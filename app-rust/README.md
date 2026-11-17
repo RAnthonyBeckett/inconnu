@@ -1,50 +1,58 @@
 # Inconnu 0.48.0-beta.2 — Windows Vampire beta
 
-![Inconnu product branding by Frakd-Up Media](../assets/branding/inconnu.jpg)
+[Download the Windows beta](https://github.com/RAnthonyBeckett/inconnu/releases/tag/v0.48.0-beta.2) · [Beta guide](../docs/BETA_QUICKSTART.md)
 
-Product branding: Frakd-Up Media.
+Product branding: Inconnu
+A Frakd-Up Media App
 
-A local Windows character and Storyteller utility. This beta supports legacy GEX/GV3
-import from original Grapevine formats, character editing, reviewed Vampire
-creation/advancement, XP ledgers and audit, spending previews, local chronicle tools,
-sheets and backup/recovery.
+Inconnu is a character and Storyteller tool for Mind's Eye Theatre Vampire games, and it
+runs entirely on your own Windows PC. It opens your existing Grapevine files (GEX and GV3),
+so a chronicle can move over without retyping anyone.
 
-## Run
+While intended for the OWbN gaming audience, Inconnu is not officially sponsored or
+supported by OWbN (maybe one day!). It does not approve XP awards or transfers; those still
+go through your Storytellers and your chronicle.
 
-Extract the entire release ZIP into a writable folder and open **Open Inconnu.cmd**. The
-launcher starts **Inconnu.exe**.
-No SDK, VM, cloud account or subscription is required. Choose or create your own library.
-Use a testing copy during beta. Read BETA_QUICKSTART.md for the workflows and known limits.
+## What it does
+
+The beta covers importing and editing characters, Vampire creation and advancement with
+reviewed rules, an XP ledger with an audit trail, spending previews before anything is bought,
+local chronicle tools, Player sheets in English or Portuguese, and backup and recovery for your
+library.
+
+## Run it
+
+Extract the whole release ZIP into a folder you can write to, then open
+**Open Inconnu.cmd**, which starts **Inconnu.exe**. You do not need an SDK, a cloud account or
+a subscription. Choose an existing library or create a new one. While this is a beta, work
+on a copy of your real files. [BETA_QUICKSTART.md](../docs/BETA_QUICKSTART.md) walks through the
+workflows and lists the known limits.
+
+## Beta limits
+
+Vampire is the only creature type with reviewed rules so far. The other twelve kinds that
+Grapevine files can hold will import and display, but creating or pricing them stays locked
+until their rules and book citations have been reviewed. The beta does not yet do everything
+the original Grapevine did, and it has no network sign-in or sharing between games. The local work
+modes keep Player and Storyteller material apart, but they are not password security.
+Source books are not included.
 
 ## Build from source
 
-Install stable Rust with the Windows MSVC toolchain and Microsoft C++ build tools and the Windows SDK resource compiler (rc.exe).
-From app-rust, run `python tools/build_portable.py`. This retains the static Windows C
-runtime and replaces workspace/user-directory paths in compiler output with neutral labels.
-Run `cargo test --locked --all-targets`, `cargo clippy --locked --all-targets -- -D warnings`
-and `cargo fmt --check` for source checks. Package with `python tools/package_public.py`.
-The compatibility crate and fabricated fixtures are included. No original databases,
-source books, third-party game art, developer journals or local library are needed to build or run.
+You need stable Rust with the Windows MSVC toolchain, the Microsoft C++ build tools and the
+Windows SDK resource compiler (rc.exe). From `app-rust`, run `python tools/build_portable.py`
+to build, and `python tools/package_public.py` to package. Source checks are
+`cargo test --locked --all-targets`, `cargo clippy --locked --all-targets -- -D warnings` and
+`cargo fmt --check`. The compatibility crate and fabricated test files are included, so no
+original databases, source books or game art are needed to build or run it.
 
-## Beta scope
+Powers and creature profiles are data, in `app-rust/data/met_powers.json` and
+`app-rust/data/creature_profiles.json`. New powers and book editions can be added there
+without new Rust code, though a rebuild is needed after editing them.
 
-Windows and local Vampire play. Rules/content and original Grapevine parity remain partial;
-network authentication and game-to-game sharing are future work. Local modes are not
-identity security. This is not an official OWbN tool or approval of awards/transfers.
-Source attribution stays with supported mechanics. Source books are not bundled.
-Dependency licenses and notices accompany release packages; no new license grant over
-third-party Grapevine or World of Darkness content is asserted here.
+## License
 
-## Shared creature configuration
-
-The shared catalogue and workflows now use the compiled source definitions in app-rust/data/met_powers.json and
-app-rust/data/creature_profiles.json. Editing these definitions requires rebuilding. Forty existing reviewed Vampire powers retain their stable
-identities, prices, saved wire formats and receipt/refund behavior. New catalogue powers
-use stable IDs rather than requiring new Rust power-enum variants. Published book edition
-tags and explicit template scopes can be added as data.
-
-All thirteen imported character kinds have profile-driven forms and synthetic shared
-purchase/refund coverage. Non-Vampire profile defaults are proposals, not verified rules:
-creation and automated pricing remain blocked until the appropriate rules and source
-citations are reviewed. Unpriced creation allocations and unsupported cases remain blocked.
-This refactor adds no new real creature powers and makes no full-rule or organization-approval claim.
+Inconnu's own code is licensed under the [Apache License 2.0](../LICENSE). That license covers
+this project's code only. It grants no rights to the original Grapevine software or to World
+of Darkness or Mind's Eye Theatre content, which belong to their owners. Third-party
+dependency licenses and notices ship with each release package.

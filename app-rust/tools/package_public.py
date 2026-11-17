@@ -26,6 +26,7 @@ def main():
         if name == "README.md":
             readme = OUT / name
             readme.write_text(readme.read_text(encoding="utf-8").replace("../assets/", "assets/"), encoding="utf-8")
+    shutil.copy2(ROOT.parent / "LICENSE", OUT / "LICENSE.txt")
     shutil.copytree(ROOT.parent / "assets/branding", OUT / "assets/branding")
     examples = OUT / "Synthetic Examples"
     examples.mkdir()

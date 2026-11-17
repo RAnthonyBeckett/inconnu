@@ -1,7 +1,7 @@
 # Inconnu 0.48.0-beta.2 — Windows Vampire beta
 
-This beta is ready for local testing of the Vampire workflow. It is not an official OWbN
-tool or a claim of complete rules/content or original Grapevine parity.
+This beta is ready for local testing of the Vampire workflow. Inconnu is not officially
+sponsored or supported by OWbN (maybe one day!), and this beta does not claim complete rules, content or original Grapevine parity.
 
 ## Start
 
