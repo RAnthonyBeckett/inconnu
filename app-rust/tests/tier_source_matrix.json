@@ -1,0 +1,194 @@
+[
+  {
+    "family": "Animalism",
+    "tier": "Intermediate",
+    "name": "Quell the Beast",
+    "power_id": "met.lotn-revised.animalism.intermediate.quell_the_beast",
+    "printed_page": 135,
+    "pdf_page": 136
+  },
+  {
+    "family": "Animalism",
+    "tier": "Intermediate",
+    "name": "Subsume the Spirit",
+    "power_id": "met.lotn-revised.animalism.intermediate.subsume_the_spirit",
+    "printed_page": 135,
+    "pdf_page": 136
+  },
+  {
+    "family": "Animalism",
+    "tier": "Advanced",
+    "name": "Drawing Out the Beast",
+    "power_id": "met.lotn-revised.animalism.advanced.drawing_out_the_beast",
+    "printed_page": 136,
+    "pdf_page": 137
+  },
+  {
+    "family": "Auspex",
+    "tier": "Intermediate",
+    "name": "The Spirit's Touch",
+    "power_id": "met.lotn-revised.auspex.intermediate.the_spirits_touch",
+    "printed_page": 138,
+    "pdf_page": 139
+  },
+  {
+    "family": "Auspex",
+    "tier": "Intermediate",
+    "name": "Telepathy",
+    "power_id": "met.lotn-revised.auspex.intermediate.telepathy",
+    "printed_page": 138,
+    "pdf_page": 139
+  },
+  {
+    "family": "Auspex",
+    "tier": "Advanced",
+    "name": "Psychic Projection",
+    "power_id": "met.lotn-revised.auspex.advanced.psychic_projection",
+    "printed_page": 139,
+    "pdf_page": 140
+  },
+  {
+    "family": "Celerity",
+    "tier": "Intermediate",
+    "name": "Rapidity",
+    "power_id": "met.lotn-revised.celerity.intermediate.rapidity",
+    "printed_page": 141,
+    "pdf_page": 142
+  },
+  {
+    "family": "Celerity",
+    "tier": "Intermediate",
+    "name": "Legerity",
+    "power_id": "met.lotn-revised.celerity.intermediate.legerity",
+    "printed_page": 141,
+    "pdf_page": 142
+  },
+  {
+    "family": "Celerity",
+    "tier": "Advanced",
+    "name": "Fleetness",
+    "power_id": "met.lotn-revised.celerity.advanced.fleetness",
+    "printed_page": 141,
+    "pdf_page": 142
+  },
+  {
+    "family": "Dominate",
+    "tier": "Intermediate",
+    "name": "Forgetful Mind",
+    "power_id": "met.lotn-revised.dominate.intermediate.forgetful_mind",
+    "printed_page": 147,
+    "pdf_page": 148
+  },
+  {
+    "family": "Dominate",
+    "tier": "Intermediate",
+    "name": "Conditioning",
+    "power_id": "met.lotn-revised.dominate.intermediate.conditioning",
+    "printed_page": 147,
+    "pdf_page": 148
+  },
+  {
+    "family": "Dominate",
+    "tier": "Advanced",
+    "name": "Possession",
+    "power_id": "met.lotn-revised.dominate.advanced.possession",
+    "printed_page": 148,
+    "pdf_page": 149
+  },
+  {
+    "family": "Fortitude",
+    "tier": "Intermediate",
+    "name": "Resilience",
+    "power_id": "met.lotn-revised.fortitude.intermediate.resilience",
+    "printed_page": 149,
+    "pdf_page": 150
+  },
+  {
+    "family": "Fortitude",
+    "tier": "Intermediate",
+    "name": "Resistance",
+    "power_id": "met.lotn-revised.fortitude.intermediate.resistance",
+    "printed_page": 149,
+    "pdf_page": 150
+  },
+  {
+    "family": "Fortitude",
+    "tier": "Advanced",
+    "name": "Aegis",
+    "power_id": "met.lotn-revised.fortitude.advanced.aegis",
+    "printed_page": 150,
+    "pdf_page": 151
+  },
+  {
+    "family": "Obfuscate",
+    "tier": "Intermediate",
+    "name": "Mask of a Thousand Faces",
+    "power_id": "met.lotn-revised.obfuscate.intermediate.mask_of_a_thousand_faces",
+    "printed_page": 162,
+    "pdf_page": 163
+  },
+  {
+    "family": "Obfuscate",
+    "tier": "Intermediate",
+    "name": "Vanish from the Mind's Eye",
+    "power_id": "met.lotn-revised.obfuscate.intermediate.vanish_from_the_minds_eye",
+    "printed_page": 162,
+    "pdf_page": 163
+  },
+  {
+    "family": "Obfuscate",
+    "tier": "Advanced",
+    "name": "Cloak the Gathering",
+    "power_id": "met.lotn-revised.obfuscate.advanced.cloak_the_gathering",
+    "printed_page": 163,
+    "pdf_page": 164
+  },
+  {
+    "family": "Potence",
+    "tier": "Intermediate",
+    "name": "Vigor",
+    "power_id": "met.lotn-revised.potence.intermediate.vigor",
+    "printed_page": 166,
+    "pdf_page": 167
+  },
+  {
+    "family": "Potence",
+    "tier": "Intermediate",
+    "name": "Intensity",
+    "power_id": "met.lotn-revised.potence.intermediate.intensity",
+    "printed_page": 166,
+    "pdf_page": 167
+  },
+  {
+    "family": "Potence",
+    "tier": "Advanced",
+    "name": "Puissance",
+    "power_id": "met.lotn-revised.potence.advanced.puissance",
+    "printed_page": 167,
+    "pdf_page": 168
+  },
+  {
+    "family": "Presence",
+    "tier": "Intermediate",
+    "name": "Entrancement",
+    "power_id": "met.lotn-revised.presence.intermediate.entrancement",
+    "printed_page": 168,
+    "pdf_page": 169
+  },
+  {
+    "family": "Presence",
+    "tier": "Intermediate",
+    "name": "Summon",
+    "power_id": "met.lotn-revised.presence.intermediate.summon",
+    "printed_page": 168,
+    "pdf_page": 169
+  },
+  {
+    "family": "Presence",
+    "tier": "Advanced",
+    "name": "Majesty",
+    "power_id": "met.lotn-revised.presence.advanced.majesty",
+    "printed_page": 168,
+    "pdf_page": 169
+  }
+]

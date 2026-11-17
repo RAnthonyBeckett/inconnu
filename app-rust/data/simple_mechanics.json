@@ -1,0 +1,1094 @@
+{
+  "profile": "MetLawsOfTheNightRevised",
+  "source_sha256": "f6eae9fda388c51e23bfe73338c867123655d5efa7957020857da7c370bac574",
+  "translation_review": "equivalence_checked",
+  "entries": [
+    {
+      "id": "met.lotn-revised.animalism.basic.feral_whispers",
+      "printed_pages": [
+        134
+      ],
+      "pdf_pages": [
+        135
+      ],
+      "en": {
+        "expenditure": "No Trait, Blood, or other activation expenditure is stated.",
+        "challenge": "Communication requires no test. To command an animal, win a Social Challenge against it; the Narrator assigns it an equivalent of 6–8 Traits.",
+        "retest": "Animal Ken is the general Animalism retest; this rule is Discipline-wide, not repeated in this power.",
+        "effect": "The animal is at least favorably disposed; communication and successful commands are possible. After a successful command challenge, it follows orders for the rest of the evening.",
+        "conditions": "Gaze into the animal's eyes; if gaze breaks, re-establish it to continue. Eyeless or very simple creatures may not connect. Most animals cannot perform complex or conditional commands."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait, sangue ou outro custo de ativação indicado.",
+        "challenge": "A comunicação não exige teste. Para dar ordens, vença um Desafio Social contra o animal; o Narrador determina um equivalente a 6–8 Traits para ele.",
+        "retest": "Animal Ken é o reteste geral de Animalism; esta regra vale para a Disciplina e não é repetida neste poder.",
+        "effect": "O animal fica pelo menos favoravelmente disposto; é possível comunicar-se e dar ordens bem-sucedidas. Após vencer o desafio para dar uma ordem, ele segue as instruções pelo restante da noite.",
+        "conditions": "Olhe nos olhos do animal; se o olhar se romper, restabeleça-o para continuar. Criaturas sem olhos ou muito simples talvez não possam se conectar. A maioria dos animais não consegue cumprir ordens complexas ou condicionais."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.animalism.basic.beckoning",
+      "printed_pages": [
+        134
+      ],
+      "pdf_pages": [
+        135
+      ],
+      "en": {
+        "expenditure": "Spend one Social Trait for each animal summoned.",
+        "challenge": "No test or challenge is stated for the summoning itself.",
+        "retest": "No retest applies to the stated activation; Animal Ken is the general Animalism retest when a challenge using the Discipline occurs.",
+        "effect": "An animal sound can call all or selected animals of a type in the area; they arrive favorably disposed but are not automatically controlled.",
+        "conditions": "Only animals able to hear the call respond, and arrival may take time. They remain until attacked or threatened, or the scene ends. Other Animalism powers can control them."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait Social (Social Trait) por animal convocado.",
+        "challenge": "O texto não indica teste ou desafio para a convocação em si.",
+        "retest": "O reteste não se aplica à ativação descrita; Animal Ken é o reteste geral de Animalism quando ocorre um desafio que use a Disciplina.",
+        "effect": "Um som animal pode chamar todos os animais de um tipo na área ou apenas alguns; eles chegam favoravelmente dispostos, mas não ficam automaticamente sob controle.",
+        "conditions": "Só respondem animais que possam ouvir o chamado, e eles podem demorar a chegar. Permanecem até serem atacados ou ameaçados, ou até o fim da cena. Outros poderes de Animalism podem controlá-los."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.auspex.basic.heightened_senses",
+      "printed_pages": [
+        137
+      ],
+      "pdf_pages": [
+        138
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated. If a sense is overwhelmed, you may spend a Willpower Trait to keep your wits about you.",
+        "challenge": "No test activates the heightened senses. While Auspex is active, a Mental Challenge may be made to pierce Chimerstry or Obfuscate, under the general Auspex rule.",
+        "retest": "Auspex retests use Investigation. When trying to spot an Obfuscated or otherwise hidden individual, one Willpower Trait may be used for a single retest.",
+        "effect": "At will, sharpen any or all senses to twice normal effectiveness, allowing finer perception and possible flashes of danger or future events.",
+        "conditions": "An overwhelming stimulus can stun you for one turn and disable the affected sense for the scene unless you spend Willpower to keep your wits. The senses still work only within their physical limits."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado. Se um sentido for sobrecarregado, você pode gastar um Trait de Força de Vontade (Willpower Trait) para manter o controle.",
+        "challenge": "Nenhum teste ativa os sentidos aguçados. Enquanto Auspex estiver ativo, pode-se fazer um Desafio Mental (Mental Challenge) para atravessar Chimerstry ou Obfuscate, conforme a regra geral de Auspex.",
+        "retest": "Os retestes de Auspex usam Investigation. Ao tentar perceber alguém oculto por Obfuscate ou de outra forma, pode-se usar um Trait de Força de Vontade para um único reteste.",
+        "effect": "À vontade, aguça qualquer sentido ou todos eles ao dobro da eficácia normal, permitindo percepções mais precisas e possíveis pressentimentos de perigo ou de eventos futuros.",
+        "conditions": "Um estímulo excessivo pode atordoá-lo por um turno e incapacitar o sentido afetado pelo restante da cena, a menos que gaste Força de Vontade para manter o controle. Os sentidos continuam limitados por suas capacidades físicas."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.auspex.basic.aura_perception",
+      "printed_pages": [
+        137,
+        138
+      ],
+      "pdf_pages": [
+        138,
+        139
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated for reading an aura. To sense a suspected ghost, spend one Mental Trait.",
+        "challenge": "For a visible target, concentrate for one turn and make a Static Mental Challenge with difficulty equal to the target's Mental Traits; the target cannot relent or retest. Ghost sensing instead uses a normal challenge after the stated expenditure.",
+        "retest": "Auspex retests use Investigation; the power text specifically bars the target from relenting or retesting in the Static Test.",
+        "effect": "On success, ask one listed question about the subject's mood, creature type, magic, diablerie, or whether their last statement was a lie. Success sensing a ghost reveals its aura, not its individual identity.",
+        "conditions": "You must see the target. Each use on a living subject yields one truthful answer. Ghost sensing requires suspecting a ghost in the area and does not identify a particular ghost."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado para ler uma aura. Para perceber um fantasma cuja presença seja suspeita, gaste um Trait Mental (Mental Trait).",
+        "challenge": "Contra um alvo visível, concentre-se por um turno e faça um Desafio Mental Estático (Static Mental Challenge) com dificuldade igual ao número de Traits Mentais do alvo; ele não pode ceder nem fazer reteste. Para perceber fantasmas, usa-se um desafio normal após o dispêndio indicado.",
+        "retest": "Os retestes de Auspex usam Investigation; o texto do poder impede especificamente o alvo de ceder ou fazer reteste no Teste Estático.",
+        "effect": "Se vencer, faça uma pergunta listada sobre o humor, o tipo de criatura, magia, diablerie ou se a última declaração do alvo foi mentira. Ao perceber um fantasma, você vê sua aura, mas não identifica o indivíduo.",
+        "conditions": "É preciso ver o alvo. Cada uso contra um ser vivo permite uma resposta verdadeira. Para perceber um fantasma, é preciso suspeitar que há um na área; isso não identifica um fantasma específico."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.celerity.basic.alacrity",
+      "printed_pages": [
+        141
+      ],
+      "pdf_pages": [
+        142
+      ],
+      "en": {
+        "expenditure": "Spend one Blood Trait to preempt a physical action.",
+        "challenge": "No separate activation challenge is stated; the preemptive action uses its normal physical challenge, if any.",
+        "retest": "Celerity grants no Ability retest of its own; actions use their normal applicable retests. If opposed by Celerity or a similar speed power, the higher Celerity level acts first.",
+        "effect": "Act before an aware physical action in the same turn, such as drawing and firing before a mugger or intervening against an attack on an ally.",
+        "conditions": "You must be aware of the action. You cannot use Celerity in the initial challenge when attacked by surprise."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Sangue (Blood Trait) para antecipar uma ação física.",
+        "challenge": "Não há desafio de ativação separado indicado; a ação antecipada usa seu desafio físico normal, se houver.",
+        "retest": "Celerity não concede reteste de Habilidade próprio; as ações usam os retestes normais aplicáveis. Se houver oposição de Celerity ou poder semelhante de velocidade, age primeiro quem tiver o nível mais alto de Celerity.",
+        "effect": "Aja antes de uma ação física percebida no mesmo turno, como sacar e atirar antes de um assaltante ou intervir contra um ataque a um aliado.",
+        "conditions": "Você precisa perceber a ação. Não é possível usar Celerity no desafio inicial quando se é surpreendido."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.celerity.basic.swiftness",
+      "printed_pages": [
+        141
+      ],
+      "pdf_pages": [
+        142
+      ],
+      "en": {
+        "expenditure": "Spend one Blood Trait to gain the additional action; the costs for Swiftness and preemptive Alacrity are not cumulative.",
+        "challenge": "No activation challenge is stated; the additional physical action uses its normal challenge, if any.",
+        "retest": "Celerity itself grants no Ability retest; use the normal retest for each action.",
+        "effect": "Gain one additional action at the end of the turn, after single basic actions have resolved; it can be used for feats such as another swing, movement, or shooting then taking cover.",
+        "conditions": "Additional actions resolve together after basic actions. Celerity actions are physical; Mental and Social Disciplines generally cannot be activated during them, except during Alacrity. You need not use your highest Celerity level. Swiftness or faster is generally a Masquerade breach; surprise blocks Celerity in the initial challenge."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Sangue para obter a ação adicional; os custos de Swiftness e da antecipação de Alacrity não são cumulativos.",
+        "challenge": "Não há desafio de ativação indicado; a ação física adicional usa seu desafio normal, se houver.",
+        "retest": "Celerity não concede reteste de Habilidade; use o reteste normal de cada ação.",
+        "effect": "Ganhe uma ação adicional ao fim do turno, depois que as ações básicas individuais forem resolvidas; ela pode servir para outro golpe, deslocamento ou um disparo seguido de busca de cobertura.",
+        "conditions": "Ações adicionais são resolvidas juntas após as ações básicas. As ações de Celerity são físicas; em geral, não se ativam Disciplinas Mentais ou Sociais durante elas, salvo durante Alacrity. Você não precisa usar seu nível mais alto de Celerity. Swiftness ou velocidade superior costuma violar a Máscara; a surpresa impede Celerity no desafio inicial."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.dominate.basic.command",
+      "printed_pages": [
+        146
+      ],
+      "pdf_pages": [
+        147
+      ],
+      "en": {
+        "expenditure": "No Trait or Blood expenditure is stated.",
+        "challenge": "Meet the subject's gaze, speak one emphasized word, and win a Mental Challenge.",
+        "retest": "Dominate challenges use Intimidation for the user's retest. A subject may spend one Willpower Trait for one retest per challenge.",
+        "effect": "On success, the subject immediately follows the command for no more than 10 minutes.",
+        "conditions": "General Dominate rule (printed p.146): most powers require the target to meet your gaze and hear commands; commands may be issued silently through Telepathy while gaze is maintained. A vampire of lower generation is immune to a weaker vampire's Dominate. Command's ordinary text specifies meeting gaze and speaking one emphasized word; the general Telepathy rule permits the silent exception while gaze remains met. The command must be simple, clear, and not blatantly harmful or self-destructive."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait ou sangue indicado.",
+        "challenge": "Encontre o olhar do alvo, diga uma palavra enfatizada e vença um Desafio Mental (Mental Challenge).",
+        "retest": "Os desafios de Dominate usam Intimidation para o reteste de quem ativa o poder. O alvo pode gastar um Trait de Força de Vontade para um reteste por desafio.",
+        "effect": "Se vencer, o alvo obedece à ordem imediatamente por no máximo 10 minutos.",
+        "conditions": "Regra geral de Dominate (p.146): a maioria dos poderes exige que o alvo encontre seu olhar e ouça os comandos; eles podem ser transmitidos silenciosamente por Telepathy mantendo o contato visual. Um vampiro de geração mais baixa é imune ao Dominate de um vampiro mais fraco. O texto comum de Command especifica contato visual e uma palavra enfatizada dita em voz alta; a regra geral de Telepathy permite a exceção silenciosa mantendo o olhar. A ordem deve ser simples, clara e não pode ser evidentemente nociva nem autodestrutiva."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.dominate.basic.mesmerism",
+      "printed_pages": [
+        146,
+        147
+      ],
+      "pdf_pages": [
+        147,
+        148
+      ],
+      "en": {
+        "expenditure": "No Trait or Blood expenditure is stated.",
+        "challenge": "Meet the subject's gaze, speak the command aloud, and win a Mental Challenge.",
+        "retest": "Dominate challenges use Intimidation for the user's retest. A subject may spend one Willpower Trait for one retest per challenge.",
+        "effect": "Implant a more complex or subconscious command, triggered immediately or by a specified event.",
+        "conditions": "General Dominate rule (printed p.146): most powers require the target to meet your gaze and hear commands; commands may be issued silently through Telepathy while gaze is maintained. A vampire of lower generation is immune to a weaker vampire's Dominate. Mesmerism's ordinary text calls for gaze and spoken commands; the general Telepathy rule permits commands to be issued silently while gaze is maintained. The command and trigger must be clear and understandable, cannot be self-destructive, and only one may be implanted at a time. The target may remember the process; no duration is stated."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait ou sangue indicado.",
+        "challenge": "Encontre o olhar do alvo, diga a ordem em voz alta e vença um Desafio Mental.",
+        "retest": "Os desafios de Dominate usam Intimidation para o reteste de quem ativa o poder. O alvo pode gastar um Trait de Força de Vontade para um reteste por desafio.",
+        "effect": "Implante uma ordem mais complexa ou subconsciente, para ser cumprida imediatamente ou quando ocorrer um evento especificado.",
+        "conditions": "Regra geral de Dominate (p.146): a maioria dos poderes exige que o alvo encontre seu olhar e ouça os comandos; eles podem ser transmitidos silenciosamente por Telepathy mantendo o contato visual. Um vampiro de geração mais baixa é imune ao Dominate de um vampiro mais fraco. O texto comum de Mesmerism exige contato visual e ordens faladas; a regra geral de Telepathy permite transmiti-las em silêncio mantendo o olhar. A ordem e o gatilho devem ser claros e compreensíveis, não podem ser autodestrutivos e só pode haver uma ordem implantada por vez. O alvo pode se lembrar do processo; não há duração indicada."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.fortitude.basic.endurance",
+      "printed_pages": [
+        149
+      ],
+      "pdf_pages": [
+        150
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated.",
+        "challenge": "No challenge or test is required by the stated passive effect.",
+        "retest": "No Endurance test occurs; general Fortitude challenges use Survival for retests if another effect calls for one.",
+        "effect": "You suffer no wound penalties beyond Bruised, until torpor or Final Death; you retain only the usual Bruised penalties.",
+        "conditions": "The protection applies to wounds from any source and does not prevent torpor or Final Death."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado.",
+        "challenge": "O efeito passivo descrito não exige desafio ou teste.",
+        "retest": "Endurance não faz teste; desafios gerais de Fortitude usam Survival para retestes se outro efeito exigir um.",
+        "effect": "Você não sofre penalidades de ferimentos além do nível Bruised, até entrar em torpor ou sofrer Morte Final; ainda sofre as penalidades normais de Bruised.",
+        "conditions": "A proteção vale para ferimentos de qualquer origem e não impede torpor nem Morte Final."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.fortitude.basic.mettle",
+      "printed_pages": [
+        149
+      ],
+      "pdf_pages": [
+        150
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated.",
+        "challenge": "No challenge or test is required by the stated passive effect.",
+        "retest": "No Mettle test occurs; general Fortitude challenges use Survival for retests if another effect calls for one.",
+        "effect": "Gain one additional health level that functions like an extra Healthy line.",
+        "conditions": "The additional health level can be lost and healed like any other."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado.",
+        "challenge": "O efeito passivo descrito não exige desafio ou teste.",
+        "retest": "Mettle não faz teste; desafios gerais de Fortitude usam Survival para retestes se outro efeito exigir um.",
+        "effect": "Ganhe um nível de saúde adicional, que funciona como uma linha Healthy extra.",
+        "conditions": "O nível de saúde adicional pode ser perdido e curado como qualquer outro."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.obfuscate.basic.cloak_of_shadows",
+      "printed_pages": [
+        161
+      ],
+      "pdf_pages": [
+        162
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated.",
+        "challenge": "No challenge is stated to become hidden.",
+        "retest": "Obfuscate retests use Stealth under the Discipline-wide rule.",
+        "effect": "Blur your form from notice while concealed.",
+        "conditions": "Use cover or shadow while nobody is watching; remain still, silent, and avoid interacting with the environment. Moving, speaking, or interacting immediately ends the concealment. Auspex or similar supernatural senses can detect you."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado.",
+        "challenge": "O texto não indica desafio para ficar oculto.",
+        "retest": "Os retestes de Obfuscate usam Stealth, conforme a regra geral da Disciplina.",
+        "effect": "Desfoque sua forma para que os outros não o percebam enquanto estiver oculto.",
+        "conditions": "Use cobertura ou sombra quando ninguém estiver olhando; permaneça imóvel, em silêncio e sem interagir com o ambiente. Mover-se, falar ou interagir encerra imediatamente a ocultação. Auspex ou sentidos sobrenaturais semelhantes podem percebê-lo."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.obfuscate.basic.unseen_presence",
+      "printed_pages": [
+        161
+      ],
+      "pdf_pages": [
+        162
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated.",
+        "challenge": "No challenge is stated to maintain the concealment.",
+        "retest": "Obfuscate retests use Stealth under the Discipline-wide rule.",
+        "effect": "After becoming hidden from sight, move at a walk while remaining unnoticed.",
+        "conditions": "Do not speak, make loud noises, or interact with the environment; opening a door, attacking, using Presence, or knocking something over reveals you. Auspex or similar supernatural senses may challenge to pierce Obfuscate."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado.",
+        "challenge": "O texto não indica desafio para manter a ocultação.",
+        "retest": "Os retestes de Obfuscate usam Stealth, conforme a regra geral da Disciplina.",
+        "effect": "Depois de ficar fora de vista, caminhe sem ser percebido.",
+        "conditions": "Não fale, faça ruídos altos nem interaja com o ambiente; abrir uma porta, atacar, usar Presence ou derrubar algo revela você. Auspex ou sentidos sobrenaturais semelhantes podem desafiar Obfuscate."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.potence.basic.prowess",
+      "printed_pages": [
+        166
+      ],
+      "pdf_pages": [
+        167
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated; activation costs no action.",
+        "challenge": "No activation challenge is stated; ordinary attack challenges are unchanged.",
+        "retest": "When striking with Potence, use the normal Brawl Ability retest; this is the Discipline-wide guidance.",
+        "effect": "Choose for unarmed or clubbing attacks to inflict lethal rather than bashing damage. Once per game session, restore all used Physical Traits from Brawny, Ferocious, Stalwart, Tough, and Wiry.",
+        "conditions": "Restore all listed Traits at once; if any are unused when you invoke Prowess, they cannot be restored later that session."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado; a ativação não consome ação.",
+        "challenge": "O texto não indica desafio de ativação; os desafios normais de ataque não mudam.",
+        "retest": "Ao golpear usando Potence, use o reteste normal da Habilidade Brawl; esta é a orientação geral da Disciplina.",
+        "effect": "Escolha causar dano letal em vez de contundente com ataques desarmados ou com porretes. Uma vez por sessão de jogo, recupere todos os Traits Físicos usados entre Brawny, Ferocious, Stalwart, Tough e Wiry.",
+        "conditions": "Recupere todos os Traits listados de uma vez; se algum estiver sem uso quando invocar Prowess, ele não poderá ser recuperado mais tarde naquela sessão."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.potence.basic.might",
+      "printed_pages": [
+        166
+      ],
+      "pdf_pages": [
+        167
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated.",
+        "challenge": "Use the power as a single retest in a challenge of sheer physical strength; no separate activation challenge is stated.",
+        "retest": "Might itself grants one retest and makes that the final test of the challenge; no further retests are allowed.",
+        "effect": "The strength retest can apply when grappling, lifting, or breaking something, and can overcome an opponent relying on stamina or speed if you rely solely on strength.",
+        "conditions": "It cannot be used at range or when the action depends on speed or accuracy, such as throwing an object. A strength-related Trait bid may be needed when overcoming evasion."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado.",
+        "challenge": "Use o poder como um único reteste em um desafio de força física pura; não há desafio de ativação separado indicado.",
+        "retest": "Might concede o próprio reteste e faz dele o teste final do desafio; nenhum outro reteste é permitido.",
+        "effect": "O reteste de força pode valer ao agarrar, levantar ou quebrar algo, e pode superar um oponente que dependa de resistência ou velocidade se você usar somente a força.",
+        "conditions": "Não pode ser usado à distância nem quando a ação depender de velocidade ou precisão, como arremessar um objeto. Para superar uma esquiva, talvez seja necessário apostar um Trait ligado à força."
+      },
+      "retest_basis": "power_text",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.presence.basic.awe",
+      "printed_pages": [
+        167
+      ],
+      "pdf_pages": [
+        168
+      ],
+      "en": {
+        "expenditure": "Spend one Social Trait per opponent retested against; in a mass challenge, spend one for each person.",
+        "challenge": "Use during a Social Challenge; no separate activation challenge is stated.",
+        "retest": "Awe grants an automatic retest, at most once per Social Challenge. General Presence retests use Leadership.",
+        "effect": "Your charisma naturally draws attention and gives others reason to consider what you say or do.",
+        "conditions": "The Trait expenditure is per person retested against in a mass challenge."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait Social (Social Trait) por oponente contra quem fizer reteste; em um desafio em massa, gaste um por pessoa.",
+        "challenge": "Use durante um Desafio Social; não há desafio de ativação separado indicado.",
+        "retest": "Awe concede um reteste automático, no máximo uma vez por Desafio Social. Os retestes gerais de Presence usam Leadership.",
+        "effect": "Seu carisma atrai naturalmente a atenção e leva os outros a considerar o que você diz ou faz.",
+        "conditions": "Em um desafio em massa, o dispêndio de Trait é para cada pessoa contra quem fizer reteste."
+      },
+      "retest_basis": "power_text",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.presence.basic.dread_gaze",
+      "printed_pages": [
+        167,
+        168
+      ],
+      "pdf_pages": [
+        168,
+        169
+      ],
+      "en": {
+        "expenditure": "No Trait or Blood expenditure is stated.",
+        "challenge": "Make a Social Challenge against the target.",
+        "retest": "Presence retests use Leadership under the Discipline-wide rule.",
+        "effect": "On success, the target flees and avoids you for the rest of the scene or hour.",
+        "conditions": "You must hiss, bare your fangs, and reveal your vampiric appearance; the act is an obvious Masquerade breach. If cornered, the target defends normally but risks an additional Trait to attack or act against you."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait ou sangue indicado.",
+        "challenge": "Faça um Desafio Social contra o alvo.",
+        "retest": "Os retestes de Presence usam Leadership, conforme a regra geral da Disciplina.",
+        "effect": "Se vencer, o alvo foge e evita você pelo restante da cena ou por uma hora.",
+        "conditions": "Você precisa sibilar, mostrar as presas e revelar sua aparência vampírica; isso viola claramente a Máscara. Se encurralado, o alvo se defende normalmente, mas arrisca um Trait adicional para atacar ou agir contra você."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.animalism.intermediate.quell_the_beast",
+      "printed_pages": [
+        135
+      ],
+      "pdf_pages": [
+        136
+      ],
+      "en": {
+        "expenditure": "Against a vampire, spend one Willpower Trait before the Social Challenge. No expenditure is stated for other targets.",
+        "challenge": "Make a Social Challenge against the victim. Touching may require a Physical Challenge, or gaze into the victim's eyes.",
+        "retest": "Animal Ken is the general Animalism retest; this rule is Discipline-wide.",
+        "effect": "The victim cannot use Willpower Traits and gains Submissive x2 for the rest of the evening. Against a vampire in frenzy, success instead restores lucidity.",
+        "conditions": "You may touch from surprise or after a Physical Challenge, or gaze into the victim's eyes; no speech is needed. The power cannot be used on yourself. Multiple uses do not stack Submissive Traits. Against a vampire, pay Willpower before the Social Challenge; a frenzy target that you affect returns to lucidity instead of receiving the ordinary effects."
+      },
+      "pt": {
+        "expenditure": "Contra um vampiro, gaste um Trait de Força de Vontade antes do Desafio Social. Nenhum dispêndio é indicado contra outros alvos.",
+        "challenge": "Faça um Desafio Social contra a vítima. Tocar pode exigir um Desafio Físico, ou você pode olhar nos olhos dela.",
+        "retest": "Animal Ken é o reteste geral de Animalism; esta regra vale para a Disciplina.",
+        "effect": "A vítima não pode usar Traits de Força de Vontade e recebe Submissive x2 pelo restante da noite. Contra um vampiro em frenesi, vencer restaura a lucidez em vez disso.",
+        "conditions": "Não pode ser usado em si mesmo. Usos repetidos não acumulam Traits Submissive. Contra vampiros, o Trait de Força de Vontade é gasto antes do Desafio Social; se vencer contra um alvo em frenesi, ele recupera a lucidez em vez de sofrer os efeitos normais."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.animalism.intermediate.subsume_the_spirit",
+      "printed_pages": [
+        135,
+        136
+      ],
+      "pdf_pages": [
+        136,
+        137
+      ],
+      "en": {
+        "expenditure": "Spend Social Traits to possess the animal: 1 for basic control, 2 to use Auspex, 3 to also use Presence and Animalism, 4 to also use Dementation and Dominate, or 5 to also use Chimerstry, Necromancy, and Thaumaturgy. Each Trait spent adds one Feral Negative Trait.",
+        "challenge": "No challenge to enter the animal is stated. If injured while attempting to return to your body, make a Simple Test.",
+        "retest": "The power text does not state a retest for entry or the Simple Test; Animal Ken is the general Animalism retest when a Discipline challenge applies.",
+        "effect": "Move your consciousness into an animal and control it; your own body becomes comatose. You can use the animal's natural abilities, and higher expenditure permits listed Disciplines.",
+        "conditions": "Must gaze into the animal's eyes; an eyeless animal cannot be possessed. Physical Disciplines do not augment it, and you cannot speak or manipulate objects beyond its abilities. Your body suffers equal sympathetic injury; if the animal dies, you return and enter torpor. Returning requires declaring intent at turn start and surviving to turn end. If injured but not knocked unconscious while returning, make a Simple Test: a tie leaves animal behavior for the scene, a loss causes frenzy, and either result returns you to your body. Remove one Feral trait per Willpower Trait spent. If your vampire body dies, make a Simple Test at each sunrise; a win or tie lets you remain, while a loss sends your spirit into the astral realms forever."
+      },
+      "pt": {
+        "expenditure": "Gaste Traits Sociais para possuir o animal: 1 para controle básico, 2 para usar Auspex, 3 para também usar Presence e Animalism, 4 para também usar Dementation e Dominate, ou 5 para também usar Chimerstry, Necromancy e Thaumaturgy. Cada Trait gasto acrescenta um Trait Negativo Feral.",
+        "challenge": "Não há desafio indicado para entrar no animal. Se sofrer ferimento ao tentar voltar ao próprio corpo, faça um Teste Simples.",
+        "retest": "O texto do poder não indica reteste para entrar nem para o Teste Simples; Animal Ken é o reteste geral de Animalism quando couber um desafio da Disciplina.",
+        "effect": "Transfira sua consciência para um animal e controle-o; seu corpo fica comatoso. Você pode usar as capacidades naturais do animal, e o dispêndio maior permite as Disciplinas listadas.",
+        "conditions": "É preciso olhar nos olhos do animal; um animal sem olhos não pode ser possuído. Disciplinas Físicas não o fortalecem, e você não pode falar ou manipular objetos além das capacidades dele. Seu corpo sofre ferimentos simpáticos iguais; se o animal morrer, você retorna e entra em torpor. Para retornar, declare a intenção no início do turno e sobreviva até o fim. Se sofrer ferimento, mas não ficar inconsciente ao tentar voltar, faça um Teste Simples: empate mantém o comportamento animal pela cena, derrota causa frenesi, e em ambos os casos você retorna ao corpo. Remova um Trait Feral por Trait de Força de Vontade gasto. Se seu corpo vampírico morrer, faça um Teste Simples a cada nascer do sol; com vitória ou empate, você permanece, e com derrota seu espírito é perdido para sempre nos reinos astrais."
+      },
+      "retest_basis": "not_stated",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.animalism.advanced.drawing_out_the_beast",
+      "printed_pages": [
+        136
+      ],
+      "pdf_pages": [
+        137
+      ],
+      "en": {
+        "expenditure": "No Trait or Blood expenditure is stated.",
+        "challenge": "When about to frenzy, make a Social Challenge against one individual within line of sight instead of a Virtue Test.",
+        "retest": "Animal Ken is the general Animalism retest; this rule is Discipline-wide.",
+        "effect": "On success, transfer your frenzy to the victim; you remain unaffected and unable to frenzy for its duration. On failure, you frenzy immediately without a Virtue Test and cannot resist with Willpower.",
+        "conditions": "You must be on the verge of frenzy; use replaces the Virtue Test and costs no action. If the victim dies while frenzied, the Beast returns and requires a Virtue Test or another use. If the victim leaves sight before frenzy ends, you lose your Beast and suffer Quell the Beast effects."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait ou sangue indicado.",
+        "challenge": "Quando estiver prestes a entrar em frenesi, faça um Desafio Social contra uma pessoa na sua linha de visão em vez de um Teste de Virtude.",
+        "retest": "Animal Ken é o reteste geral de Animalism; esta regra vale para a Disciplina.",
+        "effect": "Se vencer, transfira seu frenesi para a vítima; você fica imune e incapaz de entrar em frenesi enquanto ele durar. Se perder, entra imediatamente em frenesi sem Teste de Virtude e não pode resistir com Força de Vontade.",
+        "conditions": "É preciso estar à beira do frenesi; o uso substitui o Teste de Virtude e não consome ação. Se a vítima morrer em frenesi, a Besta retorna e exige um Teste de Virtude ou novo uso. Se a vítima sair de vista antes do fim do frenesi, você perde a Besta e sofre os efeitos de Quell the Beast."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.auspex.intermediate.the_spirits_touch",
+      "printed_pages": [
+        138
+      ],
+      "pdf_pages": [
+        139
+      ],
+      "en": {
+        "expenditure": "Spend one Mental Trait for one turn of concentration while touching the item.",
+        "challenge": "No challenge is stated.",
+        "retest": "No challenge is stated for this use, so no retest applies; Auspex retests use Investigation when a challenge occurs.",
+        "effect": "Ask a Narrator one truthful question per use about who last touched the object, whether it was part of emotionally stressful events, or what strong emotion drove a holder.",
+        "conditions": "Works on objects or places, not living beings. Answers arrive as impressions that may lack exact names or details. Very emotionally charged objects may cause a scene-long derangement at Narrator or Storyteller discretion."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait Mental por um turno de concentração enquanto toca o objeto.",
+        "challenge": "O texto não indica desafio.",
+        "retest": "O uso descrito não exige desafio, portanto não cabe reteste; desafios de Auspex usam Investigation para retestes.",
+        "effect": "Faça uma pergunta verdadeira ao Narrador por uso: quem tocou o objeto por último, se esteve envolvido em eventos emocionalmente estressantes ou qual emoção forte movia quem o segurava.",
+        "conditions": "Funciona em objetos ou lugares, não em seres vivos. As respostas vêm como impressões e podem não revelar nomes ou detalhes exatos. Objetos de carga emocional intensa podem causar uma perturbação pelo restante da cena, a critério do Narrador ou Storyteller."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.auspex.intermediate.telepathy",
+      "printed_pages": [
+        138,
+        139
+      ],
+      "pdf_pages": [
+        139,
+        140
+      ],
+      "en": {
+        "expenditure": "Spend one Mental Trait before the link challenge when contacting a supernatural creature. Spend an additional Mental Trait after linking to ask a deep question.",
+        "challenge": "Make a Mental Challenge to establish the link; spend a full turn concentrating. Each deep question needs a Static Mental Challenge against the subject's Mental Traits. An unwilling subject may use a Willpower Challenge to force you to break contact.",
+        "retest": "Auspex retests use Investigation. The deep-question Static Test bars the subject from relenting.",
+        "effect": "Send or scan thoughts as long as contact is maintained; a question can demand a truthful answer. Surface-thought eavesdropping is possible and usually invisible.",
+        "conditions": "You must see the subject; a willing subject may relent, and only one subject can be linked at a time. Ordinary communication needs no additional challenge. Supernatural targets and deep probing have the expenditures above; the power works only on conscious minds, not normal animals or non-self-aware constructs. Willpower defenses and Storyteller/Narrator judgment apply as stated."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait Mental antes do desafio de conexão ao contatar uma criatura sobrenatural. Após a conexão, gaste outro Trait Mental para fazer uma pergunta profunda.",
+        "challenge": "Faça um Desafio Mental para estabelecer a conexão e concentre-se por um turno inteiro. Cada pergunta profunda exige um Teste Mental Estático contra os Traits Mentais do alvo. Um alvo que não consentiu pode fazer um Desafio de Força de Vontade para forçar o encerramento do contato.",
+        "retest": "Os retestes de Auspex usam Investigation. No Teste Estático para pergunta profunda, o alvo não pode ceder.",
+        "effect": "Envie ou leia pensamentos enquanto mantiver a conexão; uma pergunta pode exigir resposta verdadeira. É possível escutar pensamentos superficiais sem ser notado na maioria dos casos.",
+        "conditions": "É preciso ver o alvo; um alvo disposto pode ceder, e só se mantém conexão com uma pessoa por vez. A comunicação comum não exige desafio adicional. Alvos sobrenaturais e investigação profunda têm os dispêndios acima; o poder só funciona em mentes conscientes, não em animais comuns ou construções sem autoconsciência. Aplicam-se as defesas de Força de Vontade e o julgamento de Storyteller/Narrador descritos."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.auspex.advanced.psychic_projection",
+      "printed_pages": [
+        139,
+        140
+      ],
+      "pdf_pages": [
+        140,
+        141
+      ],
+      "en": {
+        "expenditure": "Spend one Willpower Trait to project. Spend another Willpower Trait to manifest visibly for one turn. While manifested, spend a Mental Trait before using a Mental or Social Discipline.",
+        "challenge": "No test is stated to begin projection. Attacks against another astral traveler use Mental Challenges; other Disciplines use their applicable tests.",
+        "retest": "Auspex retests use Investigation for applicable challenges; the power text does not specify a special astral retest.",
+        "effect": "Project consciousness beyond the body as an invisible, intangible astral form that can travel at thought-speed under the moon's orbit. You may converse or use Mental/Social Disciplines with other astral forms; astral combat uses Mental Challenges and damage removes the opponent's Willpower.",
+        "conditions": "Your body is comatose and tied by a silver cord. You may remain projected as long as desired, but sunrise may force sleep. Manifesting is visible but still intangible; physical possessions do not travel with you. You cannot possess bodies while astral. Losing all Willpower in astral combat snaps the cord and strands you in the spirit realms."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Força de Vontade para projetar-se. Gaste outro para se manifestar visivelmente por um turno. Enquanto estiver manifestado, gaste um Trait Mental antes de usar uma Disciplina Mental ou Social.",
+        "challenge": "Não há teste indicado para iniciar a projeção. Ataques contra outro viajante astral usam Desafios Mentais; outras Disciplinas usam seus testes aplicáveis.",
+        "retest": "Os retestes de Auspex usam Investigation quando cabíveis; o texto do poder não especifica reteste astral especial.",
+        "effect": "Projete a consciência para fora do corpo como forma astral invisível e intangível, capaz de viajar à velocidade do pensamento sob a órbita da Lua. Você pode conversar ou usar Disciplinas Mentais/Sociais com outras formas astrais; o combate astral usa Desafios Mentais e o dano remove Força de Vontade do oponente.",
+        "conditions": "Seu corpo fica comatoso e ligado por um cordão de prata. Você pode permanecer projetado quanto tempo quiser, mas o nascer do sol pode forçá-lo a dormir. Manifestar-se permite ser visto, mas continua intangível; seus pertences físicos não o acompanham. Não é possível possuir corpos enquanto astral. Perder toda a Força de Vontade no combate astral rompe o cordão e o deixa preso nos reinos espirituais."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.celerity.intermediate.rapidity",
+      "printed_pages": [
+        141
+      ],
+      "pdf_pages": [
+        142
+      ],
+      "en": {
+        "expenditure": "Spend one Blood Trait to invoke all Celerity for the turn.",
+        "challenge": "No separate activation challenge is stated. In speed or agility challenges, you may choose the Bomb symbol.",
+        "retest": "Celerity gives no Ability retest; each action uses its normal retest. Rapidity's Bomb is an optional challenge symbol, not a retest.",
+        "effect": "Use the Bomb in any challenge that relies on your speed, including when the opponent relies on strength or stamina.",
+        "conditions": "Declare Rapidity before using the Bomb; you are not required to use it. Swiftness speed or greater is generally a Masquerade breach; surprise prevents Celerity in the initial challenge."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Sangue para invocar toda Celerity pelo turno.",
+        "challenge": "Não há desafio de ativação separado indicado. Em desafios de velocidade ou agilidade, você pode escolher o símbolo Bomb.",
+        "retest": "Celerity não concede reteste de Habilidade; cada ação usa seu reteste normal. O Bomb de Rapidity é um símbolo opcional de desafio, não um reteste.",
+        "effect": "Use o Bomb em qualquer desafio que dependa da sua velocidade, inclusive quando o oponente usar força ou resistência.",
+        "conditions": "Declare Rapidity antes de usar o Bomb; você não é obrigado a escolhê-lo. Velocidade de Swiftness ou superior costuma violar a Máscara; a surpresa impede Celerity no desafio inicial."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.celerity.intermediate.legerity",
+      "printed_pages": [
+        141
+      ],
+      "pdf_pages": [
+        142
+      ],
+      "en": {
+        "expenditure": "Spend one Blood Trait to activate Legerity and all other Celerity levels for the turn.",
+        "challenge": "No activation challenge is stated; the additional physical action uses its normal challenge, if any.",
+        "retest": "Celerity grants no Ability retest; actions use their normal applicable retests.",
+        "effect": "Gain another normal action at the end of the turn in addition to Swiftness's action, for at least three actions plus Alacrity's preempt and the Bomb option.",
+        "conditions": "The extra action resolves after basic and Swiftness actions and is for a physical feat. Mental and Social Disciplines generally cannot be activated during Celerity actions except during Alacrity. You need not use your highest Celerity level. This speed is generally a Masquerade breach; surprise blocks Celerity in the initial challenge."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Sangue para ativar Legerity e todos os outros níveis de Celerity pelo turno.",
+        "challenge": "Não há desafio de ativação indicado; a ação física adicional usa seu desafio normal, se houver.",
+        "retest": "Celerity não concede reteste de Habilidade; as ações usam seus retestes normais aplicáveis.",
+        "effect": "Ganhe outra ação normal ao fim do turno, além da ação de Swiftness: ao menos três ações, mais a antecipação de Alacrity e a opção do Bomb.",
+        "conditions": "A ação extra ocorre depois das ações básicas e de Swiftness e deve ser um feito físico. Em geral, não se ativam Disciplinas Mentais ou Sociais durante ações de Celerity, salvo durante Alacrity. Você não precisa usar seu nível mais alto de Celerity. Essa velocidade costuma violar a Máscara; a surpresa impede Celerity no desafio inicial."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.celerity.advanced.fleetness",
+      "printed_pages": [
+        141,
+        142
+      ],
+      "pdf_pages": [
+        142,
+        143
+      ],
+      "en": {
+        "expenditure": "Spend one Blood Trait to activate all Celerity powers for the turn.",
+        "challenge": "No activation challenge is stated. Fleetness applies to challenges where you rely on speed.",
+        "retest": "Celerity grants no Ability retest; use each action's normal applicable retest.",
+        "effect": "Win all ties in speed challenges automatically. If another factor would otherwise defeat that tie, compare Traits normally instead of losing automatically.",
+        "conditions": "The tie benefit also applies when an opponent relies on strength or stamina. Against an opponent with a tie-winning power, compare normally; against Might, ties are still won but its retest can apply. Use of Swiftness speed or higher is generally a Masquerade breach; surprise blocks the initial Celerity challenge."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Sangue para ativar todos os poderes de Celerity pelo turno.",
+        "challenge": "Não há desafio de ativação indicado. Fleetness vale em desafios nos quais você dependa da velocidade.",
+        "retest": "Celerity não concede reteste de Habilidade; use o reteste normal aplicável a cada ação.",
+        "effect": "Vença automaticamente todos os empates em desafios de velocidade. Se outro fator normalmente desfizesse o empate contra você, compare Traits em vez de perder automaticamente.",
+        "conditions": "A vantagem de empate também vale quando o oponente usa força ou resistência. Contra um poder que também vence empates, compare normalmente; contra Might, você ainda vence empates, mas o reteste dele pode ser usado. Velocidade de Swiftness ou superior costuma violar a Máscara; a surpresa impede o desafio inicial de Celerity."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.dominate.intermediate.forgetful_mind",
+      "printed_pages": [
+        146,
+        147
+      ],
+      "pdf_pages": [
+        147,
+        148
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated for altering or reviewing memories.",
+        "challenge": "Make a Mental Challenge to uncover, change, or erase memories; each additional 15-minute block needs another challenge. Checking for fabricated memories uses a Static Mental Challenge against the previous dominator's Mental Traits.",
+        "retest": "Dominate retests use Intimidation; a subject may spend one Willpower Trait for one retest per challenge. The Static Test bars the subject from relenting.",
+        "effect": "Change, erase, or prompt memories, up to 15 minutes per success; a sufficiently detailed replacement can seem realistic.",
+        "conditions": "General Dominate rule (printed p.146): most powers require the target to meet your gaze and hear commands; commands may be issued silently through Telepathy while gaze is maintained. A vampire of lower generation is immune to a weaker vampire's Dominate. This power specifically requires eye contact; no spoken command is specified for memory manipulation, and an unthreatened subject remains pacified. You cannot use it on your own memories or remove actual capabilities. Additional 15-minute blocks require additional challenges."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado para alterar ou examinar memórias.",
+        "challenge": "Faça um Desafio Mental para revelar, alterar ou apagar memórias; cada bloco adicional de 15 minutos exige outro desafio. Para verificar memórias falsas, faça um Desafio Mental Estático contra os Traits Mentais do dominador anterior.",
+        "retest": "Os retestes de Dominate usam Intimidation; o alvo pode gastar um Trait de Força de Vontade para um reteste por desafio. No Teste Estático, o alvo não pode ceder.",
+        "effect": "Altere, apague ou evoque memórias, até 15 minutos por sucesso; uma substituição suficientemente detalhada pode parecer realista.",
+        "conditions": "Regra geral de Dominate (p.146): a maioria dos poderes exige que o alvo encontre seu olhar e ouça os comandos; eles podem ser transmitidos silenciosamente por Telepathy mantendo o contato visual. Um vampiro de geração mais baixa é imune ao Dominate de um vampiro mais fraco. Este poder exige especificamente contato visual; não há ordem falada especificada para manipular memórias, e um alvo não ameaçado permanece pacificado. Não pode ser usado nas próprias memórias nem remover capacidades reais. Blocos adicionais de 15 minutos exigem novos desafios."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.dominate.intermediate.conditioning",
+      "printed_pages": [
+        146,
+        147,
+        148
+      ],
+      "pdf_pages": [
+        147,
+        148,
+        149
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated.",
+        "challenge": "Make one Mental Challenge against the victim each night. The required accumulated successes equal the victim's Self-Control/Instinct Traits, or Willpower Traits for a victim without vampiric Virtues.",
+        "retest": "Dominate retests use Intimidation; a subject may spend one Willpower Trait for one retest per challenge.",
+        "effect": "On reaching the threshold, the victim becomes a virtual slave, follows orders without eye contact, and gains one free retest against other Cainites' Dominate.",
+        "conditions": "General Dominate rule (printed p.146): most powers require gaze and audible commands; commands may be issued silently through Telepathy while gaze is maintained. A vampire of lower generation is immune to a weaker vampire's Dominate. Conditioning itself requires unrestricted access for several full nights, but the source does not state whether its use requires gaze or audible language. After six game sessions without contact, reduced by one per Willpower Trait spent to a minimum of one, the victim recovers. Reusing Conditioning can deprogram the victim if enough successes are accumulated. Conditioned pawns cannot create art or teach."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado.",
+        "challenge": "Faça um Desafio Mental contra a vítima a cada noite. O total de sucessos necessário é igual aos Traits de Self-Control/Instinct da vítima, ou aos Traits de Força de Vontade se ela não tiver Virtudes vampíricas.",
+        "retest": "Os retestes de Dominate usam Intimidation; o alvo pode gastar um Trait de Força de Vontade para um reteste por desafio.",
+        "effect": "Ao atingir o limite, a vítima vira uma escrava virtual, obedece sem contato visual e ganha um reteste gratuito contra Dominate de outros Cainitas.",
+        "conditions": "Regra geral de Dominate (p.146): a maioria dos poderes exige contato visual e comandos audíveis; eles podem ser transmitidos silenciosamente por Telepathy mantendo o olhar. Um vampiro de geração mais baixa é imune ao Dominate de um vampiro mais fraco. Conditioning exige acesso irrestrito por várias noites inteiras, mas a fonte não diz se seu uso exige contato visual ou linguagem audível. Após seis sessões de jogo sem contato, reduzidas em uma por Trait de Força de Vontade gasto até o mínimo de uma, a vítima se recupera. Reutilizar Conditioning pode desfazer a programação se acumular sucessos suficientes. Peões condicionados não conseguem criar arte nem ensinar."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "qualified",
+      "issues": [
+        "Whether the general gaze and audible-command requirement applies to Conditioning itself is not stated."
+      ]
+    },
+    {
+      "id": "met.lotn-revised.dominate.advanced.possession",
+      "printed_pages": [
+        146,
+        148,
+        149
+      ],
+      "pdf_pages": [
+        147,
+        149,
+        150
+      ],
+      "en": {
+        "expenditure": "Spend one Willpower Trait before the Mental Challenge. The total Mental Traits spent for the possession determine access: 1 for simple possession; 2 to use Auspex; 3 to also use Dominate and Presence; 4 to also use Chimerstry, Dementation, and Animalism; or 5 to also use Necromancy and Thaumaturgy.",
+        "challenge": "Touch the mortal, possibly using a Physical Challenge to secure a grip, then win a Mental Challenge.",
+        "retest": "Dominate retests use Intimidation; the subject may spend one Willpower Trait for one retest per challenge.",
+        "effect": "Control a mortal body while your own becomes comatose. Damage to the host is mirrored; if it dies before you flee, you enter torpor.",
+        "conditions": "Works only on mortals, not vampires or other supernatural beings. General Dominate rule (printed p.146): most powers require gaze and audible commands; commands may be issued silently through Telepathy while gaze is maintained. Possession's own text requires touch and does not state whether gaze or audible language also applies. The lower-generation immunity concerns vampire targets and does not apply to this mortal-only power. Flee by declaring intent at turn start; you leave at turn end. If your Cainite body is slain while you possess another, make a Simple Test (win or tie) at each sunrise to remain; a loss sends your spirit to the astral plane forever. You cannot be Embraced while possessing; distance and daylight do not limit the host body."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Força de Vontade antes do Desafio Mental. O total de Traits Mentais gastos na possessão determina as Disciplinas disponíveis: 1 para possessão simples; 2 para usar Auspex; 3 para também usar Dominate e Presence; 4 para também usar Chimerstry, Dementation e Animalism; ou 5 para também usar Necromancy e Thaumaturgy.",
+        "challenge": "Toque o mortal, talvez fazendo um Desafio Físico para segurá-lo bem, e então vença um Desafio Mental.",
+        "retest": "Os retestes de Dominate usam Intimidation; o alvo pode gastar um Trait de Força de Vontade para um reteste por desafio.",
+        "effect": "Controle um corpo mortal enquanto o seu fica comatoso. O dano ao hospedeiro repercute em você; se ele morrer antes de você fugir, você entra em torpor.",
+        "conditions": "Funciona apenas em mortais, não em vampiros ou outras criaturas sobrenaturais. Regra geral de Dominate (p.146): a maioria dos poderes exige contato visual e comandos audíveis; eles podem ser transmitidos silenciosamente por Telepathy mantendo o olhar. O texto específico de Possession exige toque e não diz se contato visual ou linguagem audível também se aplicam. A imunidade por geração mais baixa diz respeito a alvos vampiros e não se aplica a este poder exclusivo contra mortais. Para fugir, declare a intenção no início do turno; você sai no fim. Se seu corpo Cainita morrer enquanto você possui outro, faça um Teste Simples (vitória ou empate) a cada nascer do sol para permanecer; uma derrota envia seu espírito para o plano astral para sempre. Você não pode ser Abraçado enquanto possui; distância e luz do dia não limitam o corpo hospedeiro."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "qualified",
+      "issues": [
+        "The source does not state whether Possession also requires gaze or audible language beyond its specific touch requirement."
+      ]
+    },
+    {
+      "id": "met.lotn-revised.fortitude.intermediate.resilience",
+      "printed_pages": [
+        149,
+        150
+      ],
+      "pdf_pages": [
+        150,
+        151
+      ],
+      "en": {
+        "expenditure": "Optionally spend a stamina-related Physical Trait before the Simple Test to reduce aggravated damage on a win or tie.",
+        "challenge": "After suffering aggravated damage, make a Simple Test; normally it must be a win to downgrade one aggravated level to lethal.",
+        "retest": "No retest is stated for this Simple Test. Fortitude challenges generally use Survival, but the source does not assign a retest to the Simple Test.",
+        "effect": "On the required result, reduce one aggravated damage level to lethal.",
+        "conditions": "Reflexive and does not count as an action. Use at most once per attack, even if the attack deals multiple aggravated levels."
+      },
+      "pt": {
+        "expenditure": "Opcionalmente, gaste um Trait Físico ligado à resistência antes do Teste Simples para reduzir dano agravado com vitória ou empate.",
+        "challenge": "Após sofrer dano agravado, faça um Teste Simples; normalmente é preciso vencer para converter um nível agravado em letal.",
+        "retest": "O texto não indica reteste para este Teste Simples. Desafios de Fortitude geralmente usam Survival, mas a fonte não atribui reteste ao Teste Simples.",
+        "effect": "Com o resultado exigido, reduza um nível de dano agravado a letal.",
+        "conditions": "É reflexivo e não consome ação. Use no máximo uma vez por ataque, mesmo se ele causar vários níveis de dano agravado."
+      },
+      "retest_basis": "not_stated",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.fortitude.intermediate.resistance",
+      "printed_pages": [
+        149,
+        150
+      ],
+      "pdf_pages": [
+        150,
+        151
+      ],
+      "en": {
+        "expenditure": "Optionally spend a stamina-related Physical Trait before the Simple Test to avoid one damage level on a win or tie.",
+        "challenge": "After suffering lethal or bashing damage, make a Simple Test; normally you must win to remove one damage level.",
+        "retest": "No retest is stated for this Simple Test. Fortitude challenges generally use Survival, but the source does not assign a retest to the Simple Test.",
+        "effect": "Remove one level of lethal or bashing damage on the required result. It may be used after Resilience reduces aggravated damage to lethal.",
+        "conditions": "Reflexive and does not count as an action. Use once per source of damage and reduce only one level from a single attack."
+      },
+      "pt": {
+        "expenditure": "Opcionalmente, gaste um Trait Físico ligado à resistência antes do Teste Simples para evitar um nível de dano com vitória ou empate.",
+        "challenge": "Depois de sofrer dano letal ou contundente, faça um Teste Simples; normalmente é preciso vencer para remover um nível de dano.",
+        "retest": "O texto não indica reteste para este Teste Simples. Desafios de Fortitude geralmente usam Survival, mas a fonte não atribui reteste ao Teste Simples.",
+        "effect": "Remova um nível de dano letal ou contundente com o resultado exigido. Pode ser usado depois que Resilience reduzir dano agravado a letal.",
+        "conditions": "É reflexivo e não consome ação. Use uma vez por origem de dano e reduza apenas um nível de um único ataque."
+      },
+      "retest_basis": "not_stated",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.fortitude.advanced.aegis",
+      "printed_pages": [
+        150
+      ],
+      "pdf_pages": [
+        151
+      ],
+      "en": {
+        "expenditure": "Permanently expend one Willpower Trait or three permanent Physical Traits; the Traits may later be repurchased with Experience Traits.",
+        "challenge": "No challenge is stated; declare Aegis at any point during the turn.",
+        "retest": "No retest applies because Aegis calls for no challenge or test.",
+        "effect": "Revoke all damage suffered in the turn and take no damage for the rest of it.",
+        "conditions": "May be declared after being killed, but only during the same turn as the killing damage. Use is reflexive and does not count as an action."
+      },
+      "pt": {
+        "expenditure": "Gaste permanentemente um Trait de Força de Vontade ou três Traits Físicos permanentes; os Traits podem ser readquiridos depois com Experience Traits.",
+        "challenge": "O texto não indica desafio; declare Aegis em qualquer momento do turno.",
+        "retest": "Não cabe reteste porque Aegis não exige desafio ou teste.",
+        "effect": "Anule todo o dano sofrido no turno e não sofra dano pelo restante dele.",
+        "conditions": "Pode ser declarado após ser morto, mas somente no mesmo turno do dano fatal. O uso é reflexivo e não consome ação."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.obfuscate.intermediate.mask_of_a_thousand_faces",
+      "printed_pages": [
+        162
+      ],
+      "pdf_pages": [
+        163
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated for an ordinary bland appearance. Spend one Mental Trait to assume specific features; spend Blood Traits to match a more socially capable person's Social Trait total.",
+        "challenge": "No activation challenge is stated. A searching supernatural opponent may use a Mental Challenge to pierce Obfuscate under the general rule.",
+        "retest": "Obfuscate retests use Stealth; Auspex searches use the applicable Investigation retest.",
+        "effect": "Make your features appear bland, average, or specifically different; others who do not pierce the disguise see, hear, and smell the chosen form.",
+        "conditions": "Clothing and carried objects do not change. You keep your own Social Traits; matching a higher total requires Blood expenditure and cannot exceed your generation limit. The mask ends when you sleep, are unconscious or torpid, or die."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado para uma aparência comum e sem destaque. Gaste um Trait Mental para assumir traços específicos; gaste Traits de Sangue para igualar o total de Traits Sociais de alguém socialmente mais capaz.",
+        "challenge": "Não há desafio de ativação indicado. Um oponente sobrenatural que procure por você pode fazer um Desafio Mental para atravessar Obfuscate, conforme a regra geral.",
+        "retest": "Os retestes de Obfuscate usam Stealth; buscas com Auspex usam o reteste aplicável de Investigation.",
+        "effect": "Faça seus traços parecerem comuns, medianos ou especificamente diferentes; quem não atravessar o disfarce verá, ouvirá e sentirá o cheiro da forma escolhida.",
+        "conditions": "Roupas e objetos carregados não mudam. Você mantém seus próprios Traits Sociais; igualar um total maior exige gasto de Traits de Sangue e não pode exceder o limite da sua geração. A máscara termina quando você dorme, fica inconsciente ou em torpor, ou morre."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.obfuscate.intermediate.vanish_from_the_minds_eye",
+      "printed_pages": [
+        162
+      ],
+      "pdf_pages": [
+        163
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated; for the mass challenge, bid one Mental Trait for each onlooker.",
+        "challenge": "To vanish, make one mass Mental Challenge against onlookers at the end of the turn. If speaking while hidden, make a mass Mental Challenge against those trying to locate you.",
+        "retest": "Obfuscate retests use Stealth under the Discipline-wide rule.",
+        "effect": "Gain Unseen Presence's benefits and may disappear from view without first seeking cover; you may also speak aloud while hidden if the challenge succeeds.",
+        "conditions": "Fading is not an action and occurs only at turn end; you may retry on later turns. You cannot remain invisible while physically interacting, screaming, using Presence, or attacking, though you can attempt to fade after acting."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado; no desafio em massa, aposte um Trait Mental por observador.",
+        "challenge": "Para desaparecer, faça um Desafio Mental em massa contra os observadores no fim do turno. Se falar enquanto oculto, faça um Desafio Mental em massa contra quem tentar localizar você.",
+        "retest": "Os retestes de Obfuscate usam Stealth, conforme a regra geral da Disciplina.",
+        "effect": "Receba os benefícios de Unseen Presence e desapareça da vista sem antes procurar cobertura; também pode falar em voz alta enquanto estiver oculto se vencer o desafio.",
+        "conditions": "Desaparecer não é uma ação e só acontece no fim do turno; você pode tentar novamente em turnos seguintes. Não é possível permanecer invisível enquanto interage fisicamente, grita, usa Presence ou ataca, embora possa tentar desaparecer depois de agir."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.obfuscate.advanced.cloak_the_gathering",
+      "printed_pages": [
+        163
+      ],
+      "pdf_pages": [
+        164
+      ],
+      "en": {
+        "expenditure": "Spend one Mental Trait for each subject cloaked.",
+        "challenge": "No separate challenge is required unless the Obfuscate power extended requires one; extending Vanish from the Mind's Eye uses one Mental Challenge for the group.",
+        "retest": "Obfuscate retests use Stealth under the Discipline-wide rule.",
+        "effect": "Extend one Obfuscate power you are using to several creatures or entities, concealing them or giving them a shared disguise.",
+        "conditions": "Meet all conditions of the extended power; only one power can be extended at a time. Those under the cloak sense each other normally. A subject's violation removes that subject's benefit; your own violation breaks the whole cloak. It cannot hide a building."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait Mental por pessoa ocultada.",
+        "challenge": "Não é necessário desafio separado, a menos que o poder de Obfuscate estendido o exija; estender Vanish from the Mind's Eye usa um Desafio Mental para o grupo.",
+        "retest": "Os retestes de Obfuscate usam Stealth, conforme a regra geral da Disciplina.",
+        "effect": "Estenda um poder de Obfuscate que esteja usando a várias criaturas ou entidades, ocultando-as ou dando a elas o mesmo disfarce.",
+        "conditions": "Cumpra todas as condições do poder estendido; só é possível estender um poder por vez. Quem estiver sob a ocultação ainda percebe os demais normalmente. A infração de um alvo remove o benefício apenas dele; a sua própria infração rompe toda a ocultação. Não é possível ocultar um edifício."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.potence.intermediate.vigor",
+      "printed_pages": [
+        166
+      ],
+      "pdf_pages": [
+        167
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated.",
+        "challenge": "No activation challenge is stated. In a strength challenge, you may use the Bomb symbol after declaring you can do so before the challenge.",
+        "retest": "Potence grants no separate retest through Vigor; attacks while using Potence use Brawl, and other actions use their normal applicable retests.",
+        "effect": "The Bomb defeats Rock and Paper, ties with another Bomb, and loses to Scissors. You need not choose the Bomb.",
+        "conditions": "Vigor requires relying only on strength; an opponent may defend with stamina or speed without preventing the Bomb option."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado.",
+        "challenge": "Não há desafio de ativação indicado. Em um desafio de força, você pode usar o símbolo Bomb após declarar antes do desafio que é capaz de fazê-lo.",
+        "retest": "Vigor não concede reteste separado de Potence; ataques usando Potence usam Brawl, e outras ações usam seus retestes normais aplicáveis.",
+        "effect": "Bomb vence Rock e Paper, empata com outro Bomb e perde para Scissors. Você não é obrigado a escolher Bomb.",
+        "conditions": "Vigor exige que você dependa apenas da força; o oponente pode defender usando resistência ou velocidade sem impedir a opção Bomb."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.potence.intermediate.intensity",
+      "printed_pages": [
+        166,
+        167
+      ],
+      "pdf_pages": [
+        167,
+        168
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated.",
+        "challenge": "No separate activation challenge is stated; the power applies when you enter a challenge of strength.",
+        "retest": "Intensity is not a retest. Use the ordinary applicable retest for the action; Potence attacks use Brawl.",
+        "effect": "Use Potence as a bid Trait in strength challenges; it cannot be lost and does not count when resolving ties or overbids, allowing repeated use.",
+        "conditions": "If you run out of Physical Traits, you cannot use the power or enter further challenges. Wounds or Negative Traits can still force you to risk other Physical Traits."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado.",
+        "challenge": "Não há desafio de ativação separado indicado; o poder se aplica ao entrar em um desafio de força.",
+        "retest": "Intensity não é um reteste. Use o reteste normal aplicável à ação; ataques de Potence usam Brawl.",
+        "effect": "Use Potence como Trait apostado em desafios de força; ele não pode ser perdido e não conta ao resolver empates ou apostas superiores, permitindo uso repetido.",
+        "conditions": "Se ficar sem Traits Físicos, você não pode usar o poder nem entrar em novos desafios. Ferimentos ou Traits Negativos ainda podem obrigá-lo a arriscar outros Traits Físicos."
+      },
+      "retest_basis": "not_applicable",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.potence.advanced.puissance",
+      "printed_pages": [
+        167
+      ],
+      "pdf_pages": [
+        168
+      ],
+      "en": {
+        "expenditure": "No activation expenditure is stated.",
+        "challenge": "No activation test is stated; the power affects ties in tests of strength and damage when strength is a factor.",
+        "retest": "Potence does not add a separate retest here; use the normal applicable retest, including Brawl when striking with Potence.",
+        "effect": "Automatically win all ties in tests of strength, and inflict one additional health level of damage in unarmed or melee attacks where strength matters.",
+        "conditions": "Other factors such as wounds can still cause you to lose ties, as can an opponent with a tie-winning power. The increased force may break weapons not designed for it."
+      },
+      "pt": {
+        "expenditure": "Não há custo de ativação indicado.",
+        "challenge": "Não há teste de ativação indicado; o poder afeta empates em testes de força e o dano quando a força é relevante.",
+        "retest": "Potence não acrescenta reteste separado aqui; use o reteste normal aplicável, incluindo Brawl ao golpear com Potence.",
+        "effect": "Vença automaticamente todos os empates em testes de força e cause um nível de saúde adicional de dano em ataques desarmados ou corpo a corpo nos quais a força conte.",
+        "conditions": "Outros fatores, como ferimentos, ainda podem fazer você perder empates, assim como um oponente com poder de vencer empates. A força adicional pode quebrar armas que não foram projetadas para suportá-la."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.presence.intermediate.entrancement",
+      "printed_pages": [
+        168
+      ],
+      "pdf_pages": [
+        169
+      ],
+      "en": {
+        "expenditure": "No expenditure is stated.",
+        "challenge": "Make a Social Challenge against the target.",
+        "retest": "Presence retests use Leadership under the Discipline-wide rule.",
+        "effect": "On success, the target is favorably disposed, will not insult or attack you, and may aid you; a hostile target becomes neutral.",
+        "conditions": "Lasts for the scene or an hour. A hostile action against the target immediately breaks the effect, and the power cannot be used on that target again during the same scene."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio indicado.",
+        "challenge": "Faça um Desafio Social contra o alvo.",
+        "retest": "Os retestes de Presence usam Leadership, conforme a regra geral da Disciplina.",
+        "effect": "Se vencer, o alvo fica favoravelmente disposto, não o insulta nem ataca e pode ajudá-lo; um alvo hostil torna-se neutro.",
+        "conditions": "Dura pela cena ou por uma hora. Uma ação hostil contra o alvo rompe o efeito imediatamente, e o poder não pode ser usado novamente contra ele na mesma cena."
+      },
+      "retest_basis": "discipline_rule",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.presence.intermediate.summon",
+      "printed_pages": [
+        168
+      ],
+      "pdf_pages": [
+        169
+      ],
+      "en": {
+        "expenditure": "No Trait or Blood expenditure is stated.",
+        "challenge": "Request Narrator assistance; the Narrator makes a Social Challenge in your place using your Social Traits and Leadership retest if needed.",
+        "retest": "The Narrator uses Leadership for a retest if necessary, following the power text.",
+        "effect": "On success, the subject tries by any means to reach you and announce their presence; the compulsion ends then. Failure is unknown to you.",
+        "conditions": "You must know the subject (at minimum, have spoken for a few minutes or targeted them with Presence). The subject avoids obstacles that would prevent arrival. If absent, wait five minutes before another attempt. For competing summons, the most powerful generation prevails; at equal generation, the first call prevails, while simultaneous equal-generation calls are resolved by a Social Challenge between summoners. A false identity summons the nearest matching individual first; later calls to it reach that same person."
+      },
+      "pt": {
+        "expenditure": "Não há dispêndio de Trait ou sangue indicado.",
+        "challenge": "Peça a ajuda do Narrador; ele faz um Desafio Social em seu lugar usando seus Traits Sociais e o reteste de Leadership, se necessário.",
+        "retest": "O Narrador usa Leadership para reteste, se necessário, conforme o texto do poder.",
+        "effect": "Se vencer, o alvo tenta chegar até você por qualquer meio e anunciar sua presença; a compulsão termina então. Você não sabe se o desafio falhou.",
+        "conditions": "Você precisa conhecer o alvo (no mínimo, ter conversado por alguns minutos ou tê-lo escolhido como alvo de Presence). Ele evita obstáculos que impeçam a chegada. Se não aparecer, espere cinco minutos antes de tentar novamente. Em convocações concorrentes, prevalece a geração mais poderosa; com gerações iguais, vence a primeira convocação, e chamadas simultâneas de mesma geração são resolvidas por um Desafio Social entre os convocadores. Uma identidade falsa convoca primeiro o indivíduo correspondente mais próximo; chamadas posteriores levam à mesma pessoa."
+      },
+      "retest_basis": "power_text",
+      "status": "reviewed",
+      "issues": []
+    },
+    {
+      "id": "met.lotn-revised.presence.advanced.majesty",
+      "printed_pages": [
+        168,
+        169
+      ],
+      "pdf_pages": [
+        169,
+        170
+      ],
+      "en": {
+        "expenditure": "Spend one Willpower Trait to invoke Majesty.",
+        "challenge": "No challenge is required to activate it. A subject may attempt a Social Challenge to penetrate the effect and must spend one Willpower Trait to try.",
+        "retest": "When attempting to penetrate Majesty, a Willpower Trait may be used for a retest; this is the power's stated exception to the normal Presence retest.",
+        "effect": "For the scene or an hour, subjects within 10 feet who can see you cannot insult or attack you.",
+        "conditions": "If you attack or take a hostile action, Majesty immediately fades. You may still use non-harmful Mental or Social Disciplines. A subject who fails to penetrate Majesty cannot challenge it again in the same scene."
+      },
+      "pt": {
+        "expenditure": "Gaste um Trait de Força de Vontade para invocar Majesty.",
+        "challenge": "Não é necessário desafio para ativar. Um alvo pode tentar atravessar o efeito com um Desafio Social e precisa gastar um Trait de Força de Vontade para tentar.",
+        "retest": "Ao tentar atravessar Majesty, pode-se usar um Trait de Força de Vontade para reteste; esta é a exceção expressa do poder ao reteste normal de Presence.",
+        "effect": "Pela cena ou por uma hora, alvos a até 10 pés que possam vê-lo não podem insultá-lo nem atacá-lo.",
+        "conditions": "Se você atacar ou realizar uma ação hostil, Majesty desaparece imediatamente. Ainda pode usar Disciplinas Mentais ou Sociais que não causem dano direto. Quem falhar ao tentar atravessar Majesty não pode desafiá-la novamente na mesma cena."
+      },
+      "retest_basis": "power_text",
+      "status": "reviewed",
+      "issues": []
+    }
+  ],
+  "coverage_notes": [
+    "The 40 entries are the current AnimalismPower::ALL catalogue, with IDs and printed pages taken from the current name/id/printed_page methods.",
+    "Original Laws of the Night (Revised) PDF was read-only. The source SHA-256 was reused from the verified pilot; it was not recomputed.",
+    "Every inspected PDF page header was confirmed against the printed page. PDF page numbering is printed page plus one.",
+    "The title pages and immediately following pages needed to complete power text were inspected, including continuations for Aura Perception, Telepathy, Psychic Projection, Fleetness, Mesmerism, Conditioning, Possession, Dread Gaze, Resilience, Resistance, Intensity, and Majesty.",
+    "General Discipline retests are identified separately from power-specific retests. Where the source states no expenditure or test, the entry says so rather than treating the absence as a free or automatic mechanic.",
+    "No V20 or DA20 mechanics were used. XP purchase prices are not presented as activation expenditures. English and Portuguese mechanics were checked for equivalent costs, tests, effects, and conditions.",
+    "The general Dominate conditions and retest rule are on printed p. 146 / PDF p. 147; that citation is included on all five Dominate cards. The source says most powers require gaze/heard commands, and does not reconcile the silent-Telepathy exception with the spoken wording in Command/Mesmerism or specify its applicability to Conditioning/Possession.",
+    "Inspected original PDF pages: 135–143, 147–151, 162–164, and 167–170 (all one-based).",
+    "Primary review: 38 entries are source-reviewed; Conditioning and Possession have complete known mechanics with explicitly qualified application conditions, not invented gaze/language rulings. These two display bilingual source-qualification notices. Unknown mappings or unverified mechanics are omitted."
+  ]
+}

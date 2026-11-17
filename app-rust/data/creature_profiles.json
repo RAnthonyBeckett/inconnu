@@ -1,0 +1,1094 @@
+{
+  "version": 1,
+  "profiles": [
+    {
+      "kind": "Vampire",
+      "identity_fields": [
+        "Clan",
+        "Sect",
+        "Nature",
+        "Demeanor",
+        "Path"
+      ],
+      "primary_power_list": "DisciplineList",
+      "secondary_power_list": "RitualList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": true,
+      "rules_note": "Existing reviewed MET Revised rules remain authoritative."
+    },
+    {
+      "kind": "Werewolf",
+      "identity_fields": [
+        "Tribe",
+        "Auspice",
+        "Breed",
+        "Rank",
+        "Pack"
+      ],
+      "primary_power_list": "GiftList",
+      "secondary_power_list": "RiteList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Rage": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Gnosis": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Mortal",
+      "identity_fields": [
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "NuminaList",
+      "secondary_power_list": "RitualList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Changeling",
+      "identity_fields": [
+        "Kith",
+        "Court",
+        "Seeming",
+        "House",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "ArtList",
+      "secondary_power_list": "RealmList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Glamour": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Banality": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Wraith",
+      "identity_fields": [
+        "Guild",
+        "Faction",
+        "Legion",
+        "Rank"
+      ],
+      "primary_power_list": "ArcanoiList",
+      "secondary_power_list": "ThornList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Pathos": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Angst": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Mage",
+      "identity_fields": [
+        "Faction",
+        "Cabal",
+        "Essence"
+      ],
+      "primary_power_list": "SphereList",
+      "secondary_power_list": "RoteList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Arete": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Quintessence": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Paradox": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Fera",
+      "identity_fields": [
+        "Tribe",
+        "Auspice",
+        "Breed",
+        "Rank",
+        "Pack"
+      ],
+      "primary_power_list": "GiftList",
+      "secondary_power_list": "RiteList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Rage": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Gnosis": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Various",
+      "identity_fields": [
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "PowerList",
+      "secondary_power_list": "MiscellaneousList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Mummy",
+      "identity_fields": [
+        "Faction",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "HekauList",
+      "secondary_power_list": "SpellList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Sekhem": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ba": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ka": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "KueiJin",
+      "identity_fields": [
+        "Faction",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "DisciplineList",
+      "secondary_power_list": "RitualList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Hun": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Po": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "DharmaTraits": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Hunter",
+      "identity_fields": [
+        "Faction",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "EdgeList",
+      "secondary_power_list": "PowerList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Conviction": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Mercy": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Vision": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Demon",
+      "identity_fields": [
+        "Faction",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "LoreList",
+      "secondary_power_list": "RitualList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Faith": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Torment": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    },
+    {
+      "kind": "Risen",
+      "identity_fields": [
+        "Guild",
+        "Faction",
+        "Nature",
+        "Demeanor"
+      ],
+      "primary_power_list": "ArcanoiList",
+      "secondary_power_list": "DisciplineList",
+      "attribute_priorities": [
+        7,
+        5,
+        3
+      ],
+      "ability_base": 5,
+      "background_base": 5,
+      "free_traits_base": 5,
+      "max_negative_credit": 5,
+      "max_flaw_credit": 7,
+      "basic_power_base": 3,
+      "trait_xp_costs": {
+        "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "HumanityPath": [
+          {
+            "max_next": 32767,
+            "cost": 2
+          }
+        ],
+        "Virtue": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Willpower": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 5,
+            "cost": 1
+          },
+          {
+            "max_next": 10,
+            "cost": 2
+          }
+        ],
+        "Pathos": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ],
+        "Angst": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
+        ]
+      },
+      "power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "rules_reviewed": false,
+      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+    }
+  ]
+}
