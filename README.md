@@ -2,9 +2,8 @@
 
 [Download the Windows beta](https://github.com/RAnthonyBeckett/inconnu/releases/tag/v0.48.0-beta.2) · [Beta guide](docs/BETA_QUICKSTART.md)
 
-![Inconnu product branding by Frakd-Up Media](assets/branding/inconnu.jpg)
-
-Product branding: Frakd-Up Media.
+Product branding: Inconnu
+A Frakd-Up Media App
 
 A local Windows character and Storyteller utility. This beta supports legacy GEX/GV3
 import from original Grapevine formats, character editing, reviewed Vampire
