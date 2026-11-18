@@ -2,6 +2,7 @@
 //! Prices remain previews; this module does not authorize a purchase or grant a trait.
 use crate::{
     model::{Result, error},
+    owbn_bylaws::{LevelKind, PacketAuthority, TierMappingBasis},
     pricing::{
         self, ClanRelation, CostPreview, MetTier, PricingProfile, PurchaseFamily, SourceCitation,
     },
@@ -156,6 +157,14 @@ impl CatalogueEntry {
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Definition {
+    #[serde(default, skip_serializing_if = "PacketAuthority::is_unknown")]
+    pub packet_authority: PacketAuthority,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tier_mapping_basis: Option<TierMappingBasis>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_level: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub level_kind: Option<LevelKind>,
     pub stable_id: String,
     pub template_scope: String,
     pub target_list: String,
@@ -203,7 +212,14 @@ impl Catalogue {
         for p in &value.entries {
             let profile =
                 crate::creature_profiles::profile(&p.template_scope).ok_or_else(invalid)?;
-            if p.stable_id.is_empty()
+            if p.level_kind.is_some() && p.source_level.is_none()
+                || p.source_level
+                    .is_some_and(|level| !(1..=12).contains(&level))
+                || p.tier_mapping_basis == Some(TierMappingBasis::ConvertedFrom20thLevel)
+                    && p.source_level
+                        .and_then(TierMappingBasis::convert_20th_level)
+                        != Some(p.tier)
+                || p.stable_id.is_empty()
                 || p.stable_id.len() > 256
                 || !p
                     .stable_id
@@ -258,6 +274,17 @@ impl Catalogue {
     }
 }
 impl Definition {
+    pub fn effective_authority(&self) -> PacketAuthority {
+        if self.packet_authority.is_unknown()
+            && self.profile == PricingProfile::MetLawsOfTheNightRevised
+            && self.source_reviewed
+        {
+            PacketAuthority::NonBindingOrBook
+        } else {
+            self.packet_authority
+        }
+    }
+
     pub fn entry(&self) -> CatalogueEntry {
         CatalogueEntry {
             stable_id: self.stable_id.clone(),

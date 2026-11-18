@@ -28,6 +28,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for i in 1..=100 {
             let source = Reference {
                 power: Power {
+                    packet_authority: Default::default(),
+                    tier_mapping_basis: None,
                     id: format!("synthetic:power:{i}"),
                     book_id: "synthetic".into(),
                     name: format!("Synthetic entry {i:03} <literal> Café"),

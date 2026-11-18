@@ -389,6 +389,14 @@ impl InconnuApp {
                     if !request.standard_pools {
                         ui.colored_label(egui::Color32::YELLOW, tr(language, "Only standard, uncompressed pools can be applied here.", "Somente pools padrão, sem compressão, podem ser aplicados aqui."));
                     }
+                    ui.add_enabled_ui(can_edit, |ui| {
+                        changed |= ui.checkbox(&mut request.create_as_npc, tr(language, "Create as a Storyteller NPC", "Criar como PNJ do Narrador")).changed();
+                        changed |= crate::purchase_ui::render_owbn_evidence(
+                            ui, &mut request.owbn_evidence,
+                            creature_profile.map_or("Vampire", |p| p.kind.as_str()),
+                            language == Language::Portuguese, false,
+                        );
+                    });
                     if let Some(quote) = quote { render_quote(ui, quote, language); }
                     else { ui.label(tr(language, "No current preview. Preview again after changing any field.", "Sem prévia atual. Pré-visualize novamente após alterar qualquer campo.")); }
                     if !context.history.is_empty() {

@@ -75,6 +75,7 @@ pub mod action_timeline_report;
 
 pub mod chronicle;
 pub mod chronicle_handover;
+pub mod owbn_bylaws;
 
 pub mod advancement_draft;
 pub mod combined_story;

@@ -59,12 +59,16 @@ impl Library {
                 "Reload the current traits before reviewing advancement.",
             ));
         }
-        traits::quote(
-            &library_id,
-            revision,
-            &serde_json::from_str(&data)?,
-            request,
-        )
+        let record = serde_json::from_str(&data)?;
+        let (profile, _) = super::chronicle_store::read_profile(&self.conn)?;
+        crate::owbn_bylaws::check_advancement(&profile, &record)?;
+        if self.revision()? != revision {
+            return Err(error(
+                "STALE_REVISION",
+                "Reload before reviewing advancement.",
+            ));
+        }
+        traits::quote(&library_id, revision, &record, request)
     }
     pub fn commit_trait_advancement(
         &mut self,
@@ -128,6 +132,9 @@ impl Library {
             .unwrap_or_default()
             .as_secs();
         let updated = traits::apply(&record, quote, now)?;
+        let (profile, _) = super::chronicle_store::read_profile(&tx)?;
+        crate::owbn_bylaws::check_advancement(&profile, &record)?;
+        crate::owbn_bylaws::check_advancement(&profile, &updated)?;
         advance(&tx, revision)?;
         if tx.execute(
             "UPDATE records SET data=?1 WHERE id=?2",

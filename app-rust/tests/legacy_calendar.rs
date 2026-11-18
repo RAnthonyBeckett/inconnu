@@ -56,6 +56,8 @@ fn fixture() -> Fixture {
         private_notes: PRIVATE_PROFILE_NOTE.into(),
         publish_details: true,
         publish_contacts: false,
+        owbn_bylaws_enabled: false,
+        allow_non_binding_sources: false,
     };
     library.save_chronicle_profile(&profile, 0, ST).unwrap();
     let character_id = library

@@ -41,6 +41,8 @@ pub struct Options {
     pub include_temporary: bool,
     pub include_references: bool,
     pub include_simple_mechanics: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub include_owbn_mechanics: bool,
 }
 
 impl Default for Options {
@@ -53,6 +55,7 @@ impl Default for Options {
             include_temporary: true,
             include_references: true,
             include_simple_mechanics: false,
+            include_owbn_mechanics: false,
         }
     }
 }

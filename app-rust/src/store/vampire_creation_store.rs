@@ -46,8 +46,17 @@ impl Library {
                 "The library changed; reload creation before reviewing.",
             ));
         }
-        let quote = creation::quote(&library_id, revision, &self.stored_record(id)?, request)?;
+        let record = self.stored_record(id)?;
+        let (profile, _) = super::chronicle_store::read_profile(&self.conn)?;
+        let mut quote = creation::quote(&library_id, revision, &record, request)?;
+        if let Err(issue) = crate::owbn_bylaws::check_creation(&profile, &record, &quote) {
+            quote.ready = false;
+            quote.issues.push(issue.message);
+        }
         self.prepared_sheet(id, &quote.effective_sheet)?;
+        if self.revision()? != revision {
+            return Err(error("STALE_REVISION", "Reload before reviewing creation."));
+        }
         Ok(quote)
     }
     pub fn commit_vampire_creation(
@@ -96,6 +105,9 @@ impl Library {
             ));
         }
         let mut updated = self.prepared_sheet(&quote.record_id, &quote.effective_sheet)?;
+        if quote.request.create_as_npc {
+            crate::owbn_bylaws::set_creation_npc(&mut updated);
+        }
         if !quote.published_sources.is_empty() {
             let mut sources = crate::published_reference::history(&updated)?;
             for source in &quote.published_sources {

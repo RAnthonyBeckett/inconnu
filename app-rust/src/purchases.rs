@@ -32,6 +32,11 @@ pub struct PurchaseRequest {
     pub teacher_rule: Option<TeacherRule>,
     pub teacher_evidence: String,
     pub standard_cost_confirmed: bool,
+    #[serde(
+        default,
+        skip_serializing_if = "crate::owbn_bylaws::Evidence::is_empty"
+    )]
+    pub owbn_evidence: crate::owbn_bylaws::Evidence,
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PurchaseQuote {

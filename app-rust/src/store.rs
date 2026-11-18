@@ -1045,6 +1045,11 @@ impl Library {
             ));
         }
         let record: Record = serde_json::from_str(&data)?;
+        let (profile, _) = chronicle_store::read_profile(&self.conn)?;
+        crate::owbn_bylaws::check_purchase(&profile, &record, request)?;
+        if self.revision()? != revision {
+            return Err(error("STALE_REVISION", "Reload before quoting a purchase."));
+        }
         crate::purchases::quote(&library_id, revision, &record, request)
     }
 
@@ -1111,6 +1116,8 @@ impl Library {
                 "The quoted character no longer exists. Request a fresh purchase quote.",
             )
         })?)?;
+        let (profile, _) = chronicle_store::read_profile(&tx)?;
+        crate::owbn_bylaws::check_purchase(&profile, &record, &quote.request)?;
         let recomputed = crate::purchases::quote(&library_id, revision, &record, &quote.request)?;
         if recomputed != *quote {
             return Err(error(
@@ -1583,6 +1590,18 @@ impl Library {
                 public_traits.map(Vec::as_slice).unwrap_or_default(),
                 &mut document,
             )?;
+        }
+        if options.include_owbn_mechanics {
+            let (profile, _) = chronicle_store::read_profile(&self.conn)?;
+            if self.revision()? != revision {
+                return Err(error(
+                    "STALE_REVISION",
+                    "Reload before previewing OWbN reminders.",
+                ));
+            }
+            if profile.owbn_bylaws_enabled && record.kind == "Vampire" {
+                crate::owbn_bylaws::append_mechanics_reminders(&mut document);
+            }
         }
         Ok(document)
     }

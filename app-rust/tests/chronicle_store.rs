@@ -32,6 +32,8 @@ fn chronicle_profile(title: &str) -> ChronicleProfile {
         private_notes: "PRIVATE_ST_HANDOVER_NOTES".into(),
         publish_details: false,
         publish_contacts: false,
+        owbn_bylaws_enabled: false,
+        allow_non_binding_sources: false,
     }
 }
 

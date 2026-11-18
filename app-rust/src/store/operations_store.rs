@@ -21,15 +21,7 @@ fn status(r: &Record) -> &str {
     }
 }
 fn npc(r: &Record) -> bool {
-    field(r, "NPC").is_some_and(|v| {
-        v.as_bool()
-            .or_else(|| v["value"].as_bool())
-            .unwrap_or_else(|| {
-                v.as_str().is_some_and(|s| {
-                    matches!(s.to_ascii_lowercase().as_str(), "yes" | "true" | "1" | "-1")
-                })
-            })
-    })
+    crate::owbn_bylaws::is_npc(r)
 }
 fn live(r: &Record) -> bool {
     r.build.is_none() && crate::sheet::is_character_kind(&r.kind)

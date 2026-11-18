@@ -147,6 +147,14 @@ pub(super) fn merged_data(profile: &Profile, raw: Option<Value>) -> Result<Strin
         "publish_contacts".into(),
         Value::Bool(profile.publish_contacts),
     );
+    object.insert(
+        "owbn_bylaws_enabled".into(),
+        Value::Bool(profile.owbn_bylaws_enabled),
+    );
+    object.insert(
+        "allow_non_binding_sources".into(),
+        Value::Bool(profile.allow_non_binding_sources),
+    );
     Ok(serde_json::to_string(&raw)?)
 }
 
@@ -228,6 +236,8 @@ fn sources(conn: &Connection, include_names: bool) -> Result<Vec<Source>> {
 
 fn public_profile(profile: &Profile) -> PublicProfile {
     PublicProfile {
+        owbn_bylaws_enabled: profile.owbn_bylaws_enabled,
+        allow_non_binding_sources: profile.allow_non_binding_sources,
         title: profile.title.clone(),
         website: if profile.publish_details {
             profile.website.clone()

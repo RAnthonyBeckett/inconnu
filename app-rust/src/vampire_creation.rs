@@ -68,6 +68,13 @@ pub struct Request {
     pub standard_pools: bool,
     pub current_resources_reference: String,
     pub manual_power_reference: String,
+    #[serde(
+        default,
+        skip_serializing_if = "crate::owbn_bylaws::Evidence::is_empty"
+    )]
+    pub owbn_evidence: crate::owbn_bylaws::Evidence,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub create_as_npc: bool,
     pub specializations: Vec<String>,
 }
 #[derive(Clone, Debug)]
@@ -189,10 +196,13 @@ pub fn initial_request(record: &Record) -> Request {
         standard_pools: false,
         current_resources_reference: String::new(),
         manual_power_reference: String::new(),
+        owbn_evidence: Default::default(),
+        create_as_npc: false,
         specializations: vec![],
     }
 }
 pub fn validate_request(request: &Request) -> Result<()> {
+    request.owbn_evidence.validate()?;
     if uuid::Uuid::parse_str(&request.id)
         .ok()
         .map(|id| id.to_string())

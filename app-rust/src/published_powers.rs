@@ -1,5 +1,8 @@
 //! Edition-specific published names and levels. No MET tiers, prices or grants.
-use crate::model::{Result, error};
+use crate::{
+    model::{Result, error},
+    owbn_bylaws::{PacketAuthority, TierMappingBasis},
+};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{collections::HashSet, sync::OnceLock};
@@ -146,6 +149,10 @@ pub struct Book {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Power {
+    #[serde(default, skip_serializing_if = "PacketAuthority::is_unknown")]
+    pub packet_authority: PacketAuthority,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tier_mapping_basis: Option<TierMappingBasis>,
     pub id: String,
     pub book_id: String,
     pub name: String,
@@ -174,6 +181,17 @@ pub struct Reference {
     pub edition: Edition,
     pub pdf_sha256: String,
     pub facts_hash: String,
+}
+impl Power {
+    pub fn effective_authority(&self) -> PacketAuthority {
+        if self.packet_authority.is_unknown()
+            && matches!(self.book_id.as_str(), "v20-core" | "da20-core")
+        {
+            PacketAuthority::NonBindingOrBook
+        } else {
+            self.packet_authority
+        }
+    }
 }
 fn invalid() -> crate::model::AppError {
     error(

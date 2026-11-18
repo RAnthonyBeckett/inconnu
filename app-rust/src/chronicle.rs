@@ -20,6 +20,10 @@ pub struct Profile {
     pub private_notes: String,
     pub publish_details: bool,
     pub publish_contacts: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub owbn_bylaws_enabled: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub allow_non_binding_sources: bool,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -39,6 +43,10 @@ pub struct PublicProfile {
     pub meeting_time: String,
     pub description: String,
     pub house_rules: String,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub owbn_bylaws_enabled: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub allow_non_binding_sources: bool,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

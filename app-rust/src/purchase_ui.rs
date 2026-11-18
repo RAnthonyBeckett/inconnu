@@ -46,6 +46,7 @@ impl Default for PurchaseForm {
                 teacher_rule: None,
                 teacher_evidence: String::new(),
                 standard_cost_confirmed: false,
+                owbn_evidence: Default::default(),
             },
             quote: None,
             receipts: vec![],
@@ -382,6 +383,7 @@ pub fn render(
         ));
         ui.text_edit_multiline(&mut r.teacher_evidence);
     });
+    render_owbn_evidence(ui, &mut form.input.owbn_evidence, &form.kind, pt, true);
     if before != form.input {
         form.dirty = true;
         form.quote = None;
@@ -392,6 +394,23 @@ pub fn render(
         .iter()
         .find(|p| p.stable_id == form.input.power_id)
     {
+        if power_catalogue::builtin()
+            .lookup(&power.stable_id)
+            .is_some_and(|definition| {
+                definition.effective_authority()
+                    == grapevine_workbench::owbn_bylaws::PacketAuthority::NonBindingOrBook
+            })
+        {
+            ui.small(if configured {
+                grapevine_workbench::owbn_bylaws::non_binding_badge(pt)
+            } else {
+                t(
+                    pt,
+                    "MET rulebook (Local ST Discretion)",
+                    "Livro de regras MET (a critério do Narrador local)",
+                )
+            });
+        }
         ui.small(format!(
             "{} · {} · p.{} / PDF{}",
             power.family,
@@ -888,4 +907,124 @@ pub fn render_sources(
         learning.printed_page,
         learning.pdf_page_1based
     ));
+}
+
+pub fn render_owbn_evidence(
+    ui: &mut egui::Ui,
+    evidence: &mut grapevine_workbench::owbn_bylaws::Evidence,
+    kind: &str,
+    pt: bool,
+    teacher: bool,
+) -> bool {
+    use grapevine_workbench::owbn_bylaws::{Regulation, RegulationEvidence, Selector, builtin};
+    let mut changed = false;
+    egui::CollapsingHeader::new(t(
+        pt,
+        "OWbN policy evidence",
+        "Referências dos estatutos da OWbN",
+    ))
+    .show(ui, |ui| {
+        changed |= ui
+            .checkbox(
+                &mut evidence.confirm_non_binding_sources,
+                t(
+                    pt,
+                    "Local Storyteller confirms use of non-binding sources",
+                    "O Narrador local confirma o uso de fontes não vinculantes",
+                ),
+            )
+            .changed();
+        if teacher {
+            ui.label(t(
+                pt,
+                "Coordinator or packet teacher exception reference",
+                "Referência da exceção de professor do coordenador ou do pacote",
+            ));
+            changed |= ui
+                .text_edit_singleline(&mut evidence.teacher_exception_reference)
+                .changed();
+        }
+        let policy = builtin();
+        let mut remove = None;
+        for (index, item) in evidence.references.iter_mut().enumerate() {
+            ui.push_id(index, |ui| {
+                ui.horizontal_wrapped(|ui| {
+                    ui.strong(&item.rule_id);
+                    egui::ComboBox::from_id_salt("owbn_regulation")
+                        .selected_text(item.regulation.label(pt))
+                        .show_ui(ui, |ui| {
+                            for regulation in [
+                                Regulation::CoordinatorNotify,
+                                Regulation::CoordinatorApproval,
+                                Regulation::CouncilVote,
+                            ] {
+                                changed |= ui
+                                    .selectable_value(
+                                        &mut item.regulation,
+                                        regulation,
+                                        regulation.label(pt),
+                                    )
+                                    .changed();
+                            }
+                        });
+                    if ui.button(t(pt, "Remove", "Remover")).clicked() {
+                        remove = Some(index);
+                    }
+                });
+                ui.label(t(pt, "Local OWbN reference", "Referência local da OWbN"));
+                changed |= ui
+                    .text_edit_singleline(&mut item.owbn_coordinator_reference)
+                    .changed();
+            });
+        }
+        if let Some(index) = remove {
+            evidence.references.remove(index);
+            changed = true;
+        }
+        ui.menu_button(
+            t(
+                pt,
+                "Add regulation evidence",
+                "Adicionar referência de regulamentação",
+            ),
+            |ui| {
+                for rule in policy.rules.iter().filter(|rule| rule.kind == kind) {
+                    if evidence
+                        .references
+                        .iter()
+                        .any(|item| item.rule_id == rule.id)
+                    {
+                        continue;
+                    }
+                    let regulation = [rule.pc, rule.npc].into_iter().find(|regulation| {
+                        matches!(
+                            regulation,
+                            Regulation::CoordinatorNotify
+                                | Regulation::CoordinatorApproval
+                                | Regulation::CouncilVote
+                        )
+                    });
+                    let Some(regulation) = regulation else {
+                        continue;
+                    };
+                    let label = match &rule.selector {
+                        Selector::Creature => kind,
+                        Selector::Identity { value, .. } | Selector::Power { value, .. } => value,
+                    };
+                    if ui.button(format!("{label} ({})", rule.id)).clicked()
+                        && evidence.references.len() < 64
+                    {
+                        evidence.references.push(RegulationEvidence {
+                            rule_id: rule.id.clone(),
+                            regulation,
+                            owbn_coordinator_reference: String::new(),
+                        });
+                        changed = true;
+                        ui.close();
+                    }
+                }
+            },
+        );
+    });
+    changed
 }

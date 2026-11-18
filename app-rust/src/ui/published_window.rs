@@ -279,6 +279,10 @@ impl InconnuApp {
     }
 }
 fn source_label(ui: &mut egui::Ui, reference: &powers::Reference, pt: bool) {
+    use grapevine_workbench::owbn_bylaws::{PacketAuthority, non_binding_badge};
+    if reference.power.effective_authority() == PacketAuthority::NonBindingOrBook {
+        ui.small(non_binding_badge(pt));
+    }
     ui.strong(format!(
         "{} · {} {}",
         reference.power.name,
@@ -354,6 +358,7 @@ mod tests {
             teacher_rule: Some(TeacherRule::Required),
             teacher_evidence: "Synthetic teacher".into(),
             standard_cost_confirmed: true,
+            owbn_evidence: Default::default(),
         };
         let quote = lib
             .quote_purchase(&id, &purchase, 2, Role::Storyteller)

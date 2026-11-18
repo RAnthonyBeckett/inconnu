@@ -1,0 +1,299 @@
+{
+  "version": 1,
+  "mechanics_reference": "https://council.owbn.net/en/charter-bylaws/mechanics-bylaws/",
+  "vampire_pc_min_generation": 8,
+  "pc_discipline_max_level": 5,
+  "pc_sorcery_path_max_level": 6,
+  "pc_numina_path_max_level": 5,
+  "rules": [
+    {
+      "id": "risen",
+      "kind": "Risen",
+      "selector": {
+        "type": "creature"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Risen"
+    },
+    {
+      "id": "wraith-mnemoi",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Mnemoi"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Guilds"
+    },
+    {
+      "id": "wraith-solicitors",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Solicitors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Guilds"
+    },
+    {
+      "id": "wraith-ferrymen",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Ferrymen"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CouncilVote",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Guilds"
+    },
+    {
+      "id": "wraith-sparagmoi",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Sparagmoi"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Arcanoi"
+    },
+    {
+      "id": "wraith-custom-tricks",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Custom Tricks"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Arcanoi"
+    },
+    {
+      "id": "wraith-sparagmoi-tier-5",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Sparagmoi",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Sparagmoi Tier 5"
+    },
+    {
+      "id": "risen-sparagmoi",
+      "kind": "Risen",
+      "selector": {
+        "type": "power",
+        "value": "Sparagmoi"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Sparagmoi"
+    },
+    {
+      "id": "risen-sparagmoi-tier-5",
+      "kind": "Risen",
+      "selector": {
+        "type": "power",
+        "value": "Sparagmoi",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith R&U: Sparagmoi Tier 5"
+    },
+    {
+      "id": "vampire-baali",
+      "kind": "Vampire",
+      "selector": {
+        "type": "identity",
+        "field": "Clan",
+        "value": "Baali"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Demon Controlled Items: Creature Types"
+    },
+    {
+      "id": "changeling-chronos",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Chronos"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-naming",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Naming"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-autumn-way",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Autumn Way"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-contempt",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Contempt"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-delusion",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Delusion"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-discord",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Discord"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "changeling-spring-5",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Spring",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items: Arts"
+    },
+    {
+      "id": "werewolf-bunyip",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "identity",
+        "field": "Tribe",
+        "value": "Bunyip"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Near-Extinct and Extinct Garou Tribes"
+    },
+    {
+      "id": "werewolf-siberakh",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "identity",
+        "field": "Tribe",
+        "value": "Siberakh"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Near-Extinct and Extinct Garou Tribes"
+    },
+    {
+      "id": "werewolf-white-howlers",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "identity",
+        "field": "Tribe",
+        "value": "White Howlers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Near-Extinct and Extinct Garou Tribes"
+    },
+    {
+      "id": "werewolf-white-howler",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "identity",
+        "field": "Tribe",
+        "value": "White Howler"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Near-Extinct and Extinct Garou Tribes"
+    },
+    {
+      "id": "mage-marauders",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Marauders"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Creature Types"
+    },
+    {
+      "id": "mage-nephandi",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Nephandi"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Creature Types"
+    }
+  ],
+  "character_reference": "https://council.owbn.net/en/charter-bylaws/character-bylaws/"
+}

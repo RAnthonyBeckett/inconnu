@@ -339,6 +339,20 @@ impl InconnuApp {
                             );
                         }
                         ui.checkbox(
+                            &mut p.owbn_bylaws_enabled,
+                            t(l, "Enforce OWbN bylaws", "Aplicar os estatutos da OWbN"),
+                        );
+                        ui.add_enabled_ui(p.owbn_bylaws_enabled, |ui| {
+                            ui.checkbox(
+                                &mut p.allow_non_binding_sources,
+                                t(
+                                    l,
+                                    "Allow non-binding sources",
+                                    "Permitir fontes não vinculantes",
+                                ),
+                            );
+                        });
+                        ui.checkbox(
                             &mut p.publish_details,
                             t(
                                 l,

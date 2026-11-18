@@ -23,12 +23,18 @@ impl Library {
                 "Library changed; review the advancement plan again.",
             ));
         }
-        batch::quote(
-            &library_id,
-            revision,
-            &serde_json::from_str(&data)?,
-            requests,
-        )
+        let record = serde_json::from_str(&data)?;
+        let (profile, _) = super::chronicle_store::read_profile(&self.conn)?;
+        for request in requests {
+            crate::owbn_bylaws::check_purchase(&profile, &record, request)?;
+        }
+        if self.revision()? != revision {
+            return Err(error(
+                "STALE_REVISION",
+                "Reload before reviewing advancement.",
+            ));
+        }
+        batch::quote(&library_id, revision, &record, requests)
     }
 
     /// One transaction preserves the current live record and all-or-nothing XP/traits/receipts.
@@ -163,8 +169,10 @@ pub(super) fn commit_in_transaction(
     let committed_revision = revision
         .checked_add(1)
         .ok_or_else(|| error("REVISION_LIMIT", "Library revision limit reached."))?;
+    let (profile, _) = super::chronicle_store::read_profile(tx)?;
     let mut receipts = Vec::with_capacity(requests.len());
     for (index, request) in requests.iter().enumerate() {
+        crate::owbn_bylaws::check_purchase(&profile, &record, request)?;
         let actual = purchases::quote(&library_id, revision, &record, request)?;
         record = purchases::apply(&record, &actual, now)?;
         let mut receipt = purchases::receipt(&actual, committed_revision);

@@ -4663,6 +4663,7 @@ impl InconnuApp {
                         teacher_rule: Some(TeacherRule::Required),
                         teacher_evidence: "Synthetic named teacher one level above Basic".into(),
                         standard_cost_confirmed: true,
+                        owbn_evidence: Default::default(),
                     };
                     if !smoke.checks.contains_key("policy_template_file_reuse") {
                         let path = smoke.output_dir.join("Synthetic local policy.gvpolicy");
@@ -8402,6 +8403,7 @@ fn smoke_batch_request(second: bool) -> grapevine_workbench::purchases::Purchase
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic qualified teacher".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     }
 }
 

@@ -161,6 +161,7 @@ fn power_request() -> PurchaseRequest {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic qualified teacher evidence".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     }
 }
 

@@ -81,6 +81,7 @@ fn new_vampire_identity_xp_purchase_player_sheet_test_copy_and_recovery() {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic qualified teacher declaration".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     };
     let quote = lib
         .quote_purchase(&id, &request, 3, Role::Storyteller)

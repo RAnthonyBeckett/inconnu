@@ -31,6 +31,8 @@ fn current_profile(title: &str, token: &str, details: bool, contacts: bool) -> P
         private_notes: format!("KEEP_PRIVATE_NOTES_{token}"),
         publish_details: details,
         publish_contacts: contacts,
+        owbn_bylaws_enabled: false,
+        allow_non_binding_sources: false,
     }
 }
 

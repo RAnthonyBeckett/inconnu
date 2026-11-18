@@ -90,6 +90,14 @@ pub fn render(
             "Incluir fontes dos poderes conhecidos e vinculados",
         ),
     );
+    ui.checkbox(
+        &mut form.options.include_owbn_mechanics,
+        t(
+            pt,
+            "Include OWbN Mechanics Bylaws reminders",
+            "Incluir lembretes dos Estatutos de Mecânica da OWbN",
+        ),
+    );
     let mechanics_toggle = ui.checkbox(
         &mut form.options.include_simple_mechanics,
         t(

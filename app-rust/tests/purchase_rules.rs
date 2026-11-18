@@ -47,6 +47,7 @@ fn request() -> PurchaseRequest {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic teacher qualification".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     }
 }
 #[test]

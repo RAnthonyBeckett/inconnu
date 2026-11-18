@@ -156,6 +156,7 @@ fn configured_power_purchase_and_original_cost_refund_share_one_path_for_all_thi
                 teacher_rule: Some(TeacherRule::Required),
                 teacher_evidence: "Synthetic teacher".into(),
                 standard_cost_confirmed: true,
+                owbn_evidence: Default::default(),
             };
             let quote = purchases::quote_from_catalogue(
                 "synthetic-library",

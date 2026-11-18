@@ -16,12 +16,16 @@ impl Library {
                 "Reload before reviewing this mixed plan.",
             ));
         }
-        mixed::quote(
-            &library_id,
-            revision,
-            &serde_json::from_str(&data)?,
-            requests,
-        )
+        let record = serde_json::from_str(&data)?;
+        let (profile, _) = super::chronicle_store::read_profile(&self.conn)?;
+        check_policy(&profile, &record, requests)?;
+        if self.revision()? != revision {
+            return Err(error(
+                "STALE_REVISION",
+                "Reload before reviewing advancement.",
+            ));
+        }
+        mixed::quote(&library_id, revision, &record, requests)
     }
     pub fn mixed_advancement_history(&self, id: &str, role: Role) -> Result<Vec<mixed::Receipt>> {
         require_st(role)?;
@@ -100,7 +104,10 @@ pub(super) fn commit_in_transaction(
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
         .as_secs();
+    let (profile, _) = super::chronicle_store::read_profile(tx)?;
+    check_policy(&profile, &record, &q.requests())?;
     let (updated, actual_steps) = mixed::apply(&record, q, now)?;
+    crate::owbn_bylaws::check_advancement(&profile, &updated)?;
     let committed_revision = revision
         .checked_add(1)
         .ok_or_else(|| error("REVISION_LIMIT", "Revision limit reached."))?;
@@ -187,4 +194,18 @@ fn receipts(conn: &Connection, id: &str) -> Result<Vec<mixed::Receipt>> {
         rows.push(receipt);
     }
     Ok(rows)
+}
+
+pub(super) fn check_policy(
+    profile: &crate::chronicle::Profile,
+    record: &Record,
+    requests: &[mixed::Request],
+) -> Result<()> {
+    crate::owbn_bylaws::check_advancement(profile, record)?;
+    for request in requests {
+        if let mixed::Request::Power(power) = request {
+            crate::owbn_bylaws::check_purchase(profile, record, power)?;
+        }
+    }
+    Ok(())
 }

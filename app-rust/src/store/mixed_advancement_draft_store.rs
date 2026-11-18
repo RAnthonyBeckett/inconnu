@@ -24,6 +24,8 @@ impl Library {
             ));
         }
         let source = transaction_record(&tx, source_id)?;
+        let (profile, _) = super::chronicle_store::read_profile(&tx)?;
+        super::mixed_advancement_store::check_policy(&profile, &source, requests)?;
         let quote = purchase_batch::quote(&library_id, revision, &source, requests)?;
         let mut record = source.clone();
         record.id = Uuid::new_v4().to_string();
@@ -99,12 +101,28 @@ impl Library {
                 "Library changed; prepare a new draft review.",
             ));
         }
-        draft::review(
+        let source = serde_json::from_str(&source_data)?;
+        let review = draft::review(
             &library_id,
             revision,
-            &serde_json::from_str(&source_data)?,
+            &source,
             &serde_json::from_str(&draft_data)?,
-        )
+        )?;
+        if !review.applied {
+            let (profile, _) = super::chronicle_store::read_profile(&self.conn)?;
+            super::mixed_advancement_store::check_policy(
+                &profile,
+                &source,
+                &review.quote.requests(),
+            )?;
+        }
+        if self.revision()? != revision {
+            return Err(error(
+                "STALE_REVISION",
+                "Reload before reviewing this saved advancement draft.",
+            ));
+        }
+        Ok(review)
     }
 
     pub fn apply_mixed_advancement_draft(

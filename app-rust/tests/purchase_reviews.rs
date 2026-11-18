@@ -46,6 +46,7 @@ fn request(power_id: &str) -> PurchaseRequest {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: String::new(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     }
 }
 

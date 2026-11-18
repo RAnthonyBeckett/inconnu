@@ -195,6 +195,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic qualified teacher declaration".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     };
     let advancement = Advancement {
         id: uuid::Uuid::new_v4().to_string(),

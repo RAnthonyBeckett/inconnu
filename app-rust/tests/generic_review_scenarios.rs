@@ -45,6 +45,10 @@ fn configured_fixtures() -> (PowerCatalogue, ProfileCatalogue, Vec<(String, Stri
         let slug = profile.kind.to_ascii_lowercase().replace(' ', "_");
         let id = format!("synthetic.{slug}.power");
         powers.push(Definition {
+            packet_authority: Default::default(),
+            tier_mapping_basis: None,
+            source_level: None,
+            level_kind: None,
             stable_id: id.clone(),
             template_scope: profile.kind.clone(),
             target_list: profile.primary_power_list.clone(),
@@ -122,6 +126,7 @@ fn request(power_id: &str, profile: PricingProfile) -> PurchaseRequest {
         teacher_rule: Some(TeacherRule::Required),
         teacher_evidence: "Synthetic teacher evidence".into(),
         standard_cost_confirmed: true,
+        owbn_evidence: Default::default(),
     }
 }
 
