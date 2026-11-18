@@ -6,18 +6,8 @@ use tempfile::TempDir;
 
 const ST: Role = Role::Storyteller;
 const NON_VAMPIRE_KINDS: &[&str] = &[
-    "Werewolf",
-    "Mortal",
-    "Changeling",
-    "Wraith",
-    "Mage",
-    "Fera",
-    "Various",
-    "Mummy",
-    "KueiJin",
-    "Hunter",
-    "Demon",
-    "Risen",
+    "Werewolf", "Mortal", "Wraith", "Mage", "Fera", "Various", "Mummy", "KueiJin", "Hunter",
+    "Demon", "Risen",
 ];
 
 fn reviewed_request(lib: &Library, id: &str) -> creation::Request {

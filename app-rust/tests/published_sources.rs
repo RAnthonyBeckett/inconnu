@@ -103,7 +103,13 @@ fn seeded() -> (TempDir, Library, String) {
 fn installed_partial_catalogue_has_verified_dual_pages_and_no_invented_physical_names() {
     use grapevine_workbench::published_powers::{Coverage, Evidence, catalogue};
     let c = catalogue().unwrap();
-    assert_eq!(c.entries.len(), 288);
+    assert_eq!(
+        c.entries
+            .iter()
+            .filter(|power| matches!(power.book_id.as_str(), "v20-core" | "da20-core"))
+            .count(),
+        288
+    );
     assert_eq!(
         c.entries
             .iter()

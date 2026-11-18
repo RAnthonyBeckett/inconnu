@@ -613,16 +613,20 @@ pub fn preview_from_definition(
             definition.fixed_xp_cost,
         )?,
     };
-    if definition.original_pdf_sha256 != price.citation.original_pdf_sha256 {
-        return Err(error(
-            "CATALOGUE_SOURCE_PROFILE_MISMATCH",
-            "Power and configured book identity differ; review the source binding.",
-        ));
-    }
-    let mut citation = price.citation.clone();
-    citation.printed_page = definition.printed_page;
-    citation.pdf_page_1based = definition.pdf_page_1based;
-    citation.original_pdf_sha256 = definition.original_pdf_sha256.clone();
+    let citation = if let Some(citation) = definition.published_source_citation()? {
+        citation
+    } else {
+        if definition.original_pdf_sha256 != price.citation.original_pdf_sha256 {
+            return Err(error(
+                "CATALOGUE_SOURCE_PROFILE_MISMATCH",
+                "Power and configured book identity differ; review the source binding.",
+            ));
+        }
+        let mut citation = price.citation.clone();
+        citation.printed_page = definition.printed_page;
+        citation.pdf_page_1based = definition.pdf_page_1based;
+        citation
+    };
     Ok(AnimalismPurchasePreview{power:PowerIdentity::Catalogue(id.into()),catalogue_binding:Some(CatalogueBinding{template_scope:definition.template_scope.clone(),target_list:definition.target_list.clone(),family:definition.family.clone()}),power_id:id.into(),name:definition.name.clone(),tier:definition.tier,position_in_basic_animalism:0,power_source:CheckedSource{citation,inspected_text_path:format!("source:{id}"),inspected_text_sha256:definition.original_pdf_sha256.clone()},learning_source:CheckedSource{citation:price.citation.clone(),inspected_text_path:format!("source:creature-profile.{character_kind}"),inspected_text_sha256:price.citation.original_pdf_sha256.clone()},stated_power_prerequisites:vec![],prerequisite_note:definition.prerequisite_note.clone(),price,unresolved_gates:vec![UnresolvedPurchaseGate{id:"local_review".into(),explanation:"Explicit policy, affiliation, teacher, eligibility and approval declarations remain required.".into()}],purchase_enabled:false})
 }
 

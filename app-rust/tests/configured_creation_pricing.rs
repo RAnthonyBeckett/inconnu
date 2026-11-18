@@ -22,6 +22,7 @@ fn reviewed(kind: &str) -> Profile {
     p.ability_base = 1;
     p.background_base = 1;
     p.basic_power_base = 1;
+    p.secondary_power_base = None;
     p.free_traits_base = 30;
     p.free_trait_costs = Some(creature_profiles::FreeTraitCosts {
         attribute: 2,
@@ -107,7 +108,7 @@ fn all_twelve_configured_kinds_price_excess_and_generate_only_reviewed_resources
         assert_eq!(budget.free_remaining, Some(14));
         assert_eq!(q.effective_sheet.resources["Willpower"], 4);
         assert_eq!(serde_json::to_value(record).unwrap(), before);
-        assert!(!base.rules_reviewed); // No production profile was unlocked by fixture review.
+        assert_eq!(creature_profiles::profile(&base.kind), Some(base));
     }
 }
 #[test]

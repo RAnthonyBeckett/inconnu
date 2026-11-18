@@ -43,6 +43,8 @@ pub struct ConfiguredBudgetQuote {
     pub primary_power_base: i64,
     pub primary_power_remaining: i64,
     pub secondary_power_count: i64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub secondary_power_remaining: Option<i64>,
     pub negative_credit: i64,
     pub flaw_credit: i64,
     pub free_available: i64,
@@ -53,9 +55,17 @@ pub struct ConfiguredBudgetQuote {
     pub warnings: Vec<String>,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum SeemingBonus {
+    Glamour,
+    Willpower,
+}
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Request {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wilder_bonus: Option<SeemingBonus>,
     pub id: String,
     pub sheet: SheetEdit,
     pub budget: budget::Input,
@@ -196,6 +206,7 @@ pub fn initial_request(record: &Record) -> Request {
         standard_pools: false,
         current_resources_reference: String::new(),
         manual_power_reference: String::new(),
+        wilder_bonus: None,
         owbn_evidence: Default::default(),
         create_as_npc: false,
         specializations: vec![],
@@ -508,6 +519,79 @@ fn inapplicable_generation() -> generation::GenerationLimits {
     }
 }
 
+pub fn uses_c20_changeling_creation(profile: &creature_profiles::Profile) -> bool {
+    profile.kind == "Changeling" && profile.secondary_power_base.is_some()
+}
+
+fn check_c20_starting_powers(
+    edit: &SheetEdit,
+    profile: &creature_profiles::Profile,
+    issues: &mut Vec<String>,
+) -> Result<()> {
+    for (list, kind) in [
+        (
+            &profile.primary_power_list,
+            crate::published_powers::Kind::Art,
+        ),
+        (
+            &profile.secondary_power_list,
+            crate::published_powers::Kind::Realm,
+        ),
+    ] {
+        let mut ranks = std::collections::BTreeMap::<&str, Vec<u8>>::new();
+        for row in rows(edit, list)? {
+            let name = row["Name"].as_str().unwrap_or_default().trim();
+            let matches: Vec<_> = crate::published_powers::catalogue()?
+                .entries
+                .iter()
+                .filter(|power| {
+                    power.book_id == "phase7a-c20-packet-changeling"
+                        && power.kind == kind
+                        && power.name.eq_ignore_ascii_case(name)
+                })
+                .collect();
+            let [power] = matches.as_slice() else {
+                issues.push(format!(
+                    "{list}: choose an unambiguous published rank for {name}."
+                ));
+                continue;
+            };
+            if kind == crate::published_powers::Kind::Art {
+                let tier = crate::owbn_bylaws::TierMappingBasis::convert_20th_level(power.level);
+                if power.level > 3 {
+                    issues
+                        .push("Art ranks above 3 are unavailable in standard C20 creation.".into());
+                }
+                if row["Value"].as_str().map(str::trim).is_none_or(|value| {
+                    tier.is_none_or(|tier| !tier.sheet_value().eq_ignore_ascii_case(value))
+                }) {
+                    issues.push(format!(
+                        "{list}: {name} must use its source-confirmed tier."
+                    ));
+                }
+            } else if row["Value"]
+                .as_str()
+                .map(str::trim)
+                .and_then(|value| value.parse::<u8>().ok())
+                != Some(power.level)
+            {
+                issues.push(format!("{list}: {name} must use its numeric Realm rank."));
+            }
+            ranks
+                .entry(&power.discipline)
+                .or_default()
+                .push(power.level);
+        }
+        for (family, mut levels) in ranks {
+            levels.sort_unstable();
+            if levels.len() > 5 || !levels.iter().copied().eq(1..=levels.len() as u8) {
+                issues.push(format!("{list}: record preceding ranks in {family}."));
+            }
+        }
+    }
+    Ok(())
+}
+
 fn configured_power_count(edit: &SheetEdit, key: &str, issues: &mut Vec<String>) -> Result<i64> {
     let mut names = std::collections::HashSet::new();
     let values = rows(edit, key)?;
@@ -556,6 +640,14 @@ fn configured_budget_quote(
     let ability_remaining = profile.ability_base - input.ability_total;
     let background_remaining = profile.background_base - input.background_total;
     let primary_power_remaining = profile.basic_power_base - input.basic_power_count;
+    let secondary_power_remaining = profile
+        .secondary_power_base
+        .map(|base| base - secondary_power_count);
+    if let Some(remaining) = secondary_power_remaining.filter(|remaining| *remaining > 0) {
+        issues.push(format!(
+            "Secondary powers are short by {remaining} configured Trait(s)."
+        ));
+    }
     let negative_credit = input.negative_traits.iter().sum::<i64>();
     let bounded_negative_credit = negative_credit.min(profile.max_negative_credit);
     let bounded_flaw_credit = input.flaw_credit.min(profile.max_flaw_credit);
@@ -590,7 +682,7 @@ fn configured_budget_quote(
         (-ability_remaining).max(0),
         (-background_remaining).max(0),
         (-primary_power_remaining).max(0),
-        secondary_power_count,
+        (-secondary_power_remaining.unwrap_or(-secondary_power_count)).max(0),
         input.specialization_count,
         input.willpower_free,
     ];
@@ -640,6 +732,7 @@ fn configured_budget_quote(
         primary_power_base: profile.basic_power_base,
         primary_power_remaining,
         secondary_power_count,
+        secondary_power_remaining,
         negative_credit,
         flaw_credit: input.flaw_credit,
         free_available,
@@ -802,7 +895,37 @@ pub fn quote_configured_profile(
             .entry(key.clone())
             .or_insert(true);
     }
-    if input.willpower_free > 0 {
+    if uses_c20_changeling_creation(profile) {
+        if input.willpower_free != 0 || !request.specializations.is_empty() {
+            issues.push(
+                "This profile does not price optional starting Willpower or specializations."
+                    .into(),
+            );
+        }
+        let choice = match effective_sheet
+            .identity
+            .get("Seeming")
+            .map(|value| value.trim().to_ascii_lowercase())
+            .as_deref()
+        {
+            Some("childling") => Some(SeemingBonus::Glamour),
+            Some("grump") => Some(SeemingBonus::Willpower),
+            Some("wilder") => request.wilder_bonus,
+            _ => None,
+        };
+        if let Some(choice) = choice {
+            let key = match choice {
+                SeemingBonus::Glamour => "Glamour",
+                SeemingBonus::Willpower => "Willpower",
+            };
+            if let Some(resource) = effective_sheet.resources.get_mut(key) {
+                *resource += 1;
+            }
+        } else {
+            issues.push("Select a Childling, Grump, or Wilder Seeming and choose the Wilder bonus when applicable.".into());
+        }
+        check_c20_starting_powers(&effective_sheet, profile, &mut issues)?;
+    } else if input.willpower_free > 0 {
         match profile.starting_resources.get("Willpower").and_then(|base|base.checked_add(input.willpower_free)).filter(|n|*n<=32767) {
             Some(total)=>{effective_sheet.resources.insert("Willpower".into(),total);},
             None=>issues.push("Additional Willpower requires a configured starting Willpower pool and bounded purchase.".into()),

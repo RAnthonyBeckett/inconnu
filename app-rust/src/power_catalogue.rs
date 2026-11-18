@@ -140,6 +140,11 @@ impl CatalogueEntry {
     /// Reuse the price citation's edition and document identity with this power's pages.
     pub fn power_citation(&self, price: &CostPreview) -> Option<SourceCitation> {
         let source = self.source?;
+        if let Some(definition) = builtin().lookup(&self.stable_id)
+            && definition.published_source_id.is_some()
+        {
+            return definition.published_source_citation().ok().flatten();
+        }
         if source.profile != price.profile
             || source.printed_page == 0
             || source.pdf_page_1based == 0
@@ -163,6 +168,8 @@ pub struct Definition {
     pub tier_mapping_basis: Option<TierMappingBasis>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_level: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub published_source_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub level_kind: Option<LevelKind>,
     pub stable_id: String,
@@ -241,7 +248,7 @@ impl Catalogue {
                     .is_some_and(|s| s.len() > 1000 || s.chars().any(char::is_control))
                 || p.prerequisite_note.len() > 16000
                 || (p.source_reviewed
-                    && (p.printed_page == 0
+                    && ((p.printed_page == 0 && p.published_source_id.is_none())
                         || p.pdf_page_1based == 0
                         || p.original_pdf_sha256.len() != 64
                         || !p.original_pdf_sha256.bytes().all(|b| b.is_ascii_hexdigit())))
@@ -342,7 +349,46 @@ impl CatalogueEntry {
 }
 
 impl Definition {
+    pub(crate) fn published_source_citation(&self) -> Result<Option<SourceCitation>> {
+        let Some(id) = &self.published_source_id else {
+            return Ok(None);
+        };
+        let catalogue = crate::published_powers::catalogue()?;
+        let invalid = || {
+            error(
+                "CATALOGUE_SOURCE_PROFILE_MISMATCH",
+                "Review the exact creature power publication and its cost source.",
+            )
+        };
+        let power = catalogue.power(id).ok_or_else(invalid)?;
+        let book = catalogue.book(&power.book_id).ok_or_else(invalid)?;
+        if !book.applies_to(&self.template_scope)
+            || power.name != self.name
+            || power.discipline != self.family
+            || power.path != self.branch
+            || power.pdf_page != self.pdf_page_1based
+            || power.printed_page.unwrap_or_default() != self.printed_page
+            || Some(power.level) != self.source_level
+            || power.packet_authority != self.packet_authority
+            || power.tier_mapping_basis != self.tier_mapping_basis
+            || book.pdf_sha256 != self.original_pdf_sha256
+        {
+            return Err(invalid());
+        }
+        Ok(Some(SourceCitation {
+            book: book.title.clone(),
+            edition: book.edition.as_str().into(),
+            system: "World of Darkness".into(),
+            printed_page: self.printed_page,
+            pdf_page_1based: self.pdf_page_1based,
+            original_pdf_sha256: book.pdf_sha256.clone(),
+        }))
+    }
+
     pub fn source_citation(&self) -> Result<SourceCitation> {
+        if let Some(citation) = self.published_source_citation()? {
+            return Ok(citation);
+        }
         if let Some(preview) = &self.legacy_preview {
             return Ok(preview.power_source.citation.clone());
         }

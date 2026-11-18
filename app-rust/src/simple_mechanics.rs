@@ -243,7 +243,7 @@ pub fn append(record: &Record, visible: &[Value], document: &mut SheetDocument) 
 mod tests {
     use super::*;
     fn dataset() -> Value {
-        let entries=power_catalogue::entries().iter().map(|p| {
+        let entries=power_catalogue::entries().iter().filter(|power| power.legacy_power.is_some()).map(|p| {
             let page=p.source.unwrap().printed_page;
             let text=serde_json::json!({"expenditure":"Synthetic activation","challenge":"Synthetic challenge","retest":"Not stated in synthetic fixture","effect":"Synthetic effect","conditions":"Synthetic condition"});
             serde_json::json!({"id":p.stable_id,"printed_pages":[page],"pdf_pages":[page+1],"en":text,"pt":text,"retest_basis":"not_stated","status":"reviewed","issues":[]})

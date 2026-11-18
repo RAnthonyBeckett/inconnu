@@ -293,6 +293,523 @@
       "pc": "CouncilVote",
       "npc": "CoordinatorNotify",
       "citation": "OWbN Character Bylaws, Mage Controlled Items: Creature Types"
+    },
+    {
+      "id": "wraith-artificers",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Artificers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-masquers",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Masquers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-pardoners",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Pardoners"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-usurers",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Usurers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-chanteurs",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Chanteurs"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-harbingers",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Harbingers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-oracles",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Oracles"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-sandmen",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Sandmen"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-haunters",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Haunters"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-monitors",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Monitors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-proctors",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Proctors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-puppeteers",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Puppeteers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-spooks",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Spooks"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-alchemists",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Alchemists"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "wraith-legion-damned",
+      "kind": "Wraith",
+      "selector": {
+        "type": "identity",
+        "field": "Legion",
+        "value": "Legion of the Damned"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "wraith-forbidden-paths",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Forbidden Paths",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "wraith-shadow-possess",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Shadow Possess",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "wraith-open-the-channel",
+      "kind": "Wraith",
+      "selector": {
+        "type": "power",
+        "value": "Open the Channel"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "risen-artificers",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Artificers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-masquers",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Masquers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-pardoners",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Pardoners"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-usurers",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Usurers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-chanteurs",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Chanteurs"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-harbingers",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Harbingers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-oracles",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Oracles"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-sandmen",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Sandmen"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-haunters",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Haunters"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-monitors",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Monitors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-proctors",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Proctors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-puppeteers",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Puppeteers"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-spooks",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Spooks"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-alchemists",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Alchemists"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-mnemoi",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Mnemoi"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-solicitors",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Solicitors"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-ferrymen",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Guild",
+        "value": "Ferrymen"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CouncilVote",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items — Guild Membership"
+    },
+    {
+      "id": "risen-legion-damned",
+      "kind": "Risen",
+      "selector": {
+        "type": "identity",
+        "field": "Legion",
+        "value": "Legion of the Damned"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "risen-forbidden-paths",
+      "kind": "Risen",
+      "selector": {
+        "type": "power",
+        "value": "Forbidden Paths",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "risen-shadow-possess",
+      "kind": "Risen",
+      "selector": {
+        "type": "power",
+        "value": "Shadow Possess",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "risen-open-the-channel",
+      "kind": "Risen",
+      "selector": {
+        "type": "power",
+        "value": "Open the Channel"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Wraith Controlled Items"
+    },
+    {
+      "id": "changeling-stigma",
+      "kind": "Changeling",
+      "selector": {
+        "type": "power",
+        "value": "Stigma"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changeling Controlled Items"
     }
   ],
   "character_reference": "https://council.owbn.net/en/charter-bylaws/character-bylaws/"

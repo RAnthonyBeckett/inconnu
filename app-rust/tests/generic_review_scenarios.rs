@@ -48,6 +48,7 @@ fn configured_fixtures() -> (PowerCatalogue, ProfileCatalogue, Vec<(String, Stri
             packet_authority: Default::default(),
             tier_mapping_basis: None,
             source_level: None,
+            published_source_id: None,
             level_kind: None,
             stable_id: id.clone(),
             template_scope: profile.kind.clone(),

@@ -35,7 +35,10 @@ fn reviewed_synthetic(tier: MetTier, template_scope: &str) -> CatalogueEntry {
 
 #[test]
 fn catalogue_wraps_all_legacy_entries_without_changing_the_enum_wire_names() {
-    let entries = power_catalogue::entries();
+    let entries: Vec<_> = power_catalogue::entries()
+        .into_iter()
+        .filter(|entry| entry.legacy_power.is_some())
+        .collect();
     assert_eq!(entries.len(), AnimalismPower::ALL.len());
 
     for (entry, power) in entries.iter().zip(AnimalismPower::ALL) {

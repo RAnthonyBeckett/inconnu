@@ -477,7 +477,28 @@ fn render_configured_form(
             ui.label(format!("{key}: {value}"));
         }
     }
-    if profile.starting_resources.contains_key("Willpower") && profile.free_trait_costs.is_some() {
+    if grapevine_workbench::vampire_creation::uses_c20_changeling_creation(profile) {
+        use grapevine_workbench::vampire_creation::SeemingBonus;
+        ui.horizontal(|ui| {
+            ui.label(tr(
+                language,
+                "Wilder starting bonus",
+                "Bônus inicial de Wilder",
+            ));
+            ui.selectable_value(
+                &mut request.wilder_bonus,
+                Some(SeemingBonus::Glamour),
+                "Glamour",
+            );
+            ui.selectable_value(
+                &mut request.wilder_bonus,
+                Some(SeemingBonus::Willpower),
+                tr(language, "Willpower", "Força de Vontade"),
+            );
+        });
+    } else if profile.starting_resources.contains_key("Willpower")
+        && profile.free_trait_costs.is_some()
+    {
         ui.horizontal(|ui| {
             ui.label(tr(
                 language,

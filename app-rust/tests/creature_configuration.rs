@@ -12,7 +12,7 @@ fn all_thirteen_profiles_are_explicit_and_unknown_defaults_never_become_approved
     for p in &profiles.profiles {
         assert!(sheet::is_character_kind(&p.kind));
         assert!(p.owns_power_list(&p.primary_power_list));
-        if p.kind != "Vampire" {
+        if !matches!(p.kind.as_str(), "Vampire" | "Changeling") {
             assert!(!p.rules_reviewed);
             assert_eq!(
                 p.trait_cost("Attribute", 0).unwrap_err().code,
@@ -28,6 +28,9 @@ fn the_same_json_schema_and_price_engine_accept_every_creature_without_new_power
     for profile in &creature_profiles::builtin().profiles {
         let mut rules = profile.clone();
         rules.rules_reviewed = true;
+        let fixture = creature_profiles::profile("Werewolf").unwrap();
+        rules.power_tier_costs = fixture.power_tier_costs.clone();
+        rules.trait_xp_costs = fixture.trait_xp_costs.clone();
         rules.cost_source = Some(pricing::SourceCitation {
             book: "Synthetic rules fixture".into(),
             edition: "Fixture".into(),
@@ -121,6 +124,7 @@ fn configured_power_purchase_and_original_cost_refund_share_one_path_for_all_thi
                 .find(|p| p["kind"] == profile.kind)
                 .unwrap();
             row["rules_reviewed"] = json!(true);
+            row["power_tier_costs"] = json!({"Basic":3,"Intermediate":6,"Advanced":9,"in_affiliation_adj":0,"out_of_affiliation_adj":1});
             row["cost_source"] = json!({"book":"Synthetic cost fixture","edition":"Fixture","system":"Tests only","printed_page":1,"pdf_page_1based":2,"original_pdf_sha256":"a".repeat(64)});
             row["secondary_power_tier_costs"] = json!({"Basic":6,"Intermediate":7,"Advanced":8,"in_affiliation_adj":0,"out_of_affiliation_adj":2});
             let rules = creature_profiles::Catalogue::from_json(&rules.to_string()).unwrap();

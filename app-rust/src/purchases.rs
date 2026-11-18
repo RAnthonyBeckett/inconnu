@@ -246,7 +246,18 @@ pub fn quote_from_catalogue(
             "The committed ledger does not have enough unspent XP.",
         ));
     }
-    let trait_added = json!({"Name":price.name,"Value":price.tier.sheet_value(),"Note":format!("Available from {}; next-session availability declared locally.",input.available_from),"AppSourcePowerId":input.power_id,"AppPurchaseId":input.id,"AppAvailableFrom":input.available_from});
+    let trait_value = if definition.template_scope == "Changeling"
+        && definition.target_list == "RealmList"
+        && definition.published_source_id.is_some()
+    {
+        definition.source_level.map_or_else(
+            || price.tier.sheet_value().into(),
+            |level| level.to_string(),
+        )
+    } else {
+        price.tier.sheet_value().into()
+    };
+    let trait_added = json!({"Name":price.name,"Value":trait_value,"Note":format!("Available from {}; next-session availability declared locally.",input.available_from),"AppSourcePowerId":input.power_id,"AppPurchaseId":input.id,"AppAvailableFrom":input.available_from});
     let q = PurchaseQuote {
         request: input.clone(),
         library_id: library_id.into(),

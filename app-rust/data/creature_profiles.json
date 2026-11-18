@@ -258,54 +258,38 @@
       "trait_xp_costs": {
         "Attribute": [
           {
-            "max_next": 32767,
+            "max_next": 15,
             "cost": 1
-          }
-        ],
-        "Background": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Willpower": [
-          {
-            "max_next": 32767,
-            "cost": 3
           }
         ],
         "Ability": [
           {
             "max_next": 5,
             "cost": 1
-          },
+          }
+        ],
+        "Background": [
+          {
+            "max_next": 5,
+            "cost": 1
+          }
+        ],
+        "Willpower": [
           {
             "max_next": 10,
-            "cost": 2
+            "cost": 3
           }
         ],
         "Glamour": [
           {
-            "max_next": 32767,
+            "max_next": 10,
             "cost": 3
           }
         ],
         "Banality": [
           {
-            "max_next": 32767,
-            "cost": 3
+            "max_next": 10,
+            "cost": 1
           }
         ]
       },
@@ -314,10 +298,40 @@
         "Intermediate": 6,
         "Advanced": 9,
         "in_affiliation_adj": 0,
-        "out_of_affiliation_adj": 1
+        "out_of_affiliation_adj": 0
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "OWbN C20 starting pools, Seeming and XP (printed pp. 2–3); optional basic Art and Realm Free Trait exchange adopts The Shining Host finishing touches (PDF p. 101). Review eligibility before applying.",
+      "secondary_power_base": 5,
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 2,
+        "specialization": 0,
+        "permanent_resource": 0
+      },
+      "starting_resources": {
+        "Willpower": 4,
+        "Glamour": 4,
+        "Banality": 3
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 2,
+        "Advanced": 2,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "OWbN Changeling 20th Anniversary MET Translations",
+        "edition": "OWbN_C20_2018",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 3,
+        "pdf_page_1based": 5,
+        "original_pdf_sha256": "0a2bab2623318918192445d6da1c09ae61571c999c79b3cffe29056859f79cd7"
+      }
     },
     {
       "kind": "Wraith",

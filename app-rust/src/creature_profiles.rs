@@ -41,6 +41,8 @@ pub struct Profile {
     pub max_negative_credit: i64,
     pub max_flaw_credit: i64,
     pub basic_power_base: i64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub secondary_power_base: Option<i64>,
     pub trait_xp_costs: BTreeMap<String, Vec<CostBand>>,
     pub power_tier_costs: BTreeMap<String, i64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -151,6 +153,7 @@ impl Catalogue {
                         &p.max_negative_credit,
                         &p.max_flaw_credit,
                         &p.basic_power_base,
+                        p.secondary_power_base.as_ref().unwrap_or(&0),
                     ])
                     .any(|n| !(0..=4096).contains(n))
                 || p.rules_note.len() > 16000
