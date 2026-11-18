@@ -24,6 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         kind: Kind::Item,
                         label_at_binding: title.clone(),
                         quantity: 2,
+                        share_challenge_bonus: false,
                         note: "PRIVATE_ASSOCIATION_NOTE".into(),
                     },
                     current: Some(Edit {

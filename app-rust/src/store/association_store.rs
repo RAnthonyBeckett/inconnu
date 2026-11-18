@@ -33,6 +33,52 @@ fn read_in_transaction(tx: &rusqlite::Transaction<'_>, id: &str) -> Result<Optio
 }
 
 impl Library {
+    pub(super) fn challenge_items(
+        &self,
+        character: &Record,
+        private: bool,
+        markers: &[(String, String)],
+    ) -> Result<Vec<crate::challenge_math::LinkedItem>> {
+        let links = saved_links(character)?;
+        associations::validate(&links)?;
+        let mut items = Vec::new();
+        for link in links {
+            if link.kind != associations::Kind::Item || (!private && !link.share_challenge_bonus) {
+                continue;
+            }
+            let target = match self.stored_record(&link.target_id) {
+                Ok(target) if target.kind == "Item" && target.build.is_none() => target,
+                Ok(_) => continue,
+                Err(error) if error.code == "NOT_FOUND" => continue,
+                Err(error) => return Err(error),
+            };
+            let (name, bonus) = if private {
+                let edit = super::world_store::world_projection(&target);
+                (edit.name, edit.fields.get("Bonus").and_then(Value::as_i64))
+            } else {
+                let name = importer::redact_projection(
+                    target
+                        .public_fields
+                        .get("Name")
+                        .cloned()
+                        .unwrap_or_default(),
+                    target.st_markers.as_slice(),
+                )?;
+                let name = importer::redact_projection(name, markers)?;
+                let bonus = target
+                    .private_fields
+                    .get("Bonus")
+                    .or_else(|| target.public_fields.get("Bonus"))
+                    .and_then(Value::as_i64);
+                (name.as_str().unwrap_or_default().to_owned(), bonus)
+            };
+            if !name.trim().is_empty() {
+                items.push(crate::challenge_math::LinkedItem { name, bonus });
+            }
+        }
+        Ok(items)
+    }
+
     pub fn association_snapshot(&self, character_id: &str, role: Role) -> Result<Snapshot> {
         require_st(role)?;
         let revision = self.revision()?;

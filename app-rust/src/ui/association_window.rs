@@ -30,6 +30,7 @@ impl AssociationWindow {
                 kind: Kind::Item,
                 label_at_binding: target.name,
                 quantity: 2,
+                share_challenge_bonus: false,
                 note: "SYNTHETIC_ASSOCIATION_NOTE".into(),
             }],
             document_language: Some(Language::Portuguese),
@@ -217,6 +218,7 @@ impl InconnuApp {
                             if link.kind==Kind::Item {
                                 ui.label(t(l,"Quantity","Quantidade"));
                                 ui.add_enabled(!missing,egui::DragValue::new(&mut link.quantity).range(1..=999));
+                                ui.add_enabled(!missing, egui::Checkbox::new(&mut link.share_challenge_bonus, t(l, "Share item name and challenge bonus", "Compartilhar nome e bônus de desafio do item")));
                             }
                             if ui.button(t(l,"Remove link","Remover vínculo")).clicked(){remove=Some(i);}
                         });
@@ -364,6 +366,7 @@ fn add_target(
                     kind: selected,
                     label_at_binding: row.name.clone(),
                     quantity: 1,
+                    share_challenge_bonus: false,
                     note: String::new(),
                 });
                 *target = None;

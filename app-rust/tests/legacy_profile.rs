@@ -33,6 +33,7 @@ fn current_profile(title: &str, token: &str, details: bool, contacts: bool) -> P
         publish_contacts: contacts,
         owbn_bylaws_enabled: false,
         allow_non_binding_sources: false,
+        house_rules_pack: None,
     }
 }
 

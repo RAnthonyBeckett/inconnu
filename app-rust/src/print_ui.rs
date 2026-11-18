@@ -17,6 +17,7 @@ pub struct Form {
 pub enum Action {
     Preview,
     Export,
+    ExportMobile,
     PreviewGex,
     ExportGex,
 }
@@ -98,6 +99,14 @@ pub fn render(
             "Incluir lembretes dos Estatutos de Mecânica da OWbN",
         ),
     );
+    ui.checkbox(
+        &mut form.options.include_challenge_math,
+        t(
+            pt,
+            "Include challenge pool calculations",
+            "Incluir cálculos das paradas de desafio",
+        ),
+    );
     let mechanics_toggle = ui.checkbox(
         &mut form.options.include_simple_mechanics,
         t(
@@ -153,6 +162,16 @@ pub fn render(
         .clicked()
     {
         action = Some(Action::Export);
+    }
+    if ui
+        .button(t(
+            pt,
+            "Export mobile sheet (.json)…",
+            "Exportar ficha móvel (.json)…",
+        ))
+        .clicked()
+    {
+        action = Some(Action::ExportMobile);
     }
     if let Some(message) = &form.message {
         ui.label(message);

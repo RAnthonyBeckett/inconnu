@@ -154,7 +154,7 @@ impl CatalogueEntry {
 }
 
 /// Portable JSON definition; no creature-specific Rust power variants are needed.
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Definition {
     #[serde(default, skip_serializing_if = "PacketAuthority::is_unknown")]

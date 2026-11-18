@@ -45,6 +45,8 @@ pub struct Link {
     pub kind: Kind,
     pub label_at_binding: String,
     pub quantity: u16,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub share_challenge_bonus: bool,
     pub note: String,
 }
 
@@ -99,7 +101,7 @@ pub(crate) fn validate(links: &[Link]) -> Result<()> {
         }
         let quantity_valid = match link.kind {
             Kind::Item => (1..=999).contains(&link.quantity),
-            Kind::Rote | Kind::Location => link.quantity == 1,
+            Kind::Rote | Kind::Location => link.quantity == 1 && !link.share_challenge_bonus,
         };
         if !quantity_valid {
             return Err(error(
@@ -886,6 +888,7 @@ mod tests {
             kind: Kind::Item,
             label_at_binding: "Knife".into(),
             quantity: 1,
+            share_challenge_bonus: false,
             note: String::new(),
         };
         assert!(validate(std::slice::from_ref(&base)).is_ok());
@@ -922,6 +925,7 @@ mod tests {
                         kind: Kind::Item,
                         label_at_binding: "Old Crown".into(),
                         quantity: 2,
+                        share_challenge_bonus: false,
                         note: "LINK_NOTE_SECRET".into(),
                     },
                     current: Some(item),
@@ -932,6 +936,7 @@ mod tests {
                         kind: Kind::Rote,
                         label_at_binding: "Lost Rote <Name>".into(),
                         quantity: 1,
+                        share_challenge_bonus: false,
                         note: "UNRESOLVED_NOTE_SECRET".into(),
                     },
                     current: None,

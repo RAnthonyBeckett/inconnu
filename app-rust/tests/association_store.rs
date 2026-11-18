@@ -16,6 +16,7 @@ fn link(id: &str, kind: Kind, quantity: u16) -> Link {
         kind,
         label_at_binding: "Untrusted input label".into(),
         quantity,
+        share_challenge_bonus: false,
         note: "PRIVATE_ASSOCIATION_NOTE".into(),
     }
 }

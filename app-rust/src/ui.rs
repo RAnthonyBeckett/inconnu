@@ -2238,6 +2238,44 @@ impl InconnuApp {
                     self.print_form.message=Some(match result {Ok(())=>self.t("Printable HTML saved; open it in your browser to print or save as PDF.","HTML salvo; abra no navegador para imprimir ou salvar em PDF.").into(),Err(e)=>e.message});
                 }
             }
+            Some(crate::print_ui::Action::ExportMobile) => {
+                use grapevine_workbench::mobile_bundle::EXTENSION;
+                if let Some(mut path) = FileDialog::new()
+                    .set_file_name(format!("Character{EXTENSION}"))
+                    .add_filter("JSON", &["json"])
+                    .save_file()
+                {
+                    if let Some(name) = path.file_name().filter(|name| {
+                        !name
+                            .to_string_lossy()
+                            .to_ascii_lowercase()
+                            .ends_with(EXTENSION)
+                    }) {
+                        let stem = name.to_string_lossy();
+                        let stem = if stem.to_ascii_lowercase().ends_with(".json") {
+                            &stem[..stem.len() - 5]
+                        } else {
+                            &stem
+                        };
+                        path.set_file_name(format!("{stem}{EXTENSION}"));
+                    }
+                    let result = lib.write_mobile_sheet(
+                        id,
+                        self.print_form.options.language,
+                        revision,
+                        &path,
+                    );
+                    self.print_form.message = Some(match result {
+                        Ok(()) => self
+                            .t(
+                                "Player-safe mobile sheet saved.",
+                                "Ficha móvel do jogador salva.",
+                            )
+                            .into(),
+                        Err(error) => error.message,
+                    });
+                }
+            }
             Some(crate::print_ui::Action::PreviewGex) => {
                 self.print_form.gex_preview = None;
                 match lib.gex_preview(

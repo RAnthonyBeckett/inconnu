@@ -24,6 +24,8 @@ pub struct Profile {
     pub owbn_bylaws_enabled: bool,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub allow_non_binding_sources: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub house_rules_pack: Option<crate::house_rules::HouseRulesPack>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -47,6 +49,8 @@ pub struct PublicProfile {
     pub owbn_bylaws_enabled: bool,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub allow_non_binding_sources: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub house_rules_pack: Option<crate::house_rules::Summary>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

@@ -352,6 +352,10 @@ impl InconnuApp {
                                 ),
                             );
                         });
+                        if let Some(message) = house_rules_controls(ui, l, &mut p.house_rules_pack)
+                        {
+                            self.chronicle.message = Some(message);
+                        }
                         ui.checkbox(
                             &mut p.publish_details,
                             t(
@@ -492,6 +496,105 @@ impl InconnuApp {
             self.open_legacy_calendar();
         }
     }
+}
+
+fn house_rules_controls(
+    ui: &mut egui::Ui,
+    l: Language,
+    pack: &mut Option<grapevine_workbench::house_rules::HouseRulesPack>,
+) -> Option<String> {
+    use grapevine_workbench::house_rules::HouseRulesPack;
+    let mut outcome = None;
+    ui.collapsing(t(l, "House rules pack", "Pacote de regras da casa"), |ui| {
+        ui.horizontal_wrapped(|ui| {
+            if ui.button(t(l, "Load JSON…", "Carregar JSON…")).clicked()
+                && let Some(path) = FileDialog::new().add_filter("JSON", &["json"]).pick_file()
+            {
+                match HouseRulesPack::load(&path) {
+                    Ok(loaded) => {
+                        *pack = Some(loaded);
+                        outcome = Some(
+                            t(
+                                l,
+                                "Pack loaded into the Chronicle draft.",
+                                "Pacote carregado no rascunho da crônica.",
+                            )
+                            .into(),
+                        );
+                    }
+                    Err(error) => outcome = Some(error.message),
+                }
+            }
+            if pack.is_none() && ui.button(t(l, "Create pack", "Criar pacote")).clicked() {
+                *pack = Some(HouseRulesPack::default());
+            }
+            if let Some(active) = pack.as_ref() {
+                if ui.button(t(l, "Save JSON…", "Salvar JSON…")).clicked()
+                    && let Some(path) = FileDialog::new()
+                        .add_filter("JSON", &["json"])
+                        .set_file_name("house-rules.json")
+                        .save_file()
+                {
+                    outcome = Some(match active.save_new(&path) {
+                        Ok(()) => t(l, "Pack exported.", "Pacote exportado.").into(),
+                        Err(error) => error.message,
+                    });
+                }
+                if ui.button(t(l, "Clear pack", "Limpar pacote")).clicked() {
+                    *pack = None;
+                }
+            }
+        });
+        if let Some(active) = pack {
+            ui.label(t(l, "Pack name", "Nome do pacote"));
+            ui.text_edit_singleline(&mut active.name);
+            ui.label(t(l, "Pack version", "Versão do pacote"));
+            ui.text_edit_singleline(&mut active.version);
+            let formula = &mut active.challenge_formula;
+            ui.checkbox(
+                &mut formula.include_ability_in_trait_call,
+                t(
+                    l,
+                    "Count Ability Traits in calls",
+                    "Contar características de Habilidade nas comparações",
+                ),
+            );
+            ui.checkbox(
+                &mut formula.include_linked_item_bonuses,
+                t(
+                    l,
+                    "Apply linked item bonuses",
+                    "Aplicar bônus dos itens vinculados",
+                ),
+            );
+            ui.checkbox(
+                &mut formula.include_merit_flaw_modifiers,
+                t(
+                    l,
+                    "Apply Merit and Flaw modifiers",
+                    "Aplicar modificadores de Qualidades e Defeitos",
+                ),
+            );
+            let mut capped = formula.max_trait_bid_cap.is_some();
+            if ui
+                .checkbox(
+                    &mut capped,
+                    t(
+                        l,
+                        "Set a local Trait bid cap",
+                        "Definir um limite local de características",
+                    ),
+                )
+                .changed()
+            {
+                formula.max_trait_bid_cap = capped.then_some(30);
+            }
+            if let Some(cap) = &mut formula.max_trait_bid_cap {
+                ui.add(egui::DragValue::new(cap).range(1..=4096));
+            }
+        }
+    });
+    outcome
 }
 
 #[cfg(test)]

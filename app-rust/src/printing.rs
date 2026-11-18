@@ -43,6 +43,8 @@ pub struct Options {
     pub include_simple_mechanics: bool,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub include_owbn_mechanics: bool,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub include_challenge_math: bool,
 }
 
 impl Default for Options {
@@ -56,6 +58,7 @@ impl Default for Options {
             include_references: true,
             include_simple_mechanics: false,
             include_owbn_mechanics: false,
+            include_challenge_math: false,
         }
     }
 }
@@ -72,6 +75,8 @@ pub struct SheetDocument {
     pub references: Vec<Reference>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub published_references: Vec<PublishedReference>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub challenge_pools: Vec<crate::challenge_math::Breakdown>,
     pub warnings: Vec<String>,
     pub options: Options,
 }
@@ -476,6 +481,7 @@ pub fn document_from_catalogue(
     }
 
     Ok(SheetDocument {
+        challenge_pools: Vec::new(),
         published_references: Vec::new(),
         title: top_text(&view.name, effective_options.scope),
         kind: top_text(&view.kind, effective_options.scope),

@@ -797,6 +797,27 @@ fn sheet_public_key(name: &str) -> bool {
         || crate::sheet::IDENTITY_FIELDS.contains(&name)
 }
 
+/// Apply the standard and record-specific redactions together until stable.
+pub(crate) fn redact_projection(
+    mut value: Value,
+    markers: &[(String, String)],
+) -> crate::model::Result<Value> {
+    for _ in 0..16 {
+        let mut next = redact(&value);
+        for (start, end) in markers {
+            next = redact_custom(&next, start, end);
+        }
+        if next == value {
+            return Ok(next);
+        }
+        value = next;
+    }
+    Err(crate::model::error(
+        "REDACTION_LIMIT",
+        "Private markers could not be resolved safely.",
+    ))
+}
+
 /// Conservative redaction: a malformed ST block hides the rest of that string.
 pub fn redact(value: &Value) -> Value {
     match value {

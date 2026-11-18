@@ -34,6 +34,7 @@ fn chronicle_profile(title: &str) -> ChronicleProfile {
         publish_contacts: false,
         owbn_bylaws_enabled: false,
         allow_non_binding_sources: false,
+        house_rules_pack: None,
     }
 }
 

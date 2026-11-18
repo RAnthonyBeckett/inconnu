@@ -1373,6 +1373,26 @@ impl Library {
         expected: i64,
         role: Role,
     ) -> Result<crate::printing::SheetDocument> {
+        let markers = if options.scope == crate::printing::PrintScope::Public
+            && options.include_challenge_math
+        {
+            self.projection_markers()?
+        } else {
+            Vec::new()
+        };
+        Ok(self
+            .print_projection(id, options, expected, role, &markers)?
+            .document)
+    }
+
+    fn print_projection(
+        &self,
+        id: &str,
+        options: &crate::printing::Options,
+        expected: i64,
+        role: Role,
+        additional_markers: &[(String, String)],
+    ) -> Result<PrintProjection> {
         use crate::printing::PrintScope;
         if options.scope == PrintScope::PrivateStoryteller {
             require_st(role)?;
@@ -1398,15 +1418,20 @@ impl Library {
             require_st(role)?;
         }
         let private = options.scope == PrintScope::PrivateStoryteller;
+        let mut markers = additional_markers.to_vec();
+        if let Some(pair) = &record.st_markers
+            && !markers.contains(pair)
+        {
+            markers.push(pair.clone());
+        }
         let mut fields = record.public_fields.clone();
         if private {
             fields.extend(record.private_fields.clone());
         } else {
-            let mut safe = importer::redact(&Value::Object(fields));
-            if let Some((start, end)) = &record.st_markers {
-                safe = importer::redact_custom(&safe, start, end);
-            }
-            fields = safe.as_object().cloned().unwrap_or_default();
+            fields = importer::redact_projection(Value::Object(fields), &markers)?
+                .as_object()
+                .cloned()
+                .unwrap_or_default();
         }
         let player_name = if let Some(data) = player_data {
             let player: Record = serde_json::from_str(&data)?;
@@ -1421,10 +1446,9 @@ impl Library {
             if private {
                 name
             } else {
-                let mut safe = importer::redact(&Value::String(name));
-                if let Some((start, end)) = &player.st_markers {
-                    safe = importer::redact_custom(&safe, start, end);
-                }
+                let safe =
+                    importer::redact_projection(Value::String(name), player.st_markers.as_slice())?;
+                let safe = importer::redact_projection(safe, &markers)?;
                 safe.as_str().unwrap_or_default().to_owned()
             }
         } else {
@@ -1584,6 +1608,7 @@ impl Library {
             .fields
             .get("DisciplineList")
             .and_then(|list| list["Traits"].as_array());
+        let mechanics_start = document.sections.len();
         if options.include_simple_mechanics {
             crate::simple_mechanics::append(
                 &mapping_record,
@@ -1591,19 +1616,54 @@ impl Library {
                 &mut document,
             )?;
         }
-        if options.include_owbn_mechanics {
+        let mechanics_end = document.sections.len();
+        if options.include_owbn_mechanics || options.include_challenge_math {
             let (profile, _) = chronicle_store::read_profile(&self.conn)?;
+            if options.include_challenge_math {
+                let pack = profile.house_rules_pack.as_ref();
+                let public_pack = if private {
+                    None
+                } else {
+                    pack.map(|pack| pack.for_public_math(&markers))
+                        .transpose()?
+                };
+                let pack = if private { pack } else { public_pack.as_ref() };
+                let items = if pack
+                    .is_some_and(|pack| pack.challenge_formula.include_linked_item_bonuses)
+                {
+                    self.challenge_items(&record, private, &markers)?
+                } else {
+                    Vec::new()
+                };
+                document.challenge_pools = crate::challenge_math::sheet_pools(
+                    &view,
+                    &items,
+                    pack,
+                    profile.owbn_bylaws_enabled,
+                )?;
+                document.sections.push(crate::challenge_math::section(
+                    &document.challenge_pools,
+                    options.language,
+                ));
+            }
             if self.revision()? != revision {
                 return Err(error(
                     "STALE_REVISION",
                     "Reload before previewing OWbN reminders.",
                 ));
             }
-            if profile.owbn_bylaws_enabled && record.kind == "Vampire" {
+            if options.include_owbn_mechanics
+                && profile.owbn_bylaws_enabled
+                && record.kind == "Vampire"
+            {
                 crate::owbn_bylaws::append_mechanics_reminders(&mut document);
             }
         }
-        Ok(document)
+        Ok(PrintProjection {
+            view,
+            document,
+            mechanics_range: mechanics_start..mechanics_end,
+        })
     }
 
     pub fn playtime_awards(
@@ -2415,7 +2475,14 @@ pub use schedules_store::ScheduledSession;
 
 mod world_store;
 
+struct PrintProjection {
+    view: RecordView,
+    document: crate::printing::SheetDocument,
+    mechanics_range: std::ops::Range<usize>,
+}
+
 mod association_store;
+mod mobile_bundle_store;
 mod operations_store;
 mod plot_store;
 mod story_store;

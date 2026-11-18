@@ -56,6 +56,9 @@ pub(super) fn validate_profile(profile: &Profile) -> Result<()> {
     {
         return Err(profile_error());
     }
+    if let Some(pack) = &profile.house_rules_pack {
+        pack.validate()?;
+    }
     Ok(())
 }
 
@@ -155,6 +158,11 @@ pub(super) fn merged_data(profile: &Profile, raw: Option<Value>) -> Result<Strin
         "allow_non_binding_sources".into(),
         Value::Bool(profile.allow_non_binding_sources),
     );
+    if let Some(pack) = &profile.house_rules_pack {
+        object.insert("house_rules_pack".into(), serde_json::to_value(pack)?);
+    } else {
+        object.remove("house_rules_pack");
+    }
     Ok(serde_json::to_string(&raw)?)
 }
 
@@ -234,10 +242,18 @@ fn sources(conn: &Connection, include_names: bool) -> Result<Vec<Source>> {
     Ok(sources)
 }
 
-fn public_profile(profile: &Profile) -> PublicProfile {
-    PublicProfile {
+fn public_profile(profile: &Profile, markers: &[(String, String)]) -> Result<PublicProfile> {
+    let mut house_rules_pack = profile.house_rules_pack.as_ref().map(|pack| pack.summary());
+    if let Some(summary) = &mut house_rules_pack {
+        for field in [&mut summary.name, &mut summary.version] {
+            let safe = importer::redact_projection(json!(&*field), markers)?;
+            *field = safe.as_str().unwrap_or_default().to_owned();
+        }
+    }
+    Ok(PublicProfile {
         owbn_bylaws_enabled: profile.owbn_bylaws_enabled,
         allow_non_binding_sources: profile.allow_non_binding_sources,
+        house_rules_pack,
         title: profile.title.clone(),
         website: if profile.publish_details {
             profile.website.clone()
@@ -274,7 +290,7 @@ fn public_profile(profile: &Profile) -> PublicProfile {
         } else {
             String::new()
         },
-    }
+    })
 }
 
 impl Library {
@@ -297,11 +313,14 @@ impl Library {
         if read_revision(&tx)? != revision {
             return Err(stale_read());
         }
+        let markers = if profile.house_rules_pack.is_some() {
+            self.projection_markers()?
+        } else {
+            Vec::new()
+        };
+        let profile = public_profile(&profile, &markers)?;
         tx.commit()?;
-        Ok(PublicSnapshot {
-            revision,
-            profile: public_profile(&profile),
-        })
+        Ok(PublicSnapshot { revision, profile })
     }
 
     pub fn save_chronicle_profile(

@@ -73,8 +73,11 @@ pub mod vampire_status;
 pub mod action_links;
 pub mod action_timeline_report;
 
+pub mod challenge_math;
 pub mod chronicle;
 pub mod chronicle_handover;
+pub mod house_rules;
+pub mod mobile_bundle;
 pub mod owbn_bylaws;
 
 pub mod advancement_draft;

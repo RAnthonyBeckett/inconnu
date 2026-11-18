@@ -58,6 +58,7 @@ fn fixture() -> Fixture {
         publish_contacts: false,
         owbn_bylaws_enabled: false,
         allow_non_binding_sources: false,
+        house_rules_pack: None,
     };
     library.save_chronicle_profile(&profile, 0, ST).unwrap();
     let character_id = library
