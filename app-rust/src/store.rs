@@ -2440,5 +2440,6 @@ mod mixed_advancement_draft_store;
 
 mod legacy_profile_store;
 
+mod gex_store;
 mod legacy_calendar_store;
 mod playtime_review_store;

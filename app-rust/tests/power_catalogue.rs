@@ -7,6 +7,8 @@ use grapevine_workbench::{
 fn reviewed_synthetic(tier: MetTier, template_scope: &str) -> CatalogueEntry {
     CatalogueEntry {
         stable_id: format!("synthetic.{template_scope}.{tier:?}"),
+        target_list: None,
+        fixed_xp_cost: None,
         name: "Synthetic fixture".into(),
         family: "Mixed family fixture".into(),
         tier,

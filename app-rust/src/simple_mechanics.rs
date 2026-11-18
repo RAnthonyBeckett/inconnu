@@ -49,10 +49,16 @@ impl Catalogue {
         let data: Self = serde_json::from_str(text)?;
         let expected: HashSet<String> = power_catalogue::entries()
             .into_iter()
+            .filter(|e| {
+                e.template_scope == "Vampire"
+                    && e.profile == Some(crate::pricing::PricingProfile::MetLawsOfTheNightRevised)
+                    && e.legacy_power.is_some()
+            })
             .map(|e| e.stable_id)
             .collect();
         let mut seen = HashSet::new();
-        if data.profile != "MetLawsOfTheNightRevised"
+        if expected.len() != 40
+            || data.profile != "MetLawsOfTheNightRevised"
             || data.source_sha256 != SOURCE_SHA
             || data.translation_review != "equivalence_checked"
             || data.entries.len() != expected.len()

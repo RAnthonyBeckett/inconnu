@@ -72,27 +72,78 @@ pub fn normalize(bytes: &[u8], name: &str, encoding: &str) -> Result<Preview> {
             ));
         }
         for (i, item) in items.iter().enumerate() {
-            let (kind, fields) = if let Some(fields) = item.get("fields").and_then(Value::as_object)
-            {
-                (
-                    fields
-                        .get("CharacterType")
-                        .and_then(Value::as_str)
-                        .unwrap_or_else(|| item["type"].as_str().unwrap_or("Unknown"))
-                        .to_string(),
-                    fields.clone(),
-                )
-            } else {
-                let tag = item["type"].as_str().unwrap_or("unknown");
-                let kind = canonical_kind(tag).to_string();
-                let xml = &item["xml"];
-                let mut fields = xml_fields(xml);
-                if matches!(kind.as_str(), "Item" | "Location" | "Rote") {
-                    fields.extend(normalized_world_xml_fields(&kind, xml));
-                    remove_mapped_world_lists(&mut fields, &kind);
+            let (kind, mut fields) =
+                if let Some(fields) = item.get("fields").and_then(Value::as_object) {
+                    (
+                        fields
+                            .get("CharacterType")
+                            .and_then(Value::as_str)
+                            .unwrap_or_else(|| item["type"].as_str().unwrap_or("Unknown"))
+                            .to_string(),
+                        fields.clone(),
+                    )
+                } else {
+                    let tag = item["type"].as_str().unwrap_or("unknown");
+                    let xml = &item["xml"];
+                    let risen = tag == "wraith"
+                        && xml["attributes"].as_array().is_some_and(|attrs| {
+                            attrs.iter().any(|a| {
+                                a["name"] == "ethnos"
+                                    && a["value"]
+                                        .as_str()
+                                        .is_some_and(|s| s.eq_ignore_ascii_case("Risen"))
+                            })
+                        });
+                    let kind = if risen { "Risen" } else { canonical_kind(tag) }.to_string();
+                    let mut fields = xml_fields(xml);
+                    if matches!(kind.as_str(), "Item" | "Location" | "Rote") {
+                        fields.extend(normalized_world_xml_fields(&kind, xml));
+                        remove_mapped_world_lists(&mut fields, &kind);
+                    }
+                    (kind, fields)
+                };
+            let explicitly_public: Vec<String> = match fields.remove("inconnupublic") {
+                Some(Value::String(text)) => serde_json::from_str(&text).map_err(|_| {
+                    error(
+                        "XML_VISIBILITY_INVALID",
+                        "Malformed legacy public-field declaration.",
+                    )
+                })?,
+                Some(_) => {
+                    return Err(error(
+                        "XML_VISIBILITY_INVALID",
+                        "Malformed legacy public-field declaration.",
+                    ));
                 }
-                (kind, fields)
+                None => Vec::new(),
             };
+            let hidden: Vec<String> = match fields.remove("inconnuprivate") {
+                Some(Value::String(text)) => serde_json::from_str(&text).map_err(|_| {
+                    error(
+                        "XML_VISIBILITY_INVALID",
+                        "Malformed legacy private-field declaration.",
+                    )
+                })?,
+                Some(_) => {
+                    return Err(error(
+                        "XML_VISIBILITY_INVALID",
+                        "Malformed legacy private-field declaration.",
+                    ));
+                }
+                None => Vec::new(),
+            };
+            if hidden.len() > 1024
+                || explicitly_public.len() > 1024
+                || hidden
+                    .iter()
+                    .chain(&explicitly_public)
+                    .any(|s| s.len() > 128)
+            {
+                return Err(error(
+                    "XML_VISIBILITY_LIMIT",
+                    "Too many legacy private-field declarations.",
+                ));
+            }
             let text = |key: &str| {
                 fields
                     .get(key)
@@ -114,7 +165,8 @@ pub fn normalize(bytes: &[u8], name: &str, encoding: &str) -> Result<Preview> {
             let mut public = Map::new();
             let mut private = Map::new();
             for (key, value) in fields {
-                if public_field(&key) {
+                let safe_public = sheet_public_key(&key) && explicitly_public.contains(&key);
+                if (public_field(&key) || safe_public) && !hidden.contains(&key) {
                     let safe = redact_custom(&redact(&value), &start_marker, &end_marker);
                     if safe != value {
                         private.insert(key.clone(), value);
@@ -308,7 +360,7 @@ pub(crate) fn xml_list_key(name: &str) -> Option<&'static str> {
         "Spheres" => "SphereList",
         "Edges" => "EdgeList",
         "Hekau" => "HekauList",
-        _ => return None,
+        _ => return crate::gex_export::list_key(name),
     })
 }
 
@@ -316,6 +368,10 @@ pub(crate) fn xml_list_key(name: &str) -> Option<&'static str> {
 /// backfills of records imported by earlier builds.
 pub(crate) fn xml_fields(node: &Value) -> Map<String, Value> {
     let mut out = Map::new();
+    let explicit_lists = node["attributes"].as_array().is_some_and(|a| {
+        a.iter()
+            .any(|a| a["name"] == "inconnupublic" || a["name"] == "inconnuprivate")
+    });
     if let Some(attrs) = node["attributes"].as_array() {
         for a in attrs {
             if let Some(key) = a["name"].as_str() {
@@ -331,22 +387,44 @@ pub(crate) fn xml_fields(node: &Value) -> Map<String, Value> {
             if tag == "traitlist" {
                 let attrs = xml_attributes(child);
                 let list_name = attrs.get("name").and_then(Value::as_str).unwrap_or("");
-                let key = match list_name {
-                    "Physical" => "PhysicalList",
-                    "Social" => "SocialList",
-                    "Mental" => "MentalList",
-                    "Disciplines" => "DisciplineList",
-                    "Arcanoi" => "ArcanoiList",
-                    "Gifts" => "GiftList",
-                    "Arts" => "ArtList",
-                    "Realms" => "RealmList",
-                    "Spheres" => "SphereList",
-                    "Edges" => "EdgeList",
-                    "Hekau" => "HekauList",
-                    _ => "UnmappedTraitLists",
+                let key = if explicit_lists {
+                    xml_list_key(list_name).unwrap_or("UnmappedTraitLists")
+                } else {
+                    match list_name {
+                        "Physical" => "PhysicalList",
+                        "Social" => "SocialList",
+                        "Mental" => "MentalList",
+                        "Disciplines" => "DisciplineList",
+                        "Arcanoi" => "ArcanoiList",
+                        "Gifts" => "GiftList",
+                        "Arts" => "ArtList",
+                        "Realms" => "RealmList",
+                        "Spheres" => "SphereList",
+                        "Edges" => "EdgeList",
+                        "Hekau" => "HekauList",
+                        _ => "UnmappedTraitLists",
+                    }
                 };
-                let traits=child["children"].as_array().into_iter().flatten().filter(|n|n["tag"]=="trait").map(|n|{let a=xml_attributes(n);json!({"Name":a.get("name").cloned().unwrap_or(json!("")),"Value":a.get("val").cloned().unwrap_or(json!("")),"Note":a.get("note").cloned().unwrap_or(json!(""))})}).collect::<Vec<_>>();
-                let value = json!({"Name":list_name,"Traits":traits});
+                let traits=child["children"].as_array().into_iter().flatten().filter(|n|n["tag"]=="trait").map(|n|{let a=xml_attributes(n);json!({"Name":a.get("name").cloned().unwrap_or(json!("")),"Value":a.get("val").cloned().unwrap_or(json!("1")),"Note":a.get("note").cloned().unwrap_or(json!(""))})}).collect::<Vec<_>>();
+                let mut value = json!({"Name":list_name,"Traits":traits});
+                for (xml_key, field) in [
+                    ("abc", "Alphabetized"),
+                    ("alphabetized", "Alphabetized"),
+                    ("atomic", "Atomic"),
+                    ("negative", "Negative"),
+                ] {
+                    if let Some(flag) = attrs.get(xml_key).and_then(Value::as_str) {
+                        value[field] =
+                            json!(flag.eq_ignore_ascii_case("true") || flag == "1" || flag == "-1");
+                    }
+                }
+                if let Some(display) = attrs
+                    .get("display")
+                    .and_then(Value::as_str)
+                    .and_then(|s| s.parse::<i64>().ok())
+                {
+                    value["Display"] = json!(display);
+                }
                 if let Some(previous) = out.get_mut(key) {
                     if let Some(array) = previous.as_array_mut() {
                         array.push(value);
@@ -360,6 +438,8 @@ pub(crate) fn xml_fields(node: &Value) -> Map<String, Value> {
             }
             let mut value = child.clone();
             if let Some(parts) = child["children"].as_array()
+                && child["attributes"].as_array().is_none_or(Vec::is_empty)
+                && !crate::gex_export::xml_container(tag)
                 && parts.iter().all(|p| p.get("text").is_some())
             {
                 value = json!(
@@ -710,6 +790,11 @@ fn public_field(name: &str) -> bool {
             | "HekauList"
             | "PowerList"
     )
+}
+fn sheet_public_key(name: &str) -> bool {
+    crate::sheet::LIST_FIELDS.contains(&name)
+        || crate::sheet::RESOURCE_FIELDS.contains(&name)
+        || crate::sheet::IDENTITY_FIELDS.contains(&name)
 }
 
 /// Conservative redaction: a malformed ST block hides the rest of that string.

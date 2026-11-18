@@ -107,6 +107,22 @@ pub enum Coverage {
 pub enum Kind {
     Discipline,
     Path,
+    Gift,
+    Rite,
+    Arcanos,
+    Thorn,
+    Art,
+    Realm,
+    Sphere,
+    Rote,
+    Edge,
+    Lore,
+    Hekau,
+    Spell,
+    Ritual,
+    Numina,
+    Combination,
+    Power,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -180,14 +196,14 @@ fn sha_ok(value: &str) -> bool {
 
 impl Catalogue {
     pub fn from_json(source: &str) -> Result<Self> {
-        if source.len() > 8 * 1024 * 1024 {
+        if source.len() > 128 * 1024 * 1024 {
             return Err(invalid());
         }
         let catalogue: Self = serde_json::from_str(source).map_err(|_| invalid())?;
         if catalogue.version != 1
             || catalogue.books.is_empty()
             || catalogue.books.len() > 128
-            || catalogue.entries.len() > 10000
+            || catalogue.entries.len() > 100_000
         {
             return Err(invalid());
         }

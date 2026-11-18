@@ -55,6 +55,17 @@ impl Library {
         quote: &creation::Quote,
         role: Role,
     ) -> Result<creation::Receipt> {
+        self.commit_creation_with(quote, role, |library| {
+            library.quote_vampire_creation(&quote.record_id, &quote.request, quote.revision, role)
+        })
+    }
+
+    fn commit_creation_with(
+        &mut self,
+        quote: &creation::Quote,
+        role: Role,
+        requote: impl FnOnce(&Self) -> Result<creation::Quote>,
+    ) -> Result<creation::Receipt> {
         require_st(role)?;
         // Permit exact retries without reapplying initial Traits or changing the ledger.
         let current = self.stored_record(&quote.record_id)?;
@@ -71,8 +82,7 @@ impl Library {
                 "This review identity already belongs to another creation review.",
             ));
         }
-        let fresh =
-            self.quote_vampire_creation(&quote.record_id, &quote.request, quote.revision, role)?;
+        let fresh = requote(self)?;
         if fresh != *quote || !fresh.ready {
             return Err(error(
                 "CREATION_NOT_READY",
@@ -231,5 +241,88 @@ impl Library {
         audit(&tx, "vampire_creation_discard", Some(id), expected + 1)?;
         tx.commit()?;
         Ok(expected + 1)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{creature_profiles, pricing::SourceCitation};
+
+    #[test]
+    fn reviewed_configured_creation_commits_starting_resources_and_visibility() {
+        let temp = tempfile::tempdir().unwrap();
+        let mut library =
+            Library::create(&temp.path().join("creation.gvlib"), "Synthetic").unwrap();
+        let role = Role::Storyteller;
+        let id = library
+            .create_character("Wraith", "Synthetic", 0, role)
+            .unwrap();
+        let mut profile = creature_profiles::profile("Wraith").unwrap().clone();
+        profile.rules_reviewed = true;
+        profile.cost_source = Some(SourceCitation {
+            book: "Synthetic rules".into(),
+            edition: "Fixture".into(),
+            system: "Synthetic".into(),
+            printed_page: 1,
+            pdf_page_1based: 2,
+            original_pdf_sha256: "a".repeat(64),
+        });
+        profile.attribute_priorities = [0; 3];
+        profile.ability_base = 0;
+        profile.background_base = 0;
+        profile.basic_power_base = 0;
+        profile.free_traits_base = 5;
+        profile.free_trait_costs = Some(creature_profiles::FreeTraitCosts {
+            attribute: 1,
+            ability: 1,
+            background: 1,
+            primary_power: 1,
+            secondary_power: 1,
+            specialization: 1,
+            permanent_resource: 2,
+        });
+        profile.starting_resources = [("Willpower".into(), 3), ("Pathos".into(), 4)].into();
+        profile.secondary_power_tier_costs = Some(
+            [
+                ("Basic".into(), 4),
+                ("Intermediate".into(), 6),
+                ("Advanced".into(), 9),
+                ("in_affiliation_adj".into(), 0),
+                ("out_of_affiliation_adj".into(), 1),
+            ]
+            .into(),
+        );
+        let mut request = library.vampire_creation_context(&id, role).unwrap().request;
+        request.standard_pools = true;
+        request.review_confirmed = true;
+        request.actor = "Synthetic reviewer".into();
+        request.day = "2026-11-17".into();
+        request.reason = "Synthetic creation".into();
+        request.policy_version = "fixture-v1".into();
+        request.review_reference = "Synthetic review".into();
+        request.manual_power_reference = "Synthetic initial powers".into();
+        request.budget.willpower_free = 1;
+        let requote = |lib: &Library| {
+            creation::quote_configured_profile(
+                &lib.library_id()?,
+                lib.revision()?,
+                &lib.stored_record(&id)?,
+                &request,
+                &profile,
+            )
+        };
+        let quote = requote(&library).unwrap();
+        assert!(quote.ready, "{:?}", quote.issues);
+        assert_eq!(
+            quote.configured_budget.as_ref().unwrap().free_spent,
+            Some(2)
+        );
+        library.commit_creation_with(&quote, role, requote).unwrap();
+        let stored = library.stored_record(&id).unwrap();
+        assert_eq!(stored.public_fields["Willpower"], 4);
+        assert_eq!(stored.public_fields["Pathos"], 4);
+        assert!(stored.xp_ledger.is_none());
+        assert_eq!(creation::history(&stored).unwrap().len(), 1);
     }
 }

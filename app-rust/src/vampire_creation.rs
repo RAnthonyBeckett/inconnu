@@ -575,32 +575,50 @@ fn configured_budget_quote(
             profile.max_flaw_credit
         ));
     }
-    let has_unpriced_allocations = attribute_remaining.iter().any(|value| *value < 0)
-        || ability_remaining < 0
-        || background_remaining < 0
-        || primary_power_remaining < 0
-        || secondary_power_count > 0
-        || input.specialization_count > 0;
-    if secondary_power_count > 0 {
-        issues.push(
-            "Secondary power starting costs are not configured for this creation profile.".into(),
-        );
+    let allocations = [
+        attribute_remaining.iter().map(|n| (-n).max(0)).sum(),
+        (-ability_remaining).max(0),
+        (-background_remaining).max(0),
+        (-primary_power_remaining).max(0),
+        secondary_power_count,
+        input.specialization_count,
+        input.willpower_free,
+    ];
+    let free_spent = if let Some(costs) = &profile.free_trait_costs {
+        let prices = [
+            costs.attribute,
+            costs.ability,
+            costs.background,
+            costs.primary_power,
+            costs.secondary_power,
+            costs.specialization,
+            costs.permanent_resource,
+        ];
+        let spent = allocations
+            .into_iter()
+            .zip(prices)
+            .try_fold(input.merit_cost, |sum, (count, price)| {
+                sum.checked_add(count.checked_mul(price)?)
+            });
+        if spent.is_none() {
+            issues.push("Configured Free Trait arithmetic exceeds supported bounds.".into());
+        }
+        spent
+    } else if allocations.iter().any(|count| *count != 0) {
+        issues.push("Allocations above configured base pools need a reviewed creation-cost rule before they can be approved.".into());
+        None
+    } else {
+        Some(input.merit_cost)
+    };
+    if profile.kind == "Various" && profile.free_trait_costs.is_none() {
+        issues.push("Various requires an explicit local Free Trait configuration.".into());
     }
-    if input.specialization_count > 0 {
-        issues.push(
-            "Initial specialization costs are not configured for this creation profile.".into(),
-        );
+    let free_remaining = free_spent.and_then(|spent| free_available.checked_sub(spent));
+    if free_spent.is_some() && free_remaining.is_none() {
+        issues.push("Configured Free Trait arithmetic exceeds supported bounds.".into());
     }
-    if has_unpriced_allocations {
-        issues.push(
-            "Allocations above configured base pools need a reviewed creation-cost rule before they can be approved.".into(),
-        );
-    }
-
-    let free_spent = (!has_unpriced_allocations).then_some(input.merit_cost);
-    let free_remaining = free_spent.map(|spent| free_available - spent);
     if free_remaining.is_some_and(|remaining| remaining < 0) {
-        issues.push("Merit cost exceeds the configured available Free Trait pool.".into());
+        issues.push("Allocations exceed the configured available Free Trait pool.".into());
     }
     ConfiguredBudgetQuote {
         attribute_bases,
@@ -629,6 +647,35 @@ fn quote_configured(
     record: &Record,
     request: &Request,
 ) -> Result<Quote> {
+    let profile = creature_profiles::profile(&record.kind).ok_or_else(|| {
+        error(
+            "CREATION_PROFILE",
+            "No configured creation profile is available.",
+        )
+    })?;
+    quote_configured_profile(library_id, revision, record, request, profile)
+}
+/// Pure reviewed-profile seam. Store commits still re-quote against the bundled profile.
+pub fn quote_configured_profile(
+    library_id: &str,
+    revision: i64,
+    record: &Record,
+    request: &Request,
+    profile: &creature_profiles::Profile,
+) -> Result<Quote> {
+    if !(0..=4096).contains(&request.budget.willpower_free) {
+        return Err(error(
+            "INVALID_CREATION_INPUT",
+            "Additional starting Willpower must be between 0 and 4096.",
+        ));
+    }
+    profile.validate_snapshot()?;
+    if profile.kind != record.kind || profile.kind == "Vampire" {
+        return Err(error(
+            "CREATION_PROFILE",
+            "Configured creation requires a matching non-Vampire profile.",
+        ));
+    }
     scope(record)?;
     validate_request(request)?;
     history(record)?;
@@ -646,12 +693,6 @@ fn quote_configured(
             "The character changed after this draft was saved. Preserve your notes, then explicitly discard and review from the current sheet.",
         ));
     }
-    let profile = creature_profiles::profile(&record.kind).ok_or_else(|| {
-        error(
-            "CREATION_PROFILE",
-            "No configured creation profile is available for this character type.",
-        )
-    })?;
     let mut input = request.budget.clone();
     for (index, key) in ["PhysicalList", "SocialList", "MentalList"]
         .iter()
@@ -670,10 +711,16 @@ fn quote_configured(
     input.merit_cost = configured_numeric_total(&request.sheet, "MeritList")?;
     input.flaw_credit = configured_numeric_total(&request.sheet, "FlawList")?;
     let mut issues = Vec::new();
-    let mut warnings = vec![
-        "Configured creation pools are a preview; no non-Vampire starting resources are generated."
-            .into(),
-    ];
+    let mut warnings = Vec::new();
+    if profile.starting_resources.is_empty() {
+        warnings.push(
+            "No starting resources are configured for this profile; existing values are retained."
+                .into(),
+        );
+    }
+    if !request.standard_pools {
+        issues.push("Explicitly adopt this reviewed creation profile before applying.".into());
+    }
     if !profile.rules_reviewed {
         issues.push(format!(
             "{} creation rules are not reviewed: {}",
@@ -716,7 +763,6 @@ fn quote_configured(
         || request.budget.conviction
         || request.budget.instinct
         || request.budget.morality_free != 0
-        || request.budget.willpower_free != 0
     {
         issues.push(
             "Sabbat, Virtue, Derangement, Morality and Vampire-only free-pool options cannot be used for this profile.".into(),
@@ -729,10 +775,28 @@ fn quote_configured(
     {
         issues.push("Review resource sharing in the main editor; creation cannot change resource visibility.".into());
     }
-    if request.sheet.resources != original.resources {
-        issues.push(
-            "Creation does not calculate starting resources for this profile; review resource changes separately.".into(),
-        );
+    let mut effective_sheet = request.sheet.clone();
+    for (key, value) in &request.sheet.resources {
+        if original.resources.get(key) != Some(value)
+            && profile.starting_resources.get(key) != Some(value)
+        {
+            issues.push(format!(
+                "{key}: this resource edit is not covered by the configured starting-resource rule."
+            ));
+        }
+    }
+    for (key, value) in &profile.starting_resources {
+        effective_sheet.resources.insert(key.clone(), *value);
+        effective_sheet
+            .visibility
+            .entry(key.clone())
+            .or_insert(true);
+    }
+    if input.willpower_free > 0 {
+        match profile.starting_resources.get("Willpower").and_then(|base|base.checked_add(input.willpower_free)).filter(|n|*n<=32767) {
+            Some(total)=>{effective_sheet.resources.insert("Willpower".into(),total);},
+            None=>issues.push("Additional Willpower requires a configured starting Willpower pool and bounded purchase.".into()),
+        }
     }
     let mut spec_names = std::collections::HashSet::new();
     for name in &request.specializations {
@@ -756,7 +820,6 @@ fn quote_configured(
         configured_power_count(&request.sheet, &profile.secondary_power_list, &mut issues)?;
     let configured_budget = configured_budget_quote(profile, &input, secondary_power_count);
     issues.extend(configured_budget.issues.clone());
-    let effective_sheet = request.sheet.clone();
     let citations = profile.cost_source.clone().into_iter().collect();
     let ready = issues.is_empty()
         && configured_budget.complete

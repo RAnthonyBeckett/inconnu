@@ -603,12 +603,14 @@ pub fn preview_from_definition(
                 .entry()
                 .price_preview(character_kind, profile, relation)?
         }
-        PricingProfile::ConfiguredCreature => crate::pricing::configured_preview(
+        PricingProfile::ConfiguredCreature => crate::pricing::configured_power_price(
             character_kind,
             definition.purchase_family,
             definition.tier,
             relation.ok_or_else(|| error("PRICING_AFFILIATION_UNKNOWN", "Review affiliation."))?,
             rules,
+            &definition.target_list,
+            definition.fixed_xp_cost,
         )?,
     };
     if definition.original_pdf_sha256 != price.citation.original_pdf_sha256 {

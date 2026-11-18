@@ -118,6 +118,42 @@ pub fn configured_preview(
     relation: ClanRelation,
     rules: &crate::creature_profiles::Profile,
 ) -> Result<CostPreview> {
+    configured_preview_for_list(
+        kind,
+        family,
+        tier,
+        relation,
+        rules,
+        &rules.primary_power_list,
+    )
+}
+pub fn configured_preview_for_list(
+    kind: &str,
+    family: PurchaseFamily,
+    tier: MetTier,
+    relation: ClanRelation,
+    rules: &crate::creature_profiles::Profile,
+    target_list: &str,
+) -> Result<CostPreview> {
+    configured_power_price(kind, family, tier, relation, rules, target_list, None)
+}
+
+pub(crate) fn configured_power_price(
+    kind: &str,
+    family: PurchaseFamily,
+    tier: MetTier,
+    relation: ClanRelation,
+    rules: &crate::creature_profiles::Profile,
+    target_list: &str,
+    fixed_xp_cost: Option<i64>,
+) -> Result<CostPreview> {
+    rules.validate_snapshot()?;
+    if !rules.owns_power_list(target_list) {
+        return Err(error(
+            "CREATURE_COST_UNSUPPORTED",
+            "This power list does not belong to the configured profile.",
+        ));
+    }
     if kind != rules.kind || !crate::sheet::is_character_kind(kind) || !rules.rules_reviewed {
         return Err(error(
             "CREATURE_RULE_REVIEW_REQUIRED",
@@ -130,21 +166,48 @@ pub fn configured_preview(
         MetTier::Intermediate => "Intermediate",
         MetTier::Advanced => "Advanced",
     };
-    let base = *rules
-        .power_tier_costs
-        .get(tier_key)
-        .ok_or_else(|| error("CREATURE_COST_UNSUPPORTED", "No configured tier price."))?;
-    let adjustment = *rules
-        .power_tier_costs
-        .get(match relation {
-            ClanRelation::InClan => "in_affiliation_adj",
-            ClanRelation::OutOfClan => "out_of_affiliation_adj",
-        })
-        .ok_or_else(|| {
-            error(
+    let costs = if target_list == rules.secondary_power_list {
+        rules
+            .secondary_power_tier_costs
+            .as_ref()
+            .unwrap_or(&rules.power_tier_costs)
+    } else {
+        &rules.power_tier_costs
+    };
+    let (base, adjustment) = if let Some(fixed) = fixed_xp_cost {
+        if !(1..=4096).contains(&fixed) {
+            return Err(error(
                 "CREATURE_COST_UNSUPPORTED",
-                "No configured affiliation price.",
-            )
-        })?;
-    Ok(CostPreview{rule_id:format!("configured.{}.{family:?}.v1",kind.to_ascii_lowercase()),profile:PricingProfile::ConfiguredCreature,base:base.to_string(),affiliation_adjustment:adjustment.to_string(),total:(base+adjustment).to_string(),library_prompt:format!("[For more detailed info check your library for \"{}.\"]",citation.book),citation,reviewed_portuguese_equivalent:None,purchase_enabled:false,coverage:"Configured source-reviewed creature price; local policy, eligibility, teacher and approval declarations are still required.".into()})
+                "Invalid fixed XP price.",
+            ));
+        }
+        (fixed, 0)
+    } else {
+        let base = *costs
+            .get(tier_key)
+            .ok_or_else(|| error("CREATURE_COST_UNSUPPORTED", "No configured tier price."))?;
+        let adjustment = *costs
+            .get(match relation {
+                ClanRelation::InClan => "in_affiliation_adj",
+                ClanRelation::OutOfClan => "out_of_affiliation_adj",
+            })
+            .ok_or_else(|| {
+                error(
+                    "CREATURE_COST_UNSUPPORTED",
+                    "No configured affiliation price.",
+                )
+            })?;
+        (base, adjustment)
+    };
+    let price_suffix = if fixed_xp_cost.is_some() {
+        ".fixed"
+    } else {
+        ""
+    };
+    let list_suffix = if target_list == rules.secondary_power_list {
+        ".secondary"
+    } else {
+        ""
+    };
+    Ok(CostPreview{rule_id:format!("configured.{}.{family:?}{list_suffix}{price_suffix}.v1",kind.to_ascii_lowercase()),profile:PricingProfile::ConfiguredCreature,base:base.to_string(),affiliation_adjustment:adjustment.to_string(),total:(base+adjustment).to_string(),library_prompt:format!("[For more detailed info check your library for \"{}.\"]",citation.book),citation,reviewed_portuguese_equivalent:None,purchase_enabled:false,coverage:"Configured source-reviewed creature price; local policy, eligibility, teacher and approval declarations are still required.".into()})
 }

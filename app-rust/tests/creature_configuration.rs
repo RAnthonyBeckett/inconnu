@@ -122,9 +122,20 @@ fn configured_power_purchase_and_original_cost_refund_share_one_path_for_all_thi
                 .unwrap();
             row["rules_reviewed"] = json!(true);
             row["cost_source"] = json!({"book":"Synthetic cost fixture","edition":"Fixture","system":"Tests only","printed_page":1,"pdf_page_1based":2,"original_pdf_sha256":"a".repeat(64)});
+            row["secondary_power_tier_costs"] = json!({"Basic":6,"Intermediate":7,"Advanced":8,"in_affiliation_adj":0,"out_of_affiliation_adj":2});
             let rules = creature_profiles::Catalogue::from_json(&rules.to_string()).unwrap();
             let power_id = format!("synthetic.{}.first", profile.kind.to_ascii_lowercase());
-            let powers=power_catalogue::Catalogue::from_json(&json!({"version":1,"entries":[{"stable_id":power_id,"template_scope":profile.kind,"target_list":target_list,"family":"Synthetic family","branch":"Common","name":"Synthetic first power","tier":"Basic","purchase_family":"Other","profile":"ConfiguredCreature","printed_page":1,"pdf_page_1based":2,"original_pdf_sha256":"a".repeat(64),"prerequisite_note":"Synthetic fixture only","source_reviewed":true}]}).to_string()).unwrap();
+            let mut source = json!({"version":1,"entries":[{"stable_id":power_id,"template_scope":profile.kind,"target_list":target_list,"family":"Synthetic family","branch":"Common","name":"Synthetic first power","tier":"Basic","purchase_family":"Other","profile":"ConfiguredCreature","printed_page":1,"pdf_page_1based":2,"original_pdf_sha256":"a".repeat(64),"prerequisite_note":"Synthetic fixture only","source_reviewed":true}]});
+            let expected =
+                if profile.kind == "Wraith" && target_list == &profile.secondary_power_list {
+                    source["entries"][0]["fixed_xp_cost"] = json!(5);
+                    "5"
+                } else if target_list == &profile.secondary_power_list {
+                    "8"
+                } else {
+                    "4"
+                };
+            let powers = power_catalogue::Catalogue::from_json(&source.to_string()).unwrap();
             let request = PurchaseRequest {
                 review_id: None,
                 id: uuid::Uuid::new_v4().to_string(),
@@ -156,7 +167,7 @@ fn configured_power_purchase_and_original_cost_refund_share_one_path_for_all_thi
             )
             .unwrap();
             assert_eq!(quote.price.target_list(), target_list);
-            assert_eq!(quote.price.price.total, "4");
+            assert_eq!(quote.price.price.total, expected);
             assert_eq!(purchases::record_hash(&record).unwrap(), original_hash);
             let after = purchases::apply(&record, &quote, 100).unwrap();
             assert_eq!(

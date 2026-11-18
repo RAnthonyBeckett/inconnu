@@ -2238,6 +2238,49 @@ impl InconnuApp {
                     self.print_form.message=Some(match result {Ok(())=>self.t("Printable HTML saved; open it in your browser to print or save as PDF.","HTML salvo; abra no navegador para imprimir ou salvar em PDF.").into(),Err(e)=>e.message});
                 }
             }
+            Some(crate::print_ui::Action::PreviewGex) => {
+                self.print_form.gex_preview = None;
+                match lib.gex_preview(
+                    self.print_form.gex_target,
+                    Some(id),
+                    &self.print_form.gex_options,
+                    revision,
+                    role,
+                ) {
+                    Ok(preview) => {
+                        self.print_form.gex_preview = Some(preview);
+                        self.print_form.message = None;
+                    }
+                    Err(e) => self.print_form.message = Some(e.message),
+                }
+            }
+            Some(crate::print_ui::Action::ExportGex) => {
+                let Some(preview) = &self.print_form.gex_preview else {
+                    return;
+                };
+                if preview.options != self.print_form.gex_options
+                    || preview.target != self.print_form.gex_target
+                    || preview.revision != revision
+                {
+                    return;
+                }
+                if let Some(path) = FileDialog::new()
+                    .set_file_name("Inconnu transfer.gex")
+                    .add_filter("Grapevine XML", &["gex"])
+                    .save_file()
+                {
+                    let result = lib.write_gex(preview, &path, role);
+                    self.print_form.message = Some(match result {
+                        Ok(()) => self
+                            .t(
+                                "Legacy XML saved. Review the export warnings before transferring.",
+                                "XML legado salvo. Revise os avisos antes de transferir.",
+                            )
+                            .into(),
+                        Err(e) => e.message,
+                    });
+                }
+            }
             None => {}
         }
     }

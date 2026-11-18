@@ -39,6 +39,8 @@ pub struct PowerSourceReference {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CatalogueEntry {
     pub stable_id: String,
+    pub target_list: Option<String>,
+    pub fixed_xp_cost: Option<i64>,
     pub name: String,
     /// Power-family label (for example, Animalism or a synthetic mixed-family label).
     pub family: String,
@@ -116,7 +118,7 @@ impl CatalogueEntry {
                 let rules = crate::creature_profiles::profile(character_kind).ok_or_else(|| {
                     error("UNSUPPORTED_PRICING_SCOPE", "Unknown creature profile.")
                 })?;
-                pricing::configured_preview(
+                pricing::configured_power_price(
                     character_kind,
                     self.purchase_family,
                     self.tier,
@@ -127,6 +129,8 @@ impl CatalogueEntry {
                         )
                     })?,
                     rules,
+                    self.target_list().unwrap_or(&rules.primary_power_list),
+                    self.fixed_xp_cost,
                 )
             }
         }
@@ -155,6 +159,8 @@ pub struct Definition {
     pub stable_id: String,
     pub template_scope: String,
     pub target_list: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fixed_xp_cost: Option<i64>,
     pub family: String,
     pub branch: Option<String>,
     pub name: String,
@@ -186,11 +192,11 @@ impl Catalogue {
                 "MET power definitions need review; no character or XP was changed.",
             )
         };
-        if text.len() > 8 * 1024 * 1024 {
+        if text.len() > 128 * 1024 * 1024 {
             return Err(invalid());
         }
         let value: Self = serde_json::from_str(text).map_err(|_| invalid())?;
-        if value.version != 1 || value.entries.len() > 16384 {
+        if value.version != 1 || value.entries.len() > 100_000 {
             return Err(invalid());
         }
         let mut ids = std::collections::HashSet::new();
@@ -204,6 +210,11 @@ impl Catalogue {
                     .bytes()
                     .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b"._:-".contains(&b))
                 || !ids.insert(&p.stable_id)
+                || p.fixed_xp_cost.is_some_and(|cost| {
+                    !(1..=4096).contains(&cost)
+                        || p.profile != PricingProfile::ConfiguredCreature
+                        || p.legacy_power.is_some()
+                })
                 || !profile.owns_power_list(&p.target_list)
                 || !crate::sheet::LIST_FIELDS.contains(&p.target_list.as_str())
                 || [&p.name, &p.family].iter().any(|s| {
@@ -250,6 +261,8 @@ impl Definition {
     pub fn entry(&self) -> CatalogueEntry {
         CatalogueEntry {
             stable_id: self.stable_id.clone(),
+            target_list: Some(self.target_list.clone()),
+            fixed_xp_cost: self.fixed_xp_cost,
             name: self.name.clone(),
             family: self.family.clone(),
             tier: self.tier,
@@ -293,9 +306,11 @@ pub fn lookup(stable_id: &str) -> Option<CatalogueEntry> {
 }
 impl CatalogueEntry {
     pub fn target_list(&self) -> Option<&str> {
-        builtin()
-            .lookup(&self.stable_id)
-            .map(|p| p.target_list.as_str())
+        self.target_list.as_deref().or_else(|| {
+            builtin()
+                .lookup(&self.stable_id)
+                .map(|p| p.target_list.as_str())
+        })
     }
 }
 

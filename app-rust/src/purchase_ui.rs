@@ -3,6 +3,7 @@ use grapevine_workbench::{model::Language, power_catalogue, pricing::*, purchase
 
 pub struct PurchaseForm {
     pub kind: String,
+    pub power_list: String,
     pub input: PurchaseRequest,
     pub policy_name: String,
     pub reviews: Vec<(grapevine_workbench::purchase_reviews::ReviewBinding, bool)>,
@@ -20,6 +21,7 @@ impl Default for PurchaseForm {
     fn default() -> Self {
         Self {
             kind: "Vampire".into(),
+            power_list: String::new(),
             plan: vec![],
             plan_quote: None,
             policy_name: String::new(),
@@ -93,12 +95,42 @@ pub fn render(
     revision: i64,
     language: Language,
 ) -> Option<Action> {
-    let catalogue: Vec<_> = power_catalogue::entries()
-        .into_iter()
-        .filter(|p| p.template_scope == form.kind)
-        .collect();
     let pt = language == Language::Portuguese;
     let configured = form.kind != "Vampire";
+    if configured && let Some(profile) = grapevine_workbench::creature_profiles::profile(&form.kind)
+    {
+        if !profile.owns_power_list(&form.power_list) {
+            form.power_list = profile.primary_power_list.clone();
+        }
+        let previous = form.power_list.clone();
+        ui.horizontal_wrapped(|ui| {
+            ui.selectable_value(
+                &mut form.power_list,
+                profile.primary_power_list.clone(),
+                t(pt, "Primary powers", "Poderes principais"),
+            );
+            ui.selectable_value(
+                &mut form.power_list,
+                profile.secondary_power_list.clone(),
+                t(pt, "Secondary powers", "Poderes secundários"),
+            );
+        });
+        if previous != form.power_list {
+            form.input.power_id.clear();
+            form.input.review_id = None;
+            form.input.profile = None;
+            form.input.standard_cost_confirmed = false;
+            form.quote = None;
+            form.dirty = true;
+        }
+    }
+    let catalogue: Vec<_> = power_catalogue::entries()
+        .into_iter()
+        .filter(|p| {
+            p.template_scope == form.kind
+                && (!configured || p.target_list() == Some(form.power_list.as_str()))
+        })
+        .collect();
     if form.cancel_purchase.is_some() {
         return render_cancellation(ui, form, revision, pt);
     }

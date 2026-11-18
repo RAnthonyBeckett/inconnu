@@ -12,6 +12,7 @@ pub const TRAIT_FIELD: &str = "AppPublishedReference";
 
 #[derive(Clone, Debug)]
 pub struct Context {
+    pub target_list: String,
     pub revision: i64,
     pub record_id: String,
     pub record_name: String,
@@ -36,6 +37,8 @@ pub struct Request {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Quote {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub target_list: Option<String>,
     pub request: Request,
     pub library_id: String,
     pub record_id: String,
@@ -99,6 +102,16 @@ pub fn trait_signature(row: &Value) -> Result<String> {
     )
 }
 pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request) -> Result<Quote> {
+    quote_for_list(library_id, revision, record, request, None)
+}
+pub fn quote_for_list(
+    library_id: &str,
+    revision: i64,
+    record: &Record,
+    request: &Request,
+    requested_list: Option<&str>,
+) -> Result<Quote> {
+    let field = crate::met_references::target_field(record, requested_list)?;
     if !crate::sheet::is_character_kind(&record.kind) {
         return Err(error(
             "PUBLISHED_REFERENCE_SCOPE",
@@ -136,7 +149,7 @@ pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request
             "This review ID already identifies a saved source attribution.",
         ));
     }
-    let list = purchases::discipline_list(record)?;
+    let list = purchases::power_list(record, &field)?;
     let row = list["Traits"]
         .as_array()
         .and_then(|rows| rows.get(request.trait_index))
@@ -213,6 +226,11 @@ pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request
         ));
     }
     Ok(Quote {
+        target_list: (field
+            != crate::creature_profiles::profile(&record.kind)
+                .unwrap()
+                .primary_power_list)
+            .then_some(field),
         request: request.clone(),
         library_id: library_id.into(),
         record_id: record.id.clone(),

@@ -6,6 +6,7 @@ pub const FIELD: &str = "_AppMetReminderReviewsV1";
 pub const TRAIT_FIELD: &str = "AppMetReminderReference";
 #[derive(Clone, Debug)]
 pub struct Context {
+    pub target_list: String,
     pub revision: i64,
     pub record_id: String,
     pub record_name: String,
@@ -47,6 +48,8 @@ impl Default for Request {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Quote {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub target_list: Option<String>,
     pub library_id: String,
     pub record_id: String,
     pub revision: i64,
@@ -94,6 +97,16 @@ pub fn history(record: &Record) -> Result<Vec<Receipt>> {
     Ok(entries)
 }
 pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request) -> Result<Quote> {
+    quote_for_list(library_id, revision, record, request, None)
+}
+pub fn quote_for_list(
+    library_id: &str,
+    revision: i64,
+    record: &Record,
+    request: &Request,
+    requested_list: Option<&str>,
+) -> Result<Quote> {
+    let field = crate::met_references::target_field(record, requested_list)?;
     if !crate::sheet::is_character_kind(&record.kind) || record.build.is_some() {
         return Err(error(
             "MET_REFERENCE_SCOPE",
@@ -115,7 +128,11 @@ pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request
             "Record a new ID, valid date, reviewer, reason and source/eligibility reference; explicitly confirm the mapping.",
         ));
     }
-    let list = purchases::discipline_list(record)?;
+    let list = if requested_list.is_none() {
+        purchases::discipline_list(record)?
+    } else {
+        purchases::power_list(record, &field)?
+    };
     let row = list["Traits"]
         .as_array()
         .and_then(|r| r.get(request.trait_index))
@@ -162,10 +179,7 @@ pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request
         let definition = crate::power_catalogue::builtin()
             .lookup(&request.power_id)
             .ok_or_else(|| error("MET_REFERENCE_POWER", "Unknown power."))?;
-        if power.template_scope != record.kind
-            || crate::creature_profiles::profile(&record.kind)
-                .is_none_or(|p| p.primary_power_list != definition.target_list)
-        {
+        if power.template_scope != record.kind || definition.target_list != field {
             return Err(error(
                 "MET_REFERENCE_SCOPE",
                 "This power/list belongs to a different creature profile.",
@@ -225,6 +239,11 @@ pub fn quote(library_id: &str, revision: i64, record: &Record, request: &Request
         updated[TRAIT_FIELD] = json!({"review_id":request.id,"power_id":request.power_id,"trait_signature":published_reference::trait_signature(row)?,"source_sha256":citation.as_ref().unwrap().original_pdf_sha256});
     }
     Ok(Quote {
+        target_list: (field
+            != crate::creature_profiles::profile(&record.kind)
+                .unwrap()
+                .primary_power_list)
+            .then_some(field),
         library_id: library_id.into(),
         record_id: record.id.clone(),
         revision,
@@ -251,7 +270,7 @@ pub fn verified(record: &Record, row: &Value) -> Option<String> {
     {
         return None;
     }
-    let list = purchases::discipline_list(record).ok()?;
+    let list = purchases::power_list(record, &definition.target_list).ok()?;
     if list["Traits"]
         .as_array()?
         .iter()
@@ -263,6 +282,10 @@ pub fn verified(record: &Record, row: &Value) -> Option<String> {
     }
     history(record).ok()?.iter().find(|r| {
         r.quote.request.id == binding["review_id"].as_str().unwrap_or("")
+            && target_field(record, r.quote.target_list.as_deref())
+                .ok()
+                .as_deref()
+                == Some(definition.target_list.as_str())
             && !r.quote.request.clear
             && r.quote.updated_trait.get(TRAIT_FIELD) == Some(binding)
             && record
@@ -271,4 +294,24 @@ pub fn verified(record: &Record, row: &Value) -> Option<String> {
                 .is_none_or(|b| r.committed_revision <= b.source_revision)
     })?;
     crate::power_catalogue::lookup(id).map(|p| p.stable_id)
+}
+
+/// Resolves historical primary requests and validates explicit secondary targets.
+pub(crate) fn target_field(record: &Record, requested: Option<&str>) -> Result<String> {
+    let profile = crate::creature_profiles::profile(&record.kind).ok_or_else(|| {
+        error(
+            "REFERENCE_LIST_SCOPE",
+            "Choose a supported creature power list.",
+        )
+    })?;
+    let field = requested
+        .filter(|s| !s.is_empty())
+        .unwrap_or(&profile.primary_power_list);
+    if !profile.owns_power_list(field) {
+        return Err(error(
+            "REFERENCE_LIST_SCOPE",
+            "This power list belongs to a different creature profile.",
+        ));
+    }
+    Ok(field.to_owned())
 }

@@ -2,6 +2,14 @@ use super::*;
 use crate::published_reference as source;
 impl Library {
     pub fn published_reference_context(&self, id: &str, role: Role) -> Result<source::Context> {
+        self.published_reference_context_for_list(id, None, role)
+    }
+    pub fn published_reference_context_for_list(
+        &self,
+        id: &str,
+        target_list: Option<&str>,
+        role: Role,
+    ) -> Result<source::Context> {
         require_st(role)?;
         let (revision, data): (i64, String) = self.conn.query_row(
             "SELECT library.revision,records.data FROM library JOIN records ON records.id=?1",
@@ -15,9 +23,11 @@ impl Library {
                 "Choose a Vampire character.",
             ));
         }
-        let list = crate::purchases::discipline_list(&record)?;
+        let field = crate::met_references::target_field(&record, target_list)?;
+        let list = crate::purchases::power_list(&record, &field)?;
         let history = source::history(&record)?;
         Ok(source::Context {
+            target_list: field,
             history,
             revision,
             record_id: record.id,
@@ -32,6 +42,16 @@ impl Library {
         expected: i64,
         role: Role,
     ) -> Result<source::Quote> {
+        self.quote_published_reference_for_list(id, request, expected, None, role)
+    }
+    pub fn quote_published_reference_for_list(
+        &self,
+        id: &str,
+        request: &source::Request,
+        expected: i64,
+        target_list: Option<&str>,
+        role: Role,
+    ) -> Result<source::Quote> {
         require_st(role)?;
         let (library_id,revision,data):(String,i64,String)=self.conn.query_row(
             "SELECT library.id,library.revision,records.data FROM library JOIN records ON records.id=?1",[id],|row|Ok((row.get(0)?,row.get(1)?,row.get(2)?)))?;
@@ -41,11 +61,12 @@ impl Library {
                 "Library changed; review the source attribution again.",
             ));
         }
-        source::quote(
+        source::quote_for_list(
             &library_id,
             revision,
             &serde_json::from_str(&data)?,
             request,
+            target_list,
         )
     }
     pub fn commit_published_reference(
@@ -87,19 +108,22 @@ impl Library {
             ));
         }
         if revision != quote.revision
-            || source::quote(&library_id, revision, &record, &quote.request)? != *quote
+            || source::quote_for_list(
+                &library_id,
+                revision,
+                &record,
+                &quote.request,
+                quote.target_list.as_deref(),
+            )? != *quote
         {
             return Err(error(
                 "STALE_PUBLISHED_REFERENCE",
                 "The character or source review changed. Prepare a new review.",
             ));
         }
-        let mut list = crate::purchases::discipline_list(&record)?;
+        let field = crate::met_references::target_field(&record, quote.target_list.as_deref())?;
+        let mut list = crate::purchases::power_list(&record, &field)?;
         list["Traits"][quote.request.trait_index] = quote.updated_trait.clone();
-        let field = crate::creature_profiles::profile(&record.kind)
-            .unwrap()
-            .primary_power_list
-            .clone();
         set_sheet_field(&mut record, &field, list);
         let receipt = source::Receipt {
             quote: quote.clone(),

@@ -9,6 +9,7 @@ use grapevine_workbench::{
 pub(super) struct MetWindow {
     pub open: bool,
     pub target: Option<String>,
+    pub target_list: Option<String>,
     pub context: Option<met::Context>,
     pub request: met::Request,
     pub quote: Option<met::Quote>,
@@ -30,6 +31,7 @@ fn remember(ui: &egui::Ui, response: &egui::Response, key: &str) {
 #[derive(Clone, Copy)]
 enum Action {
     Reload,
+    SelectList,
     Preview,
     PreviewClear,
     Commit,
@@ -225,7 +227,11 @@ impl InconnuApp {
             self.met_reference.context = None;
             return;
         };
-        match lib.met_reference_context(id, Role::Storyteller) {
+        match lib.met_reference_context_for_list(
+            id,
+            self.met_reference.target_list.as_deref(),
+            Role::Storyteller,
+        ) {
             Ok(context) => {
                 self.met_reference.context = Some(context);
                 self.met_reference.message = None;
@@ -250,6 +256,18 @@ impl InconnuApp {
         }
         if matches!(action, Action::Reload) {
             self.reload_met_reference();
+            return;
+        }
+        if matches!(action, Action::SelectList) {
+            self.met_reference.request.id = uuid::Uuid::new_v4().to_string();
+            self.met_reference.request.trait_index = 0;
+            self.met_reference.request.power_id.clear();
+            self.met_reference.request.clear = false;
+            self.met_reference.request.confirmed = false;
+            self.met_reference.request.confirm_alias = false;
+            self.met_reference.request.confirm_legacy_value = false;
+            self.met_reference.quote = None;
+            self.load_met_reference_context();
             return;
         }
         if self.edit != self.saved_edit
@@ -280,10 +298,16 @@ impl InconnuApp {
                     .as_ref()
                     .map(|r| r.kind.as_str())
                     .unwrap_or("Vampire");
-                let powers: Vec<_> = power_catalogue::entries()
-                    .into_iter()
-                    .filter(|p| p.template_scope == kind)
-                    .collect();
+                let powers: Vec<_> =
+                    power_catalogue::entries()
+                        .into_iter()
+                        .filter(|p| {
+                            p.template_scope == kind
+                                && self.met_reference.context.as_ref().is_some_and(|c| {
+                                    p.target_list() == Some(c.target_list.as_str())
+                                })
+                        })
+                        .collect();
                 let ready = self.met_reference.context.as_ref().is_some_and(|context| {
                     if matches!(action, Action::PreviewClear) {
                         self.met_reference.request.clear
@@ -312,9 +336,13 @@ impl InconnuApp {
                 let request = self.met_reference.request.clone();
                 self.met_reference.quote = None;
                 let result = match self.library.as_mut() {
-                    Some(lib) => {
-                        lib.quote_met_reference(&id, &request, expected_revision, Role::Storyteller)
-                    }
+                    Some(lib) => lib.quote_met_reference_for_list(
+                        &id,
+                        &request,
+                        expected_revision,
+                        self.met_reference.target_list.as_deref(),
+                        Role::Storyteller,
+                    ),
                     None => {
                         self.met_reference.message = Some(
                             self.t(
@@ -400,7 +428,7 @@ impl InconnuApp {
                     Err(error) => self.met_reference.message = Some(error.message),
                 }
             }
-            Action::Reload => {}
+            Action::Reload | Action::SelectList => {}
         }
     }
 
@@ -414,7 +442,23 @@ impl InconnuApp {
         }
 
         let pt = self.language == Language::Portuguese;
-        let powers = power_catalogue::entries();
+        let creature_kind = self
+            .selected_record
+            .as_ref()
+            .map(|r| r.kind.as_str())
+            .unwrap_or("Vampire");
+        let profile = grapevine_workbench::creature_profiles::profile(creature_kind);
+        let powers: Vec<_> = power_catalogue::entries()
+            .into_iter()
+            .filter(|p| {
+                p.template_scope == creature_kind
+                    && self
+                        .met_reference
+                        .context
+                        .as_ref()
+                        .is_some_and(|c| p.target_list() == Some(c.target_list.as_str()))
+            })
+            .collect();
         let current_revision = self
             .library
             .as_ref()
@@ -454,13 +498,21 @@ impl InconnuApp {
         let mut action = None;
         egui::Window::new(t(
             pt,
-            "MET Laws of the Night Revised reference",
-            "Referência MET Laws of the Night Revised",
+            if creature_kind == "Vampire" { "MET Laws of the Night Revised reference" } else { "Reviewed creature power reference" },
+            if creature_kind == "Vampire" { "Referência MET Laws of the Night Revised" } else { "Referência de poderes de criatura revisados" },
         ))
         .id(egui::Id::unique("met_reference_window"))
         .default_size([760.0, 650.0])
         .open(&mut open)
         .show(ctx, |ui| {
+            if let Some(profile) = profile {
+                let previous = self.met_reference.target_list.clone();
+                ui.horizontal_wrapped(|ui| {
+                    ui.selectable_value(&mut self.met_reference.target_list, None, t(pt,"Primary powers","Poderes principais"));
+                    ui.selectable_value(&mut self.met_reference.target_list, Some(profile.secondary_power_list.clone()), t(pt,"Secondary powers","Poderes secundários"));
+                });
+                if previous != self.met_reference.target_list { action = Some(Action::SelectList); return; }
+            }
             ui.horizontal_wrapped(|ui| {
                 let preview = ui.add_enabled(
                     ready_to_preview,
@@ -502,8 +554,8 @@ impl InconnuApp {
                     let state = &mut self.met_reference;
                     ui.label(t(
                         pt,
-                        "Attach one exact MET power to an existing Discipline row in an original Vampire character. Imported and active characters are allowed. This adds a mechanics reminder only; it does not grant a trait, charge XP, rename a row, or change its saved value.",
-                        "Associe um poder MET específico a uma linha de Disciplina já existente em uma ficha Vampire original. Personagens importados e ativos são aceitos. Isto adiciona apenas um lembrete de regras; não concede característica, cobra XP, renomeia a linha nem altera o valor salvo.",
+                        "Attach one reviewed power to an existing row in the selected list. Imported and active characters are allowed. This adds a source-based reminder only; it does not grant a trait, charge XP, rename a row, or change its saved value.",
+                        "Associe um poder revisado a uma linha existente na lista selecionada. Personagens importados e ativos são aceitos. Isto adiciona somente um lembrete com fonte; não concede características, cobra XP, renomeia a linha nem altera o valor salvo.",
                     ));
                     let Some(context) = &context else {
                         return;
@@ -532,7 +584,7 @@ impl InconnuApp {
                         ui.weak(t(
                             pt,
                             "No existing Discipline rows are available. This window does not add traits.",
-                            "Não há linhas de Disciplina existentes. Esta janela não adiciona características.",
+                            "Não há linhas na lista de poderes selecionada. Esta janela não adiciona características.",
                         ));
                     } else {
                         state.request.trait_index = state.request.trait_index.min(context.traits.len() - 1);

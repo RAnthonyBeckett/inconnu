@@ -1,5 +1,6 @@
 pub mod character_lifecycle;
 pub mod diagnostics;
+pub mod gex_export;
 pub mod importer;
 pub mod legacy_calendar;
 pub mod legacy_profile;

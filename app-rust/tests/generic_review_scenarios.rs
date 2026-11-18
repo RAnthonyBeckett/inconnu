@@ -48,6 +48,7 @@ fn configured_fixtures() -> (PowerCatalogue, ProfileCatalogue, Vec<(String, Stri
             stable_id: id.clone(),
             template_scope: profile.kind.clone(),
             target_list: profile.primary_power_list.clone(),
+            fixed_xp_cost: None,
             family: "Synthetic family".into(),
             branch: Some("Fixture branch".into()),
             name: format!("Synthetic {} power", profile.kind),

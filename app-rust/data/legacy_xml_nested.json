@@ -1,0 +1,520 @@
+{
+  "version": 1,
+  "children": {
+    "vampire": {
+      "experience": "experience",
+      "boon": "boon"
+    },
+    "werewolf": {
+      "experience": "experience"
+    },
+    "mortal": {
+      "experience": "experience"
+    },
+    "changeling": {
+      "experience": "experience"
+    },
+    "wraith": {
+      "experience": "experience"
+    },
+    "mage": {
+      "experience": "experience"
+    },
+    "fera": {
+      "experience": "experience"
+    },
+    "various": {
+      "experience": "experience"
+    },
+    "mummy": {
+      "experience": "experience"
+    },
+    "kueijin": {
+      "experience": "experience"
+    },
+    "hunter": {
+      "experience": "experience"
+    },
+    "demon": {
+      "experience": "experience"
+    },
+    "player": {
+      "experience": "experience"
+    },
+    "action": {
+      "subaction": "subaction"
+    },
+    "plot": {
+      "development": "development"
+    },
+    "rumor": {
+      "subrumor": "subrumor",
+      "query": "query"
+    },
+    "query": {
+      "clause": "clause"
+    },
+    "calendar": {
+      "game": "game"
+    },
+    "game": {
+      "place": "text_place",
+      "notes": "text_notes"
+    },
+    "subaction": {
+      "act": "text_act",
+      "results": "text_results",
+      "linklist": "linklist"
+    },
+    "development": {
+      "event": "text_event",
+      "linklist": "linklist"
+    },
+    "subrumor": {
+      "body": "text_body"
+    },
+    "experience": {
+      "entry": "entry"
+    },
+    "boon": {
+      "description": "text_description"
+    },
+    "aprsettings": {
+      "traitlist": "traitlist"
+    },
+    "traitlist": {
+      "trait": "trait"
+    },
+    "linklist": {
+      "action": "effect",
+      "plot": "effect",
+      "rumor": "effect"
+    },
+    "grapevine": {
+      "calendar": "calendar",
+      "aprsettings": "aprsettings"
+    }
+  },
+  "elements": {
+    "experience": {
+      "attributes": {
+        "unspent": [
+          "unspent",
+          "Unspent"
+        ],
+        "earned": [
+          "earned",
+          "Earned"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "experience",
+        "Experience"
+      ]
+    },
+    "boon": {
+      "attributes": {
+        "type": [
+          "type",
+          "BoonType"
+        ],
+        "partner": [
+          "partner",
+          "CharName"
+        ],
+        "owed": [
+          "owed",
+          "IsOwed"
+        ],
+        "date": [
+          "date",
+          "BoonDate"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "boon",
+        "BoonList"
+      ]
+    },
+    "query": {
+      "attributes": {
+        "name": [
+          "name",
+          "Name"
+        ],
+        "table": [
+          "table",
+          "InvStr"
+        ],
+        "match": [
+          "match"
+        ],
+        "sort": [
+          "sort",
+          "SortKey"
+        ],
+        "descend": [
+          "descend",
+          "SortDescend"
+        ],
+        "lastmodified": [
+          "lastmodified",
+          "LastModified"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "query",
+        "Query"
+      ]
+    },
+    "calendar": {
+      "attributes": {
+        "lastmodified": [
+          "lastmodified",
+          "LastModified"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "calendar",
+        "Calendar"
+      ]
+    },
+    "entry": {
+      "attributes": {
+        "date": [
+          "date",
+          "When"
+        ],
+        "change": [
+          "change",
+          "Change"
+        ],
+        "type": [
+          "type",
+          "ChangeType"
+        ],
+        "reason": [
+          "reason",
+          "Reason"
+        ],
+        "earned": [
+          "earned",
+          "Earned"
+        ],
+        "unspent": [
+          "unspent",
+          "Unspent"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "entry",
+        "Entries",
+        "History"
+      ]
+    },
+    "game": {
+      "attributes": {
+        "date": [
+          "date",
+          "GameDate"
+        ],
+        "time": [
+          "time",
+          "Time"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "game",
+        "Games"
+      ]
+    },
+    "subaction": {
+      "attributes": {
+        "name": [
+          "name",
+          "Name"
+        ],
+        "level": [
+          "level",
+          "Level"
+        ],
+        "unused": [
+          "unused",
+          "Unused"
+        ],
+        "total": [
+          "total",
+          "Total"
+        ],
+        "growth": [
+          "growth",
+          "Growth"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "subaction",
+        "SubAction"
+      ]
+    },
+    "development": {
+      "attributes": {
+        "date": [
+          "date",
+          "DevDate"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "development",
+        "PlotDev"
+      ]
+    },
+    "subrumor": {
+      "attributes": {
+        "level": [
+          "level",
+          "Level"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "subrumor",
+        "SubRumor"
+      ]
+    },
+    "clause": {
+      "attributes": {
+        "field": [
+          "field",
+          "Key"
+        ],
+        "comp": [
+          "comp",
+          "CompStr"
+        ],
+        "find": [
+          "find",
+          "Find"
+        ],
+        "val": [
+          "val",
+          "Number"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "clause",
+        "Clauses"
+      ]
+    },
+    "aprsettings": {
+      "attributes": {
+        "personalactions": [
+          "personalactions",
+          "PersonalActions"
+        ],
+        "addcommon": [
+          "addcommon",
+          "AddCommon"
+        ],
+        "carryunused": [
+          "carryunused",
+          "CarryUnused"
+        ],
+        "publicrumors": [
+          "publicrumors",
+          "PublicRumors"
+        ],
+        "personalrumors": [
+          "personalrumors",
+          "PersonalRumors"
+        ],
+        "racerumors": [
+          "racerumors",
+          "RaceRumors"
+        ],
+        "grouprumors": [
+          "grouprumors",
+          "GroupRumors"
+        ],
+        "subgrouprumors": [
+          "subgrouprumors",
+          "SubgroupRumors"
+        ],
+        "influencerumors": [
+          "influencerumors",
+          "InfluenceRumors"
+        ],
+        "previousrumors": [
+          "previousrumors",
+          "PreviousRumors"
+        ],
+        "copyprevious": [
+          "copyprevious",
+          "CopyPrevious"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "aprsettings",
+        "APREngine"
+      ]
+    },
+    "text": {
+      "attributes": {},
+      "text": true
+    },
+    "linklist": {
+      "attributes": {},
+      "text": false,
+      "field_aliases": [
+        "linklist",
+        "Effects"
+      ]
+    },
+    "effect": {
+      "attributes": {
+        "date": [
+          "date",
+          "When"
+        ],
+        "name": [
+          "name",
+          "Item"
+        ],
+        "item": [
+          "item",
+          "Subitem"
+        ]
+      },
+      "text": false
+    },
+    "traitlist": {
+      "attributes": {
+        "name": [
+          "name",
+          "Name"
+        ],
+        "abc": [
+          "abc",
+          "Alphabetized"
+        ],
+        "atomic": [
+          "atomic",
+          "Atomic"
+        ],
+        "negative": [
+          "negative",
+          "Negative"
+        ],
+        "display": [
+          "display",
+          "Display"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "traitlist",
+        "ActionsPerLevel",
+        "BackgroundActions"
+      ]
+    },
+    "trait": {
+      "attributes": {
+        "name": [
+          "name",
+          "Name"
+        ],
+        "val": [
+          "val",
+          "Value",
+          "Total"
+        ],
+        "note": [
+          "note",
+          "Note"
+        ]
+      },
+      "text": false,
+      "field_aliases": [
+        "trait",
+        "Traits"
+      ]
+    },
+    "text_place": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "place",
+        "Place"
+      ]
+    },
+    "text_notes": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "notes",
+        "Notes"
+      ]
+    },
+    "text_act": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "act",
+        "Action"
+      ]
+    },
+    "text_results": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "results",
+        "Result"
+      ]
+    },
+    "text_event": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "event",
+        "Development"
+      ]
+    },
+    "text_body": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "body",
+        "Rumor"
+      ]
+    },
+    "text_description": {
+      "attributes": {},
+      "text": true,
+      "field_aliases": [
+        "description",
+        "Description"
+      ]
+    }
+  },
+  "scope_policy": {
+    "default": "PrivateStoryteller",
+    "note": "Element metadata declares legacy syntax only. The caller must apply current record/field visibility, redact markers, strip private notes in public scope and never serialize current internal receipts or audits."
+  },
+  "conversion_requirements": {
+    "query.table": "InvStr is computed from Inventory; do not serialize a numeric Inventory enum as table without a reviewed conversion. Known table strings: chars, players, items, rotes, locs, actions, plots, rumors.",
+    "query.match": "Map MatchAll true to all, false to any when source match text is absent.",
+    "effect.tag": "Original target enum selects action, plot or rumor. Require an existing exact tag or explicit enum conversion; do not guess.",
+    "dates": "Preserve existing saved XML strings; do not infer locale/date conversions.",
+    "traitlist.names": "APR source reader names are Actions for ActionsPerLevel and Backgrounds for BackgroundActions.",
+    "experience": "Legacy Experience and entry fields are separate from current internal XP receipt structures; source alias does not authorize dumping app ledgers."
+  }
+}

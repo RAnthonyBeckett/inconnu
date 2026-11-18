@@ -10,8 +10,25 @@ use std::collections::HashSet;
 fn full_tier_catalogue_matches_independently_captured_source_headings_and_costs() {
     let matrix: Vec<Value> = serde_json::from_str(include_str!("tier_source_matrix.json")).unwrap();
     assert_eq!(matrix.len(), 24);
-    let entries = power_catalogue::entries();
+    let entries: Vec<_> = power_catalogue::entries()
+        .into_iter()
+        .filter(|e| {
+            e.template_scope == "Vampire"
+                && e.profile == Some(PricingProfile::MetLawsOfTheNightRevised)
+                && e.legacy_power.is_some()
+        })
+        .collect();
     assert_eq!(entries.len(), 40);
+    assert_eq!(
+        entries
+            .iter()
+            .map(|e| e.stable_id.as_str())
+            .collect::<Vec<_>>(),
+        AnimalismPower::ALL
+            .iter()
+            .map(|p| p.stable_id())
+            .collect::<Vec<_>>()
+    );
     let ids: HashSet<_> = entries
         .iter()
         .map(|entry| entry.stable_id.as_str())

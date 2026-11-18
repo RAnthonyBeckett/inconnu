@@ -459,6 +459,26 @@ fn render_configured_form(
         profile.kind, profile.primary_power_list, profile.secondary_power_list
     ));
     ui.label(&profile.rules_note);
+    if !profile.starting_resources.is_empty() {
+        ui.label(tr(
+            language,
+            "Reviewed starting resources",
+            "Recursos iniciais revisados",
+        ));
+        for (key, value) in &profile.starting_resources {
+            ui.label(format!("{key}: {value}"));
+        }
+    }
+    if profile.starting_resources.contains_key("Willpower") && profile.free_trait_costs.is_some() {
+        ui.horizontal(|ui| {
+            ui.label(tr(
+                language,
+                "Additional starting Willpower (Free Traits)",
+                "Força de Vontade inicial adicional (características livres)",
+            ));
+            ui.add(egui::DragValue::new(&mut request.budget.willpower_free).range(0..=4096));
+        });
+    }
     crate::sheet_ui::render(ui, &mut request.sheet, language, summaries);
     for i in 0..3 {
         egui::ComboBox::from_id_salt(("configured_priority", i))
@@ -920,6 +940,31 @@ fn render_quote(ui: &mut egui::Ui, quote: &CreationQuote, language: Language) {
             ),
             budget.free_available
         ));
+        ui.label(format!(
+            "{}: {} / {}: {}",
+            tr(
+                language,
+                "Free Traits spent",
+                "Características livres gastas"
+            ),
+            budget
+                .free_spent
+                .map(|n| n.to_string())
+                .unwrap_or_else(|| tr(language, "Unpriced", "Sem custo revisado").into()),
+            tr(
+                language,
+                "Free Traits remaining",
+                "Características livres restantes"
+            ),
+            budget
+                .free_remaining
+                .map(|n| n.to_string())
+                .unwrap_or_else(|| tr(language, "Unpriced", "Sem custo revisado").into())
+        ));
+        ui.label(tr(language, "Resulting resources", "Recursos resultantes"));
+        for (key, value) in &quote.effective_sheet.resources {
+            ui.label(format!("{key}: {value}"));
+        }
         ui.label(tr(
             language,
             "No Vampire Generation, Blood or Virtue calculation applies to this profile.",

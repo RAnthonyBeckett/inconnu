@@ -10,10 +10,15 @@ pub struct Form {
     pub document: Option<SheetDocument>,
     pub revision: Option<i64>,
     pub message: Option<String>,
+    pub gex_options: grapevine_workbench::gex_export::Options,
+    pub gex_target: grapevine_workbench::gex_export::Target,
+    pub gex_preview: Option<grapevine_workbench::gex_export::Preview>,
 }
 pub enum Action {
     Preview,
     Export,
+    PreviewGex,
+    ExportGex,
 }
 fn t<'a>(pt: bool, en: &'a str, br: &'a str) -> &'a str {
     if pt { br } else { en }
@@ -27,6 +32,12 @@ pub fn render(
     can_private: bool,
 ) -> Option<Action> {
     let pt = language == Language::Portuguese;
+    if !can_private {
+        form.options.scope = PrintScope::Public;
+        if form.gex_target == grapevine_workbench::gex_export::Target::Chronicle {
+            form.gex_target = Default::default();
+        }
+    }
     ui.label(t(pt,"Preview the saved character sheet. Unsaved edits are excluded. Export a standalone HTML file; open it in your browser to print or save as PDF.","Pré-visualize a ficha salva. Edições não salvas ficam de fora. Exporte HTML independente; abra no navegador para imprimir ou salvar em PDF."));
     let before = form.options.clone();
     ui.horizontal_wrapped(|ui| {
@@ -138,6 +149,32 @@ pub fn render(
     if let Some(message) = &form.message {
         ui.label(message);
     }
+    ui.separator();
+    ui.collapsing(t(pt, "Grapevine XML (.gex) transfer", "Transferência XML Grapevine (.gex)"), |ui| {
+        use grapevine_workbench::gex_export::{Target, RisenLegacyExportMode};
+        form.gex_options.scope = form.options.scope;
+        form.gex_options.language = form.options.language;
+        ui.label(t(pt, "Exports saved data. Review omissions and conversion warnings before saving. This legacy projection is not a library backup.", "Exporta dados salvos. Revise omissões e avisos de conversão antes de salvar. Esta projeção legada não é um backup."));
+        ui.horizontal_wrapped(|ui| {
+            ui.selectable_value(&mut form.gex_target, Target::Character, t(pt,"Selected character","Personagem selecionado"));
+            ui.selectable_value(&mut form.gex_target, Target::Roster, t(pt,"Character roster","Lista de personagens"));
+            if can_private { ui.selectable_value(&mut form.gex_target, Target::Chronicle, t(pt,"Character/world roster projection","Projeção de personagens e mundo")); }
+        });
+        ui.checkbox(&mut form.gex_options.normalize_typography, t(pt,"Normalize typography for third-party XML importers (Haller-safe)","Normalizar tipografia para importadores XML de terceiros (compatível com Haller)"));
+        ui.label(t(pt,"Risen legacy export mode","Modo de exportação legada de Risen"));
+        ui.horizontal_wrapped(|ui| {
+            ui.selectable_value(&mut form.gex_options.risen, RisenLegacyExportMode::Disallow, t(pt,"Disallow (default)","Não permitir (padrão)"));
+            ui.selectable_value(&mut form.gex_options.risen, RisenLegacyExportMode::ExportAsWraith, t(pt,"Export as Wraith","Exportar como Wraith"));
+            ui.selectable_value(&mut form.gex_options.risen, RisenLegacyExportMode::ExportAsVarious, t(pt,"Export as Various","Exportar como Various"));
+        });
+        if form.gex_preview.as_ref().is_some_and(|p| p.options!=form.gex_options || p.target!=form.gex_target || p.revision!=revision) { form.gex_preview=None; }
+        if ui.button(t(pt,"Preview XML export summary","Pré-visualizar resumo da exportação XML")).clicked() { action=Some(Action::PreviewGex); }
+        if let Some(preview)=&form.gex_preview {
+            ui.label(format!("{}: {}", t(pt,"Records","Registros"), preview.document.record_count));
+            for warning in &preview.document.warnings { ui.colored_label(egui::Color32::YELLOW,warning); }
+        }
+        if ui.add_enabled(form.gex_preview.is_some(), egui::Button::new(t(pt,"Export Haller / Grapevine XML (.gex)…","Exportar XML Haller / Grapevine (.gex)…"))).clicked() { action=Some(Action::ExportGex); }
+    });
     if let Some(doc) = &form.document {
         if !current {
             ui.colored_label(

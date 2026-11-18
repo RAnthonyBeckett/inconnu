@@ -4,6 +4,7 @@ use grapevine_workbench::{published_powers as powers, published_reference as sou
 pub(super) struct PublishedWindow {
     pub open: bool,
     pub target: Option<String>,
+    pub target_list: Option<String>,
     pub context: Option<source::Context>,
     pub book_id: Option<String>,
     pub query: String,
@@ -17,6 +18,7 @@ impl Default for PublishedWindow {
         Self {
             open: false,
             target: None,
+            target_list: None,
             context: None,
             book_id: None,
             query: String::new(),
@@ -77,7 +79,11 @@ impl InconnuApp {
             return;
         };
         self.published.quote = None;
-        match lib.published_reference_context(id, Role::Storyteller) {
+        match lib.published_reference_context_for_list(
+            id,
+            self.published.target_list.as_deref(),
+            Role::Storyteller,
+        ) {
             Ok(context) => {
                 self.published.context = Some(context);
                 self.published.request.trait_index = 0;
@@ -128,7 +134,13 @@ impl InconnuApp {
                 request.source_id.clear();
                 request.rename_to_source = false;
             }
-            match lib.quote_published_reference(id, &request, context.revision, Role::Storyteller) {
+            match lib.quote_published_reference_for_list(
+                id,
+                &request,
+                context.revision,
+                self.published.target_list.as_deref(),
+                Role::Storyteller,
+            ) {
                 Ok(quote) => {
                     self.published.quote = Some(quote);
                     self.published.message = None;
@@ -188,10 +200,18 @@ impl InconnuApp {
             .unwrap_or_else(|| "Vampire".into());
         let mut open = true;
         let mut action = None;
-        egui::Window::new(t(pt,"V20 / Dark Ages20th source attribution","Referências V20 / Dark Ages20th"))
+        egui::Window::new(t(pt,"Published source attribution","Referências de fontes publicadas"))
             .id(egui::Id::unique("published_sources_window")).default_size([720.0,620.0]).open(&mut open).show(ctx,|ui|{
             egui::ScrollArea::vertical().id_salt("published_sources_scroll").show(ui,|ui|{
                 let state=&mut self.published;
+                if let Some(profile)=grapevine_workbench::creature_profiles::profile(&creature_kind) {
+                    let previous=state.target_list.clone();
+                    ui.horizontal_wrapped(|ui| {
+                        ui.selectable_value(&mut state.target_list,None,t(pt,"Primary powers","Poderes principais"));
+                        ui.selectable_value(&mut state.target_list,Some(profile.secondary_power_list.clone()),t(pt,"Secondary powers","Poderes secundários"));
+                    });
+                    if previous!=state.target_list { state.request.id=uuid::Uuid::new_v4().to_string(); action=Some(Action::Reload); return; }
+                }
                 ui.label(t(pt,"Record a published name/level reference for an existing trait. XP, the saved game value and MET tier remain unchanged.","Registre uma referência de nome/nível publicado para uma característica existente. XP, valor salvo no jogo e nível MET permanecem iguais."));
                 let b=ui.button(t(pt,"Reload current traits / discard preview","Recarregar características / descartar prévia"));
                 if b.clicked(){action=Some(Action::Reload);}
@@ -200,7 +220,7 @@ impl InconnuApp {
                 ui.strong(&context.record_name);
                 let catalogue=match powers::catalogue(){Ok(c)=>c,Err(error)=>{ui.label(error.message);return;}};
                 let before=state.request.clone();
-                egui::ComboBox::from_id_salt("published_trait").selected_text(context.traits.get(state.request.trait_index).and_then(|row|row["Name"].as_str()).unwrap_or(t(pt,"No existing Discipline traits","Sem características de Disciplina"))).show_ui(ui,|ui|{
+                egui::ComboBox::from_id_salt("published_trait").selected_text(context.traits.get(state.request.trait_index).and_then(|row|row["Name"].as_str()).unwrap_or(t(pt,"No existing traits in the selected list","Sem características na lista selecionada"))).show_ui(ui,|ui|{
                     for (index,row) in context.traits.iter().enumerate(){ui.selectable_value(&mut state.request.trait_index,index,format!("{} · {}",row["Name"].as_str().unwrap_or("?"),row["Value"].as_str().unwrap_or("")));}
                 });
                 let previous_book=state.book_id.clone();

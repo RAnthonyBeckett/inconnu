@@ -17,6 +17,18 @@ pub struct CostBand {
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+pub struct FreeTraitCosts {
+    pub attribute: i64,
+    pub ability: i64,
+    pub background: i64,
+    pub primary_power: i64,
+    pub secondary_power: i64,
+    pub specialization: i64,
+    pub permanent_resource: i64,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Profile {
     pub kind: String,
     pub identity_fields: Vec<String>,
@@ -31,6 +43,12 @@ pub struct Profile {
     pub basic_power_base: i64,
     pub trait_xp_costs: BTreeMap<String, Vec<CostBand>>,
     pub power_tier_costs: BTreeMap<String, i64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub secondary_power_tier_costs: Option<BTreeMap<String, i64>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub free_trait_costs: Option<FreeTraitCosts>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub starting_resources: BTreeMap<String, i64>,
     #[serde(default)]
     pub cost_source: Option<crate::pricing::SourceCitation>,
     pub rules_reviewed: bool,
@@ -59,6 +77,43 @@ impl Catalogue {
         }
         let mut kinds = HashSet::new();
         for p in &value.profiles {
+            if p.free_trait_costs.as_ref().is_some_and(|costs| {
+                [
+                    costs.attribute,
+                    costs.ability,
+                    costs.background,
+                    costs.primary_power,
+                    costs.secondary_power,
+                    costs.specialization,
+                    costs.permanent_resource,
+                ]
+                .iter()
+                .any(|cost| !(0..=4096).contains(cost))
+            }) || p.starting_resources.len() > 64
+                || p.starting_resources.iter().any(|(key, value)| {
+                    !sheet::RESOURCE_FIELDS.contains(&key.as_str())
+                        || key.starts_with("Temp")
+                        || !(0..=4096).contains(value)
+                })
+                || p.secondary_power_tier_costs.as_ref().is_some_and(|costs| {
+                    costs.len() != 5
+                        || [
+                            "Basic",
+                            "Intermediate",
+                            "Advanced",
+                            "in_affiliation_adj",
+                            "out_of_affiliation_adj",
+                        ]
+                        .iter()
+                        .any(|key| {
+                            costs
+                                .get(*key)
+                                .is_none_or(|cost| !(0..=4096).contains(cost))
+                        })
+                })
+            {
+                return Err(invalid());
+            }
             if p.cost_source.is_some() {
                 p.checked_cost_source()?;
             }
