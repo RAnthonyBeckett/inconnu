@@ -48,6 +48,13 @@ Powers and creature profiles are data, in `app-rust/data/met_powers.json` and
 `app-rust/data/creature_profiles.json`. New powers and book editions can be added there
 without new Rust code, though a rebuild is needed after editing them.
 
+## Credits
+
+Inconnu is based on Grapevine by Adam Cerling. Cerling released the Grapevine 3.01 source
+code to the community under the Creative Commons Attribution-NonCommercial 2.5 license.
+His statement and the license are in LICENSE-GRAPEVINE.md, also online at
+https://github.com/RAnthonyBeckett/inconnu/blob/main/LICENSE-GRAPEVINE.md
+
 ## License
 
 Inconnu's own code is licensed under the [Apache License 2.0](LICENSE.txt). That license covers

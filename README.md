@@ -4,6 +4,7 @@
 
 Product branding: Inconnu
 A Frakd-Up Media App
+Based on Grapevine by Adam Cerling
 
 Inconnu is a character and Storyteller tool for Mind's Eye Theatre Vampire games, and it
 runs entirely on your own Windows PC. It opens your existing Grapevine files (GEX and GV3),
@@ -49,6 +50,13 @@ original databases, source books or game art are needed to build or run it.
 Powers and creature profiles are data, in `app-rust/data/met_powers.json` and
 `app-rust/data/creature_profiles.json`. New powers and book editions can be added there
 without new Rust code, though a rebuild is needed after editing them.
+
+## Credits
+
+Inconnu is based on Grapevine by Adam Cerling. Cerling released the Grapevine 3.01 source
+code to the community under the Creative Commons Attribution-NonCommercial 2.5 license.
+His statement, the license and where to find the released source are in
+[LICENSE-GRAPEVINE.md](LICENSE-GRAPEVINE.md).
 
 ## License
 
