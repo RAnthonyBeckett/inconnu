@@ -40,13 +40,13 @@ ADDITIONAL_SOURCES = {
 }
 RISEN_DISCIPLINES = {'Celerity', 'Fortitude', 'Obfuscate', 'Potence'}
 
-def pdf_pages(args, tag):
-    name = SOURCES[tag]
+def pdf_pages(args, tag, sources=SOURCES, additional=ADDITIONAL_SOURCES):
+    name = sources[tag]
     records = load(args.locators) + load(args.inventory)['reviewed_packet_evidence']
     identities = {(row['original_pdf_sha256'], row['pages']) for row in records
                   if row['file_name'] == name}
-    if name in ADDITIONAL_SOURCES:
-        identities.add(ADDITIONAL_SOURCES[name])
+    if name in additional:
+        identities.add(additional[name])
     cache_path = args.cache / f'{tag}.json'
     if args.pdf_root and not cache_path.exists():
         for path in sorted(args.pdf_root.rglob(name)):

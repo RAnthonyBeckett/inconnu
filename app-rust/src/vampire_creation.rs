@@ -673,6 +673,146 @@ fn configured_power_count(edit: &SheetEdit, key: &str, issues: &mut Vec<String>)
     Ok(values.len() as i64)
 }
 
+fn apply_reviewed_starting_resources(
+    profile: &creature_profiles::Profile,
+    request: &Request,
+    sheet: &mut SheetEdit,
+    issues: &mut Vec<String>,
+) {
+    let edition = profile
+        .cost_source
+        .as_ref()
+        .map(|source| source.edition.as_str());
+    let identity = |field: &str| {
+        request
+            .sheet
+            .identity
+            .get(field)
+            .map(|name| name.trim().to_ascii_lowercase())
+            .unwrap_or_default()
+    };
+    let from_sheet = |key: &str| request.sheet.resources.get(key).copied();
+    let has_review =
+        request.review_confirmed && !request.current_resources_reference.trim().is_empty();
+    match (profile.kind.as_str(), edition) {
+        ("Fera", Some("MET_Gurahl")) => {
+            if !has_review || identity("Faction") != "gurahl" || identity("Auspice") != "arcas" {
+                issues.push("Confirm the reviewed Gurahl Arcas starting breed and record the resource reference.".into());
+            }
+            let start = match identity("Breed").as_str() {
+                "homid" => Some((3, 4)),
+                "ursine" => Some((4, 5)),
+                _ => None,
+            };
+            if let Some((rage, gnosis)) = start {
+                for (key, expected) in [("Rage", rage), ("Gnosis", gnosis)] {
+                    if from_sheet(key).is_some_and(|value| value != expected) {
+                        issues.push(format!("{key} differs from the Gurahl breed baseline."));
+                    }
+                    sheet.resources.insert(key.into(), expected);
+                }
+            } else {
+                issues.push("Choose Homid or Ursine for the Gurahl starting template.".into());
+            }
+        }
+        ("KueiJin", Some("MET_Laws_of_the_East")) => {
+            let yin = from_sheet("YinChi").unwrap_or(3);
+            let yang = from_sheet("YangChi").unwrap_or(3);
+            if !has_review || !(1..=5).contains(&yin) || !(1..=5).contains(&yang) || yin + yang != 6
+            {
+                issues.push("Confirm the Kuei-Jin starting resources and distribute six traits between Yin and Yang, with at least one in each.".into());
+            }
+            for (key, value) in [("YinChi", yin), ("YangChi", yang)] {
+                sheet.resources.insert(key.into(), value);
+            }
+            if request.budget.willpower_free > 2 {
+                issues.push(
+                    "Starting Willpower may not exceed four for a first-Dharma Kuei-Jin.".into(),
+                );
+            }
+        }
+        ("Demon", Some("OWbN_Fallen_2021")) => {
+            let torment = match identity("House").as_str() {
+                "devils" | "devil" | "devourers" | "devourer" | "slayers" | "slayer" => Some(4),
+                "scourges" | "scourge" | "malefactors" | "malefactor" | "fiends" | "fiend"
+                | "defilers" | "defiler" => Some(3),
+                _ => None,
+            };
+            if !has_review
+                || torment.is_none()
+                || from_sheet("Torment").is_some_and(|value| Some(value) != torment)
+            {
+                issues.push("Confirm the Fallen House, House advantages and Torment baseline in the resource review.".into());
+            }
+            if let Some(torment) = torment {
+                sheet.resources.insert("Torment".into(), torment);
+            }
+            let mut virtues = [0; 3];
+            for (index, key) in ["Conscience", "Conviction", "Courage"]
+                .into_iter()
+                .enumerate()
+            {
+                virtues[index] = from_sheet(key).unwrap_or(2);
+                sheet.resources.insert(key.into(), virtues[index]);
+            }
+            if virtues.iter().all(|v| (1..=4).contains(v)) && virtues.iter().sum::<i64>() == 6 {
+                virtues.sort_unstable();
+                sheet
+                    .resources
+                    .insert("Willpower".into(), virtues[1] + virtues[2]);
+            } else {
+                issues.push(
+                    "Fallen starting Virtues must total six with at least one in each.".into(),
+                );
+            }
+        }
+        ("Mummy", Some("OWbN_Mummy_Genre_2024")) if !has_review => {
+            issues.push(
+                "Confirm the mortal stage, Dynasty and Rebirth allocations in the resource review."
+                    .into(),
+            );
+        }
+        _ => {}
+    }
+}
+
+fn check_mummy_initial_powers(sheet: &SheetEdit, issues: &mut Vec<String>) -> Result<()> {
+    let catalogue = crate::power_catalogue::builtin();
+    let mut paths = std::collections::BTreeSet::new();
+    let mut spell_paths = std::collections::BTreeSet::new();
+    for (list, families) in [("HekauList", &mut paths), ("SpellList", &mut spell_paths)] {
+        for row in rows(sheet, list)? {
+            let name = row["Name"].as_str().unwrap_or_default().trim();
+            let power = catalogue.entries.iter().find(|entry| {
+                entry.template_scope == "Mummy"
+                    && entry.target_list == list
+                    && entry.source_level == Some(1)
+                    && entry.name.eq_ignore_ascii_case(name)
+            });
+            if let Some(power) = power
+                && families.insert(power.family.as_str())
+            {
+                continue;
+            }
+            issues.push(format!(
+                "{list}: choose one reviewed first-rank entry per Hekau path."
+            ));
+        }
+    }
+    let favored = sheet
+        .identity
+        .get("Faction")
+        .and_then(|dynasty| creature_profiles::mummy_favored_hekau(dynasty));
+    if favored.is_none_or(|family| !paths.contains(family)) {
+        issues.push("Select a supported Amenti Dynasty and its favored Hekau.".into());
+    }
+    if paths != spell_paths {
+        issues
+            .push("Each starting spell must belong to one of the three chosen Hekau paths.".into());
+    }
+    Ok(())
+}
+
 fn configured_budget_quote(
     profile: &creature_profiles::Profile,
     input: &budget::Input,
@@ -736,8 +876,22 @@ fn configured_budget_quote(
             profile.max_flaw_credit
         ));
     }
+    let attribute_surplus = attribute_remaining.iter().map(|n| (-n).max(0)).sum::<i64>();
+    let rebirth_attributes = if profile.kind == "Mummy"
+        && profile
+            .cost_source
+            .as_ref()
+            .is_some_and(|source| source.edition == "OWbN_Mummy_Genre_2024")
+    {
+        2
+    } else {
+        0
+    };
+    if attribute_surplus < rebirth_attributes {
+        issues.push("Allocate both additional Rebirth Attributes.".into());
+    }
     let allocations = [
-        attribute_remaining.iter().map(|n| (-n).max(0)).sum(),
+        (attribute_surplus - rebirth_attributes).max(0),
         (-ability_remaining).max(0),
         (-background_remaining).max(0),
         (-primary_power_remaining).max(0),
@@ -955,6 +1109,10 @@ pub fn quote_configured_profile(
     let garou =
         profile.kind == "Werewolf" && source_edition == Some("MET_Laws_of_the_Wild_Revised");
     let mortal = profile.kind == "Mortal" && source_edition == Some("MET_Laws_of_the_Hunt_Revised");
+    let fera = profile.kind == "Fera" && source_edition == Some("MET_Gurahl");
+    let kuei = profile.kind == "KueiJin" && source_edition == Some("MET_Laws_of_the_East");
+    let fallen = profile.kind == "Demon" && source_edition == Some("OWbN_Fallen_2021");
+    let mummy = profile.kind == "Mummy" && source_edition == Some("OWbN_Mummy_Genre_2024");
     if risen {
         if risen_start.is_none_or(|start| !start.review_confirmed || start.potency > 5)
             || request.current_resources_reference.trim().is_empty()
@@ -991,7 +1149,16 @@ pub fn quote_configured_profile(
         issues.push("Starting Shadow Angst must be between 0 and 10.".into());
     }
     for (key, value) in &request.sheet.resources {
-        if shadow && key == "Angst" || risen && matches!(key.as_str(), "Pathos" | "Corpus") {
+        if shadow && key == "Angst"
+            || risen && matches!(key.as_str(), "Pathos" | "Corpus")
+            || fera && matches!(key.as_str(), "Rage" | "Gnosis")
+            || kuei && matches!(key.as_str(), "YinChi" | "YangChi")
+            || fallen
+                && matches!(
+                    key.as_str(),
+                    "Conscience" | "Conviction" | "Courage" | "Torment"
+                )
+        {
             continue;
         }
         if original.resources.get(key) != Some(value)
@@ -1009,6 +1176,7 @@ pub fn quote_configured_profile(
             .entry(key.clone())
             .or_insert(true);
     }
+    apply_reviewed_starting_resources(profile, request, &mut effective_sheet, &mut issues);
     if garou {
         if let Some([gnosis, rage, willpower]) = garou_starting_resources(&effective_sheet) {
             for (key, value) in [("Gnosis", gnosis), ("Rage", rage), ("Willpower", willpower)] {
@@ -1114,6 +1282,55 @@ pub fn quote_configured_profile(
     let secondary_power_count =
         configured_power_count(&request.sheet, &profile.secondary_power_list, &mut issues)?;
     let mut extra_free_spent = 0;
+    if fera || kuei || fallen || mummy {
+        let primary = rows(&request.sheet, &profile.primary_power_list)?;
+        if primary.iter().any(|row| {
+            row["Value"]
+                .as_str()
+                .is_none_or(|value| !value.eq_ignore_ascii_case("basic"))
+        }) {
+            issues.push("This starting template requires Basic primary powers.".into());
+        }
+        if (fera || mummy) && input.basic_power_count != 3 {
+            issues.push("Allocate exactly three starting primary powers for this template.".into());
+        }
+        if mummy {
+            check_mummy_initial_powers(&request.sheet, &mut issues)?;
+            if secondary_power_count != 3 {
+                issues.push(
+                    "Choose one starting spell or ritual for each of the three Hekau paths.".into(),
+                );
+            }
+        } else if secondary_power_count != 0 {
+            issues.push("Starting secondary powers require a separately reviewed grant.".into());
+        }
+        if kuei
+            && !primary.iter().any(|row| {
+                row["Name"].as_str().is_some_and(|name| {
+                    [
+                        "Black Wind",
+                        "Demon Shintai",
+                        "Hellweaving",
+                        "Iron Mountain",
+                        "Kiai",
+                    ]
+                    .iter()
+                    .any(|art| {
+                        name.to_ascii_lowercase()
+                            .starts_with(&art.to_ascii_lowercase())
+                    })
+                })
+            })
+        {
+            issues.push("Kuei-Jin creation requires a reviewed Basic Demon Art.".into());
+        }
+        if (fera || fallen || mummy) && input.willpower_free != 0 {
+            issues.push(
+                "The reviewed starting template requires a separate review for extra Willpower."
+                    .into(),
+            );
+        }
+    }
     if mage {
         let arete = 1 + i64::from(request.mage_arete_free);
         if arete > 3 {

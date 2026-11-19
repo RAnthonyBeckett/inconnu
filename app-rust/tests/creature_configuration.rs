@@ -12,10 +12,7 @@ fn all_thirteen_profiles_are_explicit_and_unknown_defaults_never_become_approved
     for p in &profiles.profiles {
         assert!(sheet::is_character_kind(&p.kind));
         assert!(p.owns_power_list(&p.primary_power_list));
-        if !matches!(
-            p.kind.as_str(),
-            "Vampire" | "Changeling" | "Mage" | "Mortal" | "Risen" | "Werewolf" | "Wraith"
-        ) {
+        if matches!(p.kind.as_str(), "Hunter" | "Various") {
             assert!(!p.rules_reviewed);
             assert_eq!(
                 p.trait_cost("Attribute", 0).unwrap_err().code,

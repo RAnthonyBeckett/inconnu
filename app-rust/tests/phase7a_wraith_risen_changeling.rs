@@ -252,7 +252,11 @@ fn bylaws_remain_distinct_from_catalogue_inclusion_and_profile_readiness() {
         reviewed,
         BTreeSet::from([
             "Changeling",
+            "Demon",
+            "Fera",
+            "KueiJin",
             "Mage",
+            "Mummy",
             "Mortal",
             "Risen",
             "Vampire",

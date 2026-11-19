@@ -160,7 +160,27 @@ pub(crate) fn configured_power_price(
             "Review the creature rules, source and local adoption before quoting.",
         ));
     }
-    let citation = rules.checked_cost_source()?;
+    let mut citation = rules.checked_cost_source()?;
+    if kind == "Fera" && citation.edition == "MET_Gurahl" {
+        citation = crate::creature_profiles::profile("Werewolf")
+            .ok_or_else(|| {
+                error(
+                    "CREATURE_COST_UNSUPPORTED",
+                    "The adopted Revised MET Gift and Rite rates are unavailable.",
+                )
+            })?
+            .checked_cost_source()?;
+    }
+    if kind == "Demon"
+        && citation.edition == "OWbN_Fallen_2021"
+        && target_list == rules.secondary_power_list
+        && fixed_xp_cost.is_none()
+    {
+        return Err(error(
+            "CREATURE_COST_UNSUPPORTED",
+            "Fallen rituals require an individually sourced XP cost.",
+        ));
+    }
     let tier_key = match tier {
         MetTier::Basic => "Basic",
         MetTier::Intermediate => "Intermediate",
@@ -222,5 +242,28 @@ pub(crate) fn configured_power_price(
     } else {
         ""
     };
-    Ok(CostPreview{rule_id:format!("configured.{}.{family:?}{list_suffix}{price_suffix}.v1",kind.to_ascii_lowercase()),profile:PricingProfile::ConfiguredCreature,base:base.to_string(),affiliation_adjustment:adjustment.to_string(),total:(base+adjustment).to_string(),library_prompt:format!("[For more detailed info check your library for \"{}.\"]",citation.book),citation,reviewed_portuguese_equivalent:None,purchase_enabled:false,coverage:"Configured source-reviewed creature price; local policy, eligibility, teacher and approval declarations are still required.".into()})
+    let coverage = if kind == "Vampire" && target_list == "RitualList" && citation.edition == "V20"
+    {
+        "Paid additional blood-magic ritual schedule from OWbN Character Bylaws, Experience Points. Rulebook citations identify source rank. Confirm the paradigm, eligible rank and whether the ritual is already included in the primary path."
+    } else {
+        "Configured source-reviewed creature price; local policy, eligibility, teacher and approval declarations are still required."
+    };
+    Ok(CostPreview {
+        rule_id: format!(
+            "configured.{}.{family:?}{list_suffix}{price_suffix}.v1",
+            kind.to_ascii_lowercase()
+        ),
+        profile: PricingProfile::ConfiguredCreature,
+        base: base.to_string(),
+        affiliation_adjustment: adjustment.to_string(),
+        total: (base + adjustment).to_string(),
+        library_prompt: format!(
+            "[For more detailed info check your library for \"{}.\"]",
+            citation.book
+        ),
+        citation,
+        reviewed_portuguese_equivalent: None,
+        purchase_enabled: false,
+        coverage: coverage.into(),
+    })
 }

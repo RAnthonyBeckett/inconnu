@@ -136,6 +136,93 @@ pub fn quote(
     )
 }
 
+fn check_mummy_hekau(
+    record: &Record,
+    power: &crate::power_catalogue::Definition,
+    relation: Option<ClanRelation>,
+) -> Result<()> {
+    let sheet = crate::sheet::extract(record);
+    let invalid = || {
+        error(
+            "MUMMY_HEKAU_PREREQUISITE",
+            "Confirm Dynasty, affinity, Balance and the prior Hekau rank.",
+        )
+    };
+    let favored = sheet
+        .identity
+        .get("Faction")
+        .and_then(|dynasty| crate::creature_profiles::mummy_favored_hekau(dynasty))
+        .ok_or_else(invalid)?;
+    let in_affinity = favored.eq_ignore_ascii_case(&power.family);
+    let expected = if in_affinity {
+        ClanRelation::InClan
+    } else {
+        ClanRelation::OutOfClan
+    };
+    if relation != Some(expected) {
+        return Err(invalid());
+    }
+    let list = power_list(record, "HekauList")?;
+    let rank_for = |family: &str| {
+        list["Traits"]
+            .as_array()
+            .into_iter()
+            .flatten()
+            .filter_map(|row| {
+                let name = row["Name"].as_str()?.trim();
+                let rank = if name.eq_ignore_ascii_case(family) {
+                    row["Value"].as_str()?.trim().parse::<i64>().ok()?
+                } else {
+                    let (prefix, rank) = name.rsplit_once(' ')?;
+                    if !prefix.eq_ignore_ascii_case(family) {
+                        return None;
+                    }
+                    rank.parse::<i64>().ok()?
+                };
+                (1..=5).contains(&rank).then_some(rank)
+            })
+            .max()
+            .unwrap_or(0)
+    };
+    let current = rank_for(&power.family);
+    let rank = i64::from(power.source_level.ok_or_else(invalid)?);
+    let eligible = if power.target_list == "HekauList" {
+        let balance = sheet.resources.get("Balance").copied().unwrap_or(0);
+        rank == current + 1 && rank <= balance && (in_affinity || rank <= rank_for(favored))
+    } else {
+        rank <= current
+    };
+    if !eligible {
+        return Err(invalid());
+    }
+    Ok(())
+}
+
+fn check_kuei_rite(record: &Record, tier: MetTier) -> Result<()> {
+    let required = match tier {
+        MetTier::Basic => 1,
+        MetTier::Intermediate => 2,
+        MetTier::Advanced => 3,
+    };
+    let list = power_list(record, "BackgroundList")?;
+    let has_rites = list["Traits"].as_array().into_iter().flatten().any(|row| {
+        row["Name"]
+            .as_str()
+            .is_some_and(|name| name.trim().eq_ignore_ascii_case("Rites"))
+            && row["Value"]
+                .as_str()
+                .and_then(|value| value.trim().parse::<i64>().ok())
+                .is_some_and(|rank| (required..=5).contains(&rank))
+    });
+    if !has_rites {
+        return Err(error(
+            "KUEI_RITES_BACKGROUND",
+            "This rite requires the corresponding Rites Background.",
+        ));
+    }
+    Ok(())
+}
+
 pub fn quote_from_catalogue(
     library_id: &str,
     revision: i64,
@@ -208,6 +295,34 @@ pub fn quote_from_catalogue(
         rules,
     )?;
     price.validate_scope(&record.kind)?;
+    match rules
+        .cost_source
+        .as_ref()
+        .map(|source| source.edition.as_str())
+    {
+        Some("MET_Gurahl") if record.kind == "Fera" => {
+            let sheet = crate::sheet::extract(record);
+            if sheet
+                .identity
+                .get("Faction")
+                .is_none_or(|value| !value.trim().eq_ignore_ascii_case("Gurahl"))
+            {
+                return Err(error(
+                    "FERA_BREED_REVIEW",
+                    "The reviewed Gift and Rite schedule applies to Gurahl.",
+                ));
+            }
+        }
+        Some("MET_Laws_of_the_East")
+            if record.kind == "KueiJin" && definition.target_list == "RitualList" =>
+        {
+            check_kuei_rite(record, definition.tier)?;
+        }
+        Some("OWbN_Mummy_Genre_2024") if record.kind == "Mummy" => {
+            check_mummy_hekau(record, definition, input.relation)?;
+        }
+        _ => {}
+    }
     if definition.template_scope == "Wraith"
         && definition.target_list == "ThornList"
         && definition.published_source_id.is_some()

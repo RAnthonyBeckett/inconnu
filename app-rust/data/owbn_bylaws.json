@@ -1125,6 +1125,529 @@
       "pc": "CoordinatorApproval",
       "npc": "Unregulated",
       "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "phase7c-fera-ananasi",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Ananasi"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-kitsune",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Kitsune"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-mokole",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Mokole"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-nagah",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Nagah"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-nuwisha",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Nuwisha"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-rokea",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Rokea"
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Extraordinary Changing Breeds"
+    },
+    {
+      "id": "phase7c-fera-gurahl",
+      "kind": "Fera",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Gurahl"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: Gurahl"
+    },
+    {
+      "id": "phase7c-kuei-bile-shintai",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Bile Shintai"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Disciplines"
+    },
+    {
+      "id": "phase7c-kuei-hell-weaving",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Hell-Weaving"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Disciplines"
+    },
+    {
+      "id": "phase7c-kuei-mibasham",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Mibasham"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Disciplines"
+    },
+    {
+      "id": "phase7c-kuei-fourth-age-elemental-shintai",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Fourth Age Elemental Shintai"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Disciplines"
+    },
+    {
+      "id": "phase7c-kuei-bakemono-rite",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Bakemono Rite"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-conciliatory-doorway-ritual",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Conciliatory Doorway Ritual"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-eating-the-scorpion",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Eating the Scorpion"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-inquisition-of-the-prying-magistrate",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Inquisition of the Prying Magistrate"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-memories-of-torments-unexperienced",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Memories of Torments Unexperienced"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-mists-of-the-lotus",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Mists of the Lotus"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-reading-the-leaves-of-wisdom",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Reading the Leaves of Wisdom"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-rite-of-beseeching-remembrance",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Rite of Beseeching Remembrance"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-ritual-of-the-invisible-mask",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Ritual of the Invisible Mask"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-shroud-over-death",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Shroud Over Death"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-speak-with-local-beasts",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Speak with Local Beasts"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-stoking-the-demon-s-fury",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Stoking the Demon’s Fury"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-the-ritual-of-the-black-peony",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "The Ritual of the Black Peony"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-the-ritual-of-guarded-alliance",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "The Ritual of Guarded Alliance"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-tithing-to-the-ancestor",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Tithing to the Ancestor"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-kuei-wisdom-of-the-spirit-ways",
+      "kind": "KueiJin",
+      "selector": {
+        "type": "power",
+        "value": "Wisdom of the Spirit Ways"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Kuei-Jin Controlled Items: Rare Rites"
+    },
+    {
+      "id": "phase7c-demon-baron",
+      "kind": "Demon",
+      "selector": {
+        "type": "identity",
+        "field": "Rank",
+        "value": "Baron"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Demon Controlled Items: Fallen ranks"
+    },
+    {
+      "id": "phase7c-demon-duke",
+      "kind": "Demon",
+      "selector": {
+        "type": "identity",
+        "field": "Rank",
+        "value": "Duke"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Demon Controlled Items: Fallen ranks"
+    },
+    {
+      "id": "phase7c-demon-archduke",
+      "kind": "Demon",
+      "selector": {
+        "type": "identity",
+        "field": "Rank",
+        "value": "Archduke"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Demon Controlled Items: Fallen ranks"
+    },
+    {
+      "id": "phase7c-demon-overlord",
+      "kind": "Demon",
+      "selector": {
+        "type": "identity",
+        "field": "Rank",
+        "value": "Overlord"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Demon Controlled Items: Fallen ranks"
+    },
+    {
+      "id": "phase7c-mummy-asek-sen",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Asek-Sen"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-bane-mummy",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Bane Mummy"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-udja-sen",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Udja-Sen"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-cabiri",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Cabiri"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-capococoha",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Capococoha"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-ishmaelites",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Ishmaelites"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-wu-tian",
+      "kind": "Mummy",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Wu T’ian"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Creature Types"
+    },
+    {
+      "id": "phase7c-mummy-spell-of-life",
+      "kind": "Mummy",
+      "selector": {
+        "type": "power",
+        "value": "Spell of Life"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Rituals of Immortality"
+    },
+    {
+      "id": "phase7c-mummy-elixir-of-immortality",
+      "kind": "Mummy",
+      "selector": {
+        "type": "power",
+        "value": "Elixir of Immortality"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Rituals of Immortality"
+    },
+    {
+      "id": "phase7c-mummy-ritual-of-going-westward",
+      "kind": "Mummy",
+      "selector": {
+        "type": "power",
+        "value": "Ritual of Going Westward"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mummy Controlled Items: Rituals of Immortality"
+    },
+    {
+      "id": "phase7c-hunter-shih",
+      "kind": "Hunter",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Shih"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Shih"
     }
   ],
   "character_reference": "https://council.owbn.net/en/charter-bylaws/character-bylaws/"

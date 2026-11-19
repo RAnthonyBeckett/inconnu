@@ -153,6 +153,7 @@ fn missing_costs_overdraw_unreviewed_rules_and_invalid_resources_fail_closed() {
 #[test]
 fn secondary_prices_can_fall_back_to_primary_and_defaults_preserve_old_wire() {
     let mut p = reviewed("Wraith");
+    p.secondary_power_tier_costs = None;
     let fallback = pricing::configured_preview_for_list(
         "Wraith",
         PurchaseFamily::Other,
@@ -205,7 +206,9 @@ fn secondary_prices_can_fall_back_to_primary_and_defaults_preserve_old_wire() {
         )
         .is_err()
     );
-    let legacy = serde_json::to_value(creature_profiles::profile("Vampire").unwrap()).unwrap();
+    let mut legacy_profile = creature_profiles::profile("Vampire").unwrap().clone();
+    legacy_profile.secondary_power_tier_costs = None;
+    let legacy = serde_json::to_value(legacy_profile).unwrap();
     for key in [
         "free_trait_costs",
         "starting_resources",

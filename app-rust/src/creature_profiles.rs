@@ -62,6 +62,17 @@ pub struct Catalogue {
     pub version: u32,
     pub profiles: Vec<Profile>,
 }
+pub(crate) fn mummy_favored_hekau(dynasty: &str) -> Option<&'static str> {
+    match dynasty.trim().to_ascii_lowercase().as_str() {
+        "khri-habi" => Some("Alchemy"),
+        "kher-minu" => Some("Amulets"),
+        "mesektet" => Some("Celestial"),
+        "sakhmu" => Some("Effigy"),
+        "sefekhi" => Some("Necromancy"),
+        _ => None,
+    }
+}
+
 fn invalid() -> crate::model::AppError {
     error(
         "CREATURE_PROFILE_INVALID",

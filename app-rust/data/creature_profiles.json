@@ -73,7 +73,22 @@
         "out_of_affiliation_adj": 1
       },
       "rules_reviewed": true,
-      "rules_note": "Existing reviewed MET Revised rules remain authoritative."
+      "rules_note": "Existing reviewed MET Revised rules remain authoritative.",
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 4,
+        "Advanced": 6,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "V20 ritual rank reference",
+        "edition": "V20",
+        "system": "V20 ritual ranks; paid rates from OWbN Character Bylaws, Experience Points",
+        "printed_page": 230,
+        "pdf_page_1based": 238,
+        "original_pdf_sha256": "a37b4e8d65258e4430a52591ed506cecf60ae925a824ba7d4d52cac0b19ec45e"
+      }
     },
     {
       "kind": "Werewolf",
@@ -517,6 +532,7 @@
     {
       "kind": "Fera",
       "identity_fields": [
+        "Faction",
         "Tribe",
         "Auspice",
         "Breed",
@@ -547,18 +563,6 @@
           {
             "max_next": 32767,
             "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
           }
         ],
         "Willpower": [
@@ -597,8 +601,37 @@
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Gurahl Arcas creation only. Changing Breeds 2, PDF 47, 49 and 63 supply breed and pool baselines. Purchase pricing adopts the Revised MET Werewolf Gift and Rite schedules (Laws of the Wild Revised, p. 173) for Gurahl. Additional starting Gifts and Rites require separate review.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 0,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Gnosis": 4,
+        "Rage": 3,
+        "Willpower": 6
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 4,
+        "Advanced": 6,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Laws of the Wild: Changing Breeds 2",
+        "edition": "MET_Gurahl",
+        "system": "Mind’s Eye Theatre",
+        "printed_page": 47,
+        "pdf_page_1based": 49,
+        "original_pdf_sha256": "16d01c3efebd6d1737de43bd62fb2325bc586a9fc214656372d6aa792046483d"
+      }
     },
     {
       "kind": "Various",
@@ -675,17 +708,18 @@
       "kind": "Mummy",
       "identity_fields": [
         "Faction",
+        "Path",
         "Nature",
         "Demeanor"
       ],
       "primary_power_list": "HekauList",
       "secondary_power_list": "SpellList",
       "attribute_priorities": [
-        7,
-        5,
+        6,
+        4,
         3
       ],
-      "ability_base": 5,
+      "ability_base": 10,
       "background_base": 5,
       "free_traits_base": 5,
       "max_negative_credit": 5,
@@ -698,55 +732,15 @@
             "cost": 1
           }
         ],
-        "Background": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
         "Willpower": [
           {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
             "max_next": 10,
-            "cost": 2
+            "cost": 3
           }
         ],
         "Sekhem": [
           {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ba": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ka": [
-          {
-            "max_next": 32767,
+            "max_next": 10,
             "cost": 3
           }
         ]
@@ -758,13 +752,46 @@
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "First-Balance Amenti Rebirth. Review the completed mortal stage before using the final Free Traits. Ba and Ka are optional backgrounds. Hekau and Spell costs use the Laws of the Resurrection staircase reproduced in the 2024 Genre packet. Magic packet out-of-affinity Spell figures differ and need review.",
+      "secondary_power_base": 3,
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 0,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Willpower": 5,
+        "Balance": 1,
+        "Sekhem": 1,
+        "Ba": 0,
+        "Ka": 0
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 1,
+        "Intermediate": 3,
+        "Advanced": 5,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "cost_source": {
+        "book": "OWbN Mummy Genre Packet",
+        "edition": "OWbN_Mummy_Genre_2024",
+        "system": "Mind’s Eye Theatre",
+        "printed_page": 26,
+        "pdf_page_1based": 27,
+        "original_pdf_sha256": "57175197de19ee9b07396fd6e245477b1cdf10bcb5490ee40312733a72de8ae6"
+      }
     },
     {
       "kind": "KueiJin",
       "identity_fields": [
         "Faction",
+        "Path",
         "Nature",
         "Demeanor"
       ],
@@ -790,66 +817,59 @@
         ],
         "Background": [
           {
-            "max_next": 32767,
+            "max_next": 5,
             "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
           }
         ],
         "Willpower": [
           {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
             "max_next": 10,
-            "cost": 2
-          }
-        ],
-        "Hun": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Po": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "DharmaTraits": [
-          {
-            "max_next": 32767,
             "cost": 3
           }
         ]
       },
       "power_tier_costs": {
-        "Basic": 3,
-        "Intermediate": 6,
-        "Advanced": 9,
+        "Basic": 4,
+        "Intermediate": 7,
+        "Advanced": 10,
         "in_affiliation_adj": 0,
-        "out_of_affiliation_adj": 1
+        "out_of_affiliation_adj": 0
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "First-Dharma creation uses Laws of the East, PDF 47–52. Yin and Yang share six starting traits. Demon Chi is situational and starts uncharged. Review the Demon Art and order of starting powers.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 4,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Willpower": 2,
+        "Hun": 1,
+        "Po": 3,
+        "YinChi": 3,
+        "YangChi": 3,
+        "DemonChi": 0,
+        "DharmaTraits": 1
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 4,
+        "Advanced": 6,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Laws of the East",
+        "edition": "MET_Laws_of_the_East",
+        "system": "Mind’s Eye Theatre",
+        "printed_page": 125,
+        "pdf_page_1based": 127,
+        "original_pdf_sha256": "63a1e0d8ce15960f3a8260b4ff529a3b019a168bb3693f5510a1c4f244b67585"
+      }
     },
     {
       "kind": "Hunter",
@@ -945,6 +965,9 @@
       "kind": "Demon",
       "identity_fields": [
         "Faction",
+        "House",
+        "Path",
+        "Rank",
         "Nature",
         "Demeanor"
       ],
@@ -964,53 +987,31 @@
       "trait_xp_costs": {
         "Attribute": [
           {
-            "max_next": 32767,
+            "max_next": 20,
+            "cost": 1
+          }
+        ],
+        "Ability": [
+          {
+            "max_next": 6,
             "cost": 1
           }
         ],
         "Background": [
           {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Willpower": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
             "max_next": 5,
             "cost": 1
-          },
-          {
-            "max_next": 10,
-            "cost": 2
           }
         ],
         "Faith": [
           {
-            "max_next": 32767,
-            "cost": 3
+            "max_next": 10,
+            "cost": 6
           }
         ],
-        "Torment": [
+        "Willpower": [
           {
-            "max_next": 32767,
+            "max_next": 15,
             "cost": 3
           }
         ]
@@ -1022,8 +1023,40 @@
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Standard 2021 Fallen. Choose House and confirm its advantages and Primary Lore with the reviewer. Torment derives from House and Willpower from the highest two of six starting Virtue Traits. Rituals use individual source costs.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Willpower": 4,
+        "Faith": 3,
+        "Torment": 3,
+        "Conscience": 2,
+        "Conviction": 2,
+        "Courage": 2
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 0,
+        "Intermediate": 0,
+        "Advanced": 0,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "OWbN Fallen Genre Packet",
+        "edition": "OWbN_Fallen_2021",
+        "system": "Mind’s Eye Theatre",
+        "printed_page": 43,
+        "pdf_page_1based": 46,
+        "original_pdf_sha256": "4c667c5d541248ef80b4af641e353be379e3d0a9469b6790ca1d6f6ef3836391"
+      }
     },
     {
       "kind": "Risen",
