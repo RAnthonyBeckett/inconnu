@@ -1,6 +1,6 @@
-# Inconnu 0.48.0-beta.2 — Windows Vampire beta
+# Inconnu 0.48.0-beta.3 — Windows beta
 
-This beta is ready for local testing of the Vampire workflow. Inconnu is not officially
+This beta supports local testing of the reviewed creature profiles. Inconnu is not officially
 sponsored or supported by OWbN (maybe one day!), and this beta does not claim complete rules, content or original Grapevine parity.
 
 ## Start
@@ -30,19 +30,22 @@ The included Synthetic Examples are fabricated and suitable for a first look.
 ## Shared profile forms
 
 Shared creation, pricing and source-review forms recognize all thirteen character kinds.
-The currently reviewed automated rules/powers remain Vampire-focused. Other creature
-profiles are explicitly proposed defaults: use them to inspect the structure, not as
-approved rules. Missing source review, unpriced allocations and unsupported cases block
-application. Existing Vampire receipts, original-cost refunds and legacy wire snapshots
-remain regression-tested. This beta does not add new real non-Vampire power content.
+Reviewed profiles are available for Vampire, Changeling, Wraith, Risen, Werewolf, Mage
+and Mortal. Storytellers review starting powers, resources and eligibility before
+applying a creation quote. The Wraith uses a local Psyche template with separate
+Shadow review. The Risen uses a local starting template and can record a Storyteller's
+transcription from a Wraith sheet. Werewolf resources follow the selected breed, auspice
+and tribe. Mage starting Quintessence follows Avatar, and Sphere ranks are limited by
+Arete. Hunter special Edge references are available while its creation and advancement
+prices remain pending. The remaining unreviewed profiles stay gated.
 
 ## Known beta limits
 
-The target is Windows and local Vampire play. Network identity, direct game/organization
-sharing and other-family rules remain future work. Local work modes are not authentication.
+The target is local play on Windows. Network identity and direct game or organization
+sharing remain future work. Local work modes are not authentication.
 Automatic rules/prerequisites and content coverage are partial. Forty supported MET powers
-have optional mechanics;288V20/DA20 name/level facts are a partial catalogue, not a full-book
-claim or an automatic MET-tier conversion. Unsupported/exceptional cases need explicit staff
+have optional mechanics. Source catalogues cover selected names, ranks and provenance across editions.
+The display identifies native MET tiers and explicitly converted levels. Unsupported/exceptional cases need explicit staff
 review; imported labels are not verified rules. Source books are not bundled.
 
 Monthly limits use a qualified saved policy snapshot and manual applicability/eligibility

@@ -141,7 +141,7 @@ impl CatalogueEntry {
     pub fn power_citation(&self, price: &CostPreview) -> Option<SourceCitation> {
         let source = self.source?;
         if let Some(definition) = builtin().lookup(&self.stable_id)
-            && definition.published_source_id.is_some()
+            && (definition.published_source_id.is_some() || definition.native_source_id.is_some())
         {
             return definition.published_source_citation().ok().flatten();
         }
@@ -170,6 +170,8 @@ pub struct Definition {
     pub source_level: Option<u8>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub published_source_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub native_source_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub level_kind: Option<LevelKind>,
     pub stable_id: String,
@@ -219,7 +221,10 @@ impl Catalogue {
         for p in &value.entries {
             let profile =
                 crate::creature_profiles::profile(&p.template_scope).ok_or_else(invalid)?;
-            if p.level_kind.is_some() && p.source_level.is_none()
+            if p.native_source_id
+                .as_ref()
+                .is_some_and(|id| id.len() > 256 || p.published_source_id.is_some())
+                || p.level_kind.is_some() && p.source_level.is_none()
                 || p.source_level
                     .is_some_and(|level| !(1..=12).contains(&level))
                 || p.tier_mapping_basis == Some(TierMappingBasis::ConvertedFrom20thLevel)
@@ -350,6 +355,38 @@ impl CatalogueEntry {
 
 impl Definition {
     pub(crate) fn published_source_citation(&self) -> Result<Option<SourceCitation>> {
+        if let Some(id) = &self.native_source_id {
+            let invalid = || {
+                error(
+                    "CATALOGUE_SOURCE_PROFILE_MISMATCH",
+                    "Review the native MET power and its separate configured cost source.",
+                )
+            };
+            let native = builtin().lookup(id).ok_or_else(invalid)?;
+            if self.template_scope != "Risen"
+                || self.target_list != "DisciplineList"
+                || !matches!(
+                    self.family.as_str(),
+                    "Celerity" | "Fortitude" | "Obfuscate" | "Potence"
+                )
+                || self.tier_mapping_basis != Some(TierMappingBasis::NativeMetTier)
+                || native.profile != PricingProfile::MetLawsOfTheNightRevised
+                || !native.source_reviewed
+                || native.family != self.family
+                || native.name != self.name
+                || native.tier != self.tier
+                || native.printed_page != self.printed_page
+                || native.pdf_page_1based != self.pdf_page_1based
+                || native.original_pdf_sha256 != self.original_pdf_sha256
+            {
+                return Err(invalid());
+            }
+            return native
+                .legacy_preview
+                .as_ref()
+                .map(|preview| Some(preview.power_source.citation.clone()))
+                .ok_or_else(invalid);
+        }
         let Some(id) = &self.published_source_id else {
             return Ok(None);
         };

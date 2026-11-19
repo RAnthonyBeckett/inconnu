@@ -810,6 +810,321 @@
       "pc": "DisallowedForPc",
       "npc": "CoordinatorNotify",
       "citation": "OWbN Character Bylaws, Changeling Controlled Items"
+    },
+    {
+      "id": "werewolf-rite-of-conquest",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "power",
+        "value": "Rite of Conquest"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: learning the Rite of Conquest"
+    },
+    {
+      "id": "werewolf-rite-severed-strings",
+      "kind": "Werewolf",
+      "selector": {
+        "type": "power",
+        "value": "Rite of Severed Strings and Hateful Rebirth"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Changing Breeds Controlled Items: learning the Rite of Severed Strings and Hateful Rebirth"
+    },
+    {
+      "id": "mage-disparates",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Disparates"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Disparate/Craft Mages"
+    },
+    {
+      "id": "mage-craft-mages",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Craft Mages"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Disparate/Craft Mages"
+    },
+    {
+      "id": "mage-disparate-craft-mages",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Disparate/Craft Mages"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Disparate/Craft Mages"
+    },
+    {
+      "id": "mage-hollow-ones",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Hollow Ones"
+      },
+      "authority": "BylawMandated",
+      "pc": "Unregulated",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Hollow Ones"
+    },
+    {
+      "id": "mage-revenant",
+      "kind": "Mage",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Revenant Mages"
+      },
+      "authority": "BylawMandated",
+      "pc": "DisallowedForPc",
+      "npc": "CoordinatorApproval",
+      "citation": "OWbN Character Bylaws, Mage Controlled Items: Revenant Mages"
+    },
+    {
+      "id": "mortal-true-faith-1",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 1
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-2",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 2
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-3",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 3
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-4",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 4
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-5",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 5
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorNotify",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-6",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 6
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-7",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 7
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-8",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 8
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "mortal-true-faith-9",
+      "kind": "Mortal",
+      "selector": {
+        "type": "power",
+        "value": "True Faith",
+        "level": 9
+      },
+      "authority": "BylawMandated",
+      "pc": "CouncilVote",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, General Controlled Items: True Faith"
+    },
+    {
+      "id": "hunter-wayward",
+      "kind": "Hunter",
+      "selector": {
+        "type": "identity",
+        "field": "Faction",
+        "value": "Wayward"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "CoordinatorNotify",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Imbued Wayward"
+    },
+    {
+      "id": "hunter-corrupt-edges",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Corrupt Edges"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-divine-edges",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Divine Edges"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-cremate",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Cremate"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-denounce",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Denounce"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-infuse",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Infuse"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-channel",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Channel"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-enthrall",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Enthrall"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
+    },
+    {
+      "id": "hunter-transport",
+      "kind": "Hunter",
+      "selector": {
+        "type": "power",
+        "value": "Transport"
+      },
+      "authority": "BylawMandated",
+      "pc": "CoordinatorApproval",
+      "npc": "Unregulated",
+      "citation": "OWbN Character Bylaws, Hunter Controlled Items: Corrupt and Divine Edges"
     }
   ],
   "character_reference": "https://council.owbn.net/en/charter-bylaws/character-bylaws/"

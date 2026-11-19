@@ -135,7 +135,7 @@ fn unknown_power_missing_profile_or_affiliation_and_wrong_kind_fail_closed() {
     );
 
     assert_eq!(
-        preview("Werewolf", None, profile(), &[], &[])
+        preview("Hunter", None, profile(), &[], &[])
             .unwrap_err()
             .code,
         "UNSUPPORTED_PRICING_SCOPE"

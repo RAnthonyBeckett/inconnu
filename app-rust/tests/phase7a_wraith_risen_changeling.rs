@@ -248,5 +248,16 @@ fn bylaws_remain_distinct_from_catalogue_inclusion_and_profile_readiness() {
         .filter(|p| p.rules_reviewed)
         .map(|p| p.kind.as_str())
         .collect();
-    assert_eq!(reviewed, BTreeSet::from(["Changeling", "Vampire"]));
+    assert_eq!(
+        reviewed,
+        BTreeSet::from([
+            "Changeling",
+            "Mage",
+            "Mortal",
+            "Risen",
+            "Vampire",
+            "Werewolf",
+            "Wraith"
+        ])
+    );
 }

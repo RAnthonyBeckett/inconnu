@@ -197,6 +197,19 @@ pub(crate) fn configured_power_price(
                     "No configured affiliation price.",
                 )
             })?;
+        let adjustment = if kind == "Mage"
+            && target_list == "SphereList"
+            && citation.edition == "MET_Laws_of_Ascension"
+        {
+            adjustment
+                * match tier {
+                    MetTier::Basic => 1,
+                    MetTier::Intermediate => 2,
+                    MetTier::Advanced => 3,
+                }
+        } else {
+            adjustment
+        };
         (base, adjustment)
     };
     let price_suffix = if fixed_xp_cost.is_some() {

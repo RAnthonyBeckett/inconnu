@@ -477,7 +477,67 @@ fn render_configured_form(
             ui.label(format!("{key}: {value}"));
         }
     }
-    if grapevine_workbench::vampire_creation::uses_c20_changeling_creation(profile) {
+    if grapevine_workbench::vampire_creation::uses_separate_shadow(profile) {
+        ui.checkbox(
+            &mut request.shadow_review,
+            tr(
+                language,
+                "Confirm reviewed Shadow Thorn and Angst allocations",
+                "Confirmar revisão de Espinhos e Angústia da Sombra",
+            ),
+        );
+    } else if profile.kind == "Risen" && profile.rules_reviewed {
+        let before_start = request.risen_start.clone().unwrap_or_default();
+        let mut start = before_start.clone();
+        ui.checkbox(
+            &mut start.from_wraith,
+            tr(
+                language,
+                "Transcribe from a reviewed Wraith sheet",
+                "Transcrever de uma ficha revisada de Aparicao",
+            ),
+        );
+        ui.checkbox(
+            &mut start.review_confirmed,
+            tr(
+                language,
+                "Confirm Risen origin and resource review",
+                "Confirmar a revisao de origem e recursos do Renascido",
+            ),
+        );
+        ui.horizontal(|ui| {
+            ui.label(tr(language, "Potency", "Potencia"));
+            ui.add(egui::DragValue::new(&mut start.potency).range(0..=5));
+        });
+        for key in ["Pathos", "Corpus"] {
+            let default = profile
+                .starting_resources
+                .get(key)
+                .copied()
+                .unwrap_or_default();
+            ui.horizontal(|ui| {
+                ui.label(key);
+                let mut value = request.sheet.resources.get(key).copied().unwrap_or(default);
+                if ui
+                    .add(egui::DragValue::new(&mut value).range(0..=4096))
+                    .changed()
+                {
+                    request.sheet.resources.insert(key.into(), value);
+                }
+                if key == "Corpus"
+                    && start.from_wraith
+                    && ui
+                        .small_button(tr(language, "Record value", "Registrar valor"))
+                        .clicked()
+                {
+                    request.sheet.resources.insert(key.into(), value);
+                }
+            });
+        }
+        if start != before_start {
+            request.risen_start = Some(start);
+        }
+    } else if grapevine_workbench::vampire_creation::uses_c20_changeling_creation(profile) {
         use grapevine_workbench::vampire_creation::SeemingBonus;
         ui.horizontal(|ui| {
             ui.label(tr(
@@ -506,6 +566,16 @@ fn render_configured_form(
                 "Força de Vontade inicial adicional (características livres)",
             ));
             ui.add(egui::DragValue::new(&mut request.budget.willpower_free).range(0..=4096));
+        });
+    }
+    if profile.kind == "Mage" && profile.rules_reviewed {
+        ui.horizontal(|ui| {
+            ui.label(tr(
+                language,
+                "Additional starting Arete (2 Free Traits each)",
+                "Arete inicial adicional (2 caracteristicas livres cada)",
+            ));
+            ui.add(egui::DragValue::new(&mut request.mage_arete_free).range(0..=2));
         });
     }
     crate::sheet_ui::render(ui, &mut request.sheet, language, summaries);

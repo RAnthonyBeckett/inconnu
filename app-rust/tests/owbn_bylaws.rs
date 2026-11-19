@@ -271,7 +271,7 @@ fn binding_and_bylaw_rules_take_precedence_over_local_and_book_rules() {
 }
 
 #[test]
-fn creation_requires_the_specific_risen_reference_and_still_requires_reviewed_costs() {
+fn creation_requires_the_specific_risen_reference_and_a_reviewed_start() {
     let dir = tempfile::tempdir().unwrap();
     let mut lib = Library::create(&dir.path().join("synthetic.gvlib"), "Synthetic").unwrap();
     let id = lib
@@ -294,7 +294,11 @@ fn creation_requires_the_specific_risen_reference_and_still_requires_reviewed_co
         let q = lib.quote_vampire_creation(&id, &request, rev, ST).unwrap();
         assert!(!q.ready);
         assert!(!q.issues.iter().any(|issue| issue.starts_with("risen:")));
-        assert!(q.issues.iter().any(|issue| issue.contains("not reviewed")));
+        assert!(
+            q.issues
+                .iter()
+                .any(|issue| issue.starts_with("Confirm the Risen origin"))
+        );
     }
 }
 

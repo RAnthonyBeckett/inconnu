@@ -66,6 +66,12 @@ pub enum SeemingBonus {
 pub struct Request {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wilder_bonus: Option<SeemingBonus>,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub shadow_review: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub risen_start: Option<RisenStart>,
+    #[serde(default, skip_serializing_if = "crate::vampire_creation::zero_u8")]
+    pub mage_arete_free: u8,
     pub id: String,
     pub sheet: SheetEdit,
     pub budget: budget::Input,
@@ -87,6 +93,18 @@ pub struct Request {
     pub create_as_npc: bool,
     pub specializations: Vec<String>,
 }
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RisenStart {
+    pub from_wraith: bool,
+    pub potency: u8,
+    pub review_confirmed: bool,
+}
+
+fn zero_u8(value: &u8) -> bool {
+    *value == 0
+}
+
 #[derive(Clone, Debug)]
 pub struct Context {
     pub revision: i64,
@@ -207,6 +225,9 @@ pub fn initial_request(record: &Record) -> Request {
         current_resources_reference: String::new(),
         manual_power_reference: String::new(),
         wilder_bonus: None,
+        shadow_review: false,
+        risen_start: None,
+        mage_arete_free: 0,
         owbn_evidence: Default::default(),
         create_as_npc: false,
         specializations: vec![],
@@ -519,6 +540,43 @@ fn inapplicable_generation() -> generation::GenerationLimits {
     }
 }
 
+pub fn uses_separate_shadow(profile: &creature_profiles::Profile) -> bool {
+    profile.kind == "Wraith"
+        && profile
+            .cost_source
+            .as_ref()
+            .is_some_and(|source| source.book == "Oblivion")
+}
+
+fn garou_starting_resources(edit: &SheetEdit) -> Option<[i64; 3]> {
+    let identity = |key| {
+        edit.identity
+            .get(key)
+            .map(|value| value.trim().to_ascii_lowercase())
+    };
+    let gnosis = match identity("Breed")?.as_str() {
+        "homid" => 1,
+        "metis" => 3,
+        "lupus" => 5,
+        _ => return None,
+    };
+    let rage = match identity("Auspice")?.as_str() {
+        "ragabash" => 1,
+        "theurge" => 2,
+        "philodox" => 3,
+        "galliard" => 4,
+        "ahroun" => 5,
+        _ => return None,
+    };
+    let willpower = match identity("Tribe")?.as_str() {
+        "bone gnawers" | "children of gaia" | "wendigo" => 4,
+        "black furies" | "fianna" | "get of fenris" | "glass walkers" | "red talons"
+        | "shadow lords" | "silent striders" | "silver fangs" | "uktena" => 3,
+        _ => return None,
+    };
+    Some([gnosis, rage, willpower])
+}
+
 pub fn uses_c20_changeling_creation(profile: &creature_profiles::Profile) -> bool {
     profile.kind == "Changeling" && profile.secondary_power_base.is_some()
 }
@@ -619,6 +677,7 @@ fn configured_budget_quote(
     profile: &creature_profiles::Profile,
     input: &budget::Input,
     secondary_power_count: i64,
+    additional_free_spent: i64,
 ) -> ConfiguredBudgetQuote {
     let mut issues = Vec::new();
     let mut priorities = input.priorities;
@@ -682,7 +741,11 @@ fn configured_budget_quote(
         (-ability_remaining).max(0),
         (-background_remaining).max(0),
         (-primary_power_remaining).max(0),
-        (-secondary_power_remaining.unwrap_or(-secondary_power_count)).max(0),
+        if uses_separate_shadow(profile) {
+            0
+        } else {
+            (-secondary_power_remaining.unwrap_or(-secondary_power_count)).max(0)
+        },
         input.specialization_count,
         input.willpower_free,
     ];
@@ -696,12 +759,10 @@ fn configured_budget_quote(
             costs.specialization,
             costs.permanent_resource,
         ];
-        let spent = allocations
-            .into_iter()
-            .zip(prices)
-            .try_fold(input.merit_cost, |sum, (count, price)| {
-                sum.checked_add(count.checked_mul(price)?)
-            });
+        let spent = allocations.into_iter().zip(prices).try_fold(
+            input.merit_cost + additional_free_spent,
+            |sum, (count, price)| sum.checked_add(count.checked_mul(price)?),
+        );
         if spent.is_none() {
             issues.push("Configured Free Trait arithmetic exceeds supported bounds.".into());
         }
@@ -879,7 +940,60 @@ pub fn quote_configured_profile(
         issues.push("Review resource sharing in the main editor; creation cannot change resource visibility.".into());
     }
     let mut effective_sheet = request.sheet.clone();
+    let shadow = uses_separate_shadow(profile);
+    let risen = profile.kind == "Risen"
+        && profile
+            .cost_source
+            .as_ref()
+            .is_some_and(|source| source.edition == "OWbN_Risen_2019");
+    let risen_start = risen.then_some(request.risen_start.as_ref()).flatten();
+    let source_edition = profile
+        .cost_source
+        .as_ref()
+        .map(|source| source.edition.as_str());
+    let mage = profile.kind == "Mage" && source_edition == Some("MET_Laws_of_Ascension");
+    let garou =
+        profile.kind == "Werewolf" && source_edition == Some("MET_Laws_of_the_Wild_Revised");
+    let mortal = profile.kind == "Mortal" && source_edition == Some("MET_Laws_of_the_Hunt_Revised");
+    if risen {
+        if risen_start.is_none_or(|start| !start.review_confirmed || start.potency > 5)
+            || request.current_resources_reference.trim().is_empty()
+        {
+            issues.push("Confirm the Risen origin, Potency and reviewed starting resources with a Storyteller reference.".into());
+        }
+        if input.willpower_free != 0 || !request.specializations.is_empty() {
+            issues.push("The Risen template requires separate review for optional Willpower and specializations.".into());
+        }
+    }
+    let shadow_evidence =
+        request.shadow_review && !request.current_resources_reference.trim().is_empty();
+    if shadow && (input.willpower_free != 0 || !request.specializations.is_empty()) {
+        issues.push(
+            "Additional starting Willpower and specializations need a separate reviewed cost."
+                .into(),
+        );
+    }
+    if shadow
+        && (!rows(&request.sheet, "ThornList")?.is_empty()
+            || request.sheet.resources.contains_key("Angst"))
+        && !shadow_evidence
+    {
+        issues
+            .push("Confirm the separate Shadow allocation and record its review reference.".into());
+    }
+    if shadow
+        && request
+            .sheet
+            .resources
+            .get("Angst")
+            .is_some_and(|angst| !(0..=10).contains(angst))
+    {
+        issues.push("Starting Shadow Angst must be between 0 and 10.".into());
+    }
     for (key, value) in &request.sheet.resources {
+        if shadow && key == "Angst" || risen && matches!(key.as_str(), "Pathos" | "Corpus") {
+            continue;
+        }
         if original.resources.get(key) != Some(value)
             && profile.starting_resources.get(key) != Some(value)
         {
@@ -894,6 +1008,54 @@ pub fn quote_configured_profile(
             .visibility
             .entry(key.clone())
             .or_insert(true);
+    }
+    if garou {
+        if let Some([gnosis, rage, willpower]) = garou_starting_resources(&effective_sheet) {
+            for (key, value) in [("Gnosis", gnosis), ("Rage", rage), ("Willpower", willpower)] {
+                effective_sheet.resources.insert(key.into(), value);
+            }
+        } else {
+            issues.push("Choose a Breed, Auspice and Tribe supported by the Revised Garou starting-resource tables.".into());
+        }
+    }
+    if let Some(start) = risen_start {
+        let defaults = &profile.starting_resources;
+        let Some((&base_pathos, &base_corpus)) = defaults.get("Pathos").zip(defaults.get("Corpus"))
+        else {
+            return Err(error(
+                "CREATION_PROFILE",
+                "Risen needs reviewed Pathos and Corpus baselines.",
+            ));
+        };
+        let pathos = request
+            .sheet
+            .resources
+            .get("Pathos")
+            .copied()
+            .unwrap_or(base_pathos);
+        let corpus = request
+            .sheet
+            .resources
+            .get("Corpus")
+            .copied()
+            .unwrap_or(base_corpus);
+        if !(0..=10 + i64::from(start.potency)).contains(&pathos) {
+            issues.push("Starting Pathos exceeds the reviewed limit for this Potency.".into());
+        }
+        if start.from_wraith
+            && (!request.sheet.resources.contains_key("Corpus") || !(1..=4096).contains(&corpus))
+            || !start.from_wraith && corpus != base_corpus
+        {
+            issues.push(
+                "Enter the inherited Wraith Corpus, or use the standalone Risen Corpus baseline."
+                    .into(),
+            );
+        }
+        effective_sheet.resources.insert("Pathos".into(), pathos);
+        effective_sheet.resources.insert("Corpus".into(), corpus);
+        if start.from_wraith {
+            warnings.push("Inherited traits are transcribed from the reviewed Wraith sheet. This creation does not change that source character or transfer its XP ledger.".into());
+        }
     }
     if uses_c20_changeling_creation(profile) {
         if input.willpower_free != 0 || !request.specializations.is_empty() {
@@ -926,7 +1088,7 @@ pub fn quote_configured_profile(
         }
         check_c20_starting_powers(&effective_sheet, profile, &mut issues)?;
     } else if input.willpower_free > 0 {
-        match profile.starting_resources.get("Willpower").and_then(|base|base.checked_add(input.willpower_free)).filter(|n|*n<=32767) {
+        match effective_sheet.resources.get("Willpower").and_then(|base|base.checked_add(input.willpower_free)).filter(|n|*n<=32767) {
             Some(total)=>{effective_sheet.resources.insert("Willpower".into(),total);},
             None=>issues.push("Additional Willpower requires a configured starting Willpower pool and bounded purchase.".into()),
         }
@@ -951,7 +1113,95 @@ pub fn quote_configured_profile(
         configured_power_count(&request.sheet, &profile.primary_power_list, &mut issues)?;
     let secondary_power_count =
         configured_power_count(&request.sheet, &profile.secondary_power_list, &mut issues)?;
-    let configured_budget = configured_budget_quote(profile, &input, secondary_power_count);
+    let mut extra_free_spent = 0;
+    if mage {
+        let arete = 1 + i64::from(request.mage_arete_free);
+        if arete > 3 {
+            issues.push("Starting Arete cannot exceed 3.".into());
+        }
+        extra_free_spent = i64::from(request.mage_arete_free) * 2;
+        effective_sheet.resources.insert("Arete".into(), arete);
+        let avatar = rows(&request.sheet, "BackgroundList")?
+            .iter()
+            .filter(|row| {
+                row["Name"]
+                    .as_str()
+                    .is_some_and(|name| name.eq_ignore_ascii_case("Avatar"))
+            })
+            .filter_map(|row| {
+                row["Value"]
+                    .as_str()
+                    .and_then(|value| value.parse::<i64>().ok())
+            })
+            .sum::<i64>();
+        if !(0..=5).contains(&avatar) {
+            issues.push("Starting Avatar must be between 0 and 5.".into());
+        }
+        effective_sheet
+            .resources
+            .insert("Quintessence".into(), avatar);
+        let catalogue = crate::published_powers::catalogue()?;
+        let mut families = std::collections::HashSet::new();
+        input.basic_power_count = 0;
+        for row in rows(&request.sheet, "SphereList")? {
+            let power = catalogue.entries.iter().find(|power| {
+                power.book_id == "phase7b-ascension"
+                    && power.kind == crate::published_powers::Kind::Sphere
+                    && row["Name"]
+                        .as_str()
+                        .is_some_and(|name| power.name.eq_ignore_ascii_case(name.trim()))
+            });
+            let Some(power) = power else {
+                issues.push("Choose a reviewed Sphere name and its native numeric rank.".into());
+                continue;
+            };
+            if i64::from(power.level) > arete
+                || row["Value"]
+                    .as_str()
+                    .and_then(|value| value.parse::<u8>().ok())
+                    != Some(power.level)
+                || !families.insert(&power.discipline)
+            {
+                issues.push(format!(
+                    "{}: enter one rank per Sphere at or below starting Arete.",
+                    power.discipline
+                ));
+            }
+            input.basic_power_count += i64::from(power.level);
+        }
+        if secondary_power_count != 0 {
+            issues.push("Starting Rotes need a separate reviewed allocation rule.".into());
+        }
+    }
+    if mortal && secondary_power_count != 0 {
+        issues.push("Starting sorcery rituals need a separate reviewed allocation rule.".into());
+    }
+    if garou && (input.basic_power_count > profile.basic_power_base || secondary_power_count != 0) {
+        issues.push(
+            "Additional starting Gifts and Rites need a separately reviewed creation rule.".into(),
+        );
+    }
+    if shadow || mortal || garou {
+        for row in rows(&request.sheet, &profile.primary_power_list)? {
+            if row["Value"]
+                .as_str()
+                .is_none_or(|value| !value.trim().eq_ignore_ascii_case("basic"))
+            {
+                issues.push("Use Basic primary powers for this starting profile.".into());
+                break;
+            }
+        }
+    }
+    if (mage || mortal || garou)
+        && effective_sheet
+            .resources
+            .get("Willpower")
+            .is_some_and(|value| *value > 10)
+    {
+        issues.push("Starting Willpower cannot exceed 10.".into());
+    }
+    let configured_budget =
+        configured_budget_quote(profile, &input, secondary_power_count, extra_free_spent);
     issues.extend(configured_budget.issues.clone());
     let citations = profile.cost_source.clone().into_iter().collect();
     let ready = issues.is_empty()

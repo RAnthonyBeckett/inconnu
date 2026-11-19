@@ -95,7 +95,7 @@
       "background_base": 5,
       "free_traits_base": 5,
       "max_negative_credit": 5,
-      "max_flaw_credit": 7,
+      "max_flaw_credit": 5,
       "basic_power_base": 3,
       "trait_xp_costs": {
         "Attribute": [
@@ -108,18 +108,6 @@
           {
             "max_next": 32767,
             "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
           }
         ],
         "Willpower": [
@@ -158,8 +146,37 @@
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Revised Garou baseline. Breed determines Gnosis, auspice determines Rage, and tribe determines Willpower. Paid Rite prices apply when the Rite is not readily available; learning without XP is a separate Storyteller workflow.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 0,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 1
+      },
+      "starting_resources": {
+        "Gnosis": 1,
+        "Rage": 1,
+        "Willpower": 3
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 4,
+        "Advanced": 6,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Laws of the Wild (Revised)",
+        "edition": "MET_Laws_of_the_Wild_Revised",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 173,
+        "pdf_page_1based": 175,
+        "original_pdf_sha256": "24fa5348e2833f670f9e4e9f93dbe002272ef82d9fb23e77d8714b0afd656192"
+      }
     },
     {
       "kind": "Mortal",
@@ -170,16 +187,16 @@
       "primary_power_list": "NuminaList",
       "secondary_power_list": "RitualList",
       "attribute_priorities": [
-        7,
-        5,
+        6,
+        4,
         3
       ],
       "ability_base": 5,
-      "background_base": 5,
-      "free_traits_base": 5,
+      "background_base": 3,
+      "free_traits_base": 10,
       "max_negative_credit": 5,
-      "max_flaw_credit": 7,
-      "basic_power_base": 3,
+      "max_flaw_credit": 5,
+      "basic_power_base": 0,
       "trait_xp_costs": {
         "Attribute": [
           {
@@ -187,7 +204,7 @@
             "cost": 1
           }
         ],
-        "Background": [
+        "Ability": [
           {
             "max_next": 32767,
             "cost": 1
@@ -195,30 +212,20 @@
         ],
         "HumanityPath": [
           {
-            "max_next": 32767,
+            "max_next": 5,
             "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
           }
         ],
         "Willpower": [
           {
-            "max_next": 32767,
+            "max_next": 10,
             "cost": 3
           }
         ],
-        "Ability": [
+        "Influence": [
           {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
-            "max_next": 10,
-            "cost": 2
+            "max_next": 32767,
+            "cost": 3
           }
         ]
       },
@@ -227,10 +234,38 @@
         "Intermediate": 6,
         "Advanced": 9,
         "in_affiliation_adj": 0,
-        "out_of_affiliation_adj": 1
+        "out_of_affiliation_adj": 0
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Standard ordinary mortal baseline. Starting Numina are optional and require separate Storyteller eligibility review. Imbued Edges belong to Hunter.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 1
+      },
+      "starting_resources": {
+        "Willpower": 3,
+        "Humanity": 4
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 2,
+        "Intermediate": 4,
+        "Advanced": 6,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Laws of the Hunt (Revised)",
+        "edition": "MET_Laws_of_the_Hunt_Revised",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 157,
+        "pdf_page_1based": 159,
+        "original_pdf_sha256": "fcf3090fd95954c9094d3fe456a946ceee1c9461c39d038967076dbcacba7f28"
+      }
     },
     {
       "kind": "Changeling",
@@ -354,69 +389,38 @@
       "max_negative_credit": 5,
       "max_flaw_credit": 7,
       "basic_power_base": 3,
-      "trait_xp_costs": {
-        "Attribute": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "Background": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Willpower": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
-            "max_next": 10,
-            "cost": 2
-          }
-        ],
-        "Pathos": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Angst": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ]
-      },
+      "trait_xp_costs": {},
       "power_tier_costs": {
-        "Basic": 3,
-        "Intermediate": 6,
-        "Advanced": 9,
+        "Basic": 4,
+        "Intermediate": 7,
+        "Advanced": 10,
         "in_affiliation_adj": 0,
-        "out_of_affiliation_adj": 1
+        "out_of_affiliation_adj": 0
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Local Psyche template requested for this release. Oblivion MET supplies the attribute and resource baseline; character options and Shadow allocations require separate Storyteller review. Standard Arcanoi prices adopt the 2016 OWbN Arcanoi packet as a local schedule.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 0,
+        "specialization": 0,
+        "permanent_resource": 0
+      },
+      "starting_resources": {
+        "Willpower": 3,
+        "Pathos": 5,
+        "Corpus": 10
+      },
+      "cost_source": {
+        "book": "Oblivion",
+        "edition": "MET",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 63,
+        "pdf_page_1based": 64,
+        "original_pdf_sha256": "33c41e3af860f8091e1f6c773715744ea1e7e902afba099ebad8cc2fbcd6cbfb"
+      }
     },
     {
       "kind": "Mage",
@@ -433,13 +437,19 @@
         3
       ],
       "ability_base": 5,
-      "background_base": 5,
+      "background_base": 7,
       "free_traits_base": 5,
       "max_negative_credit": 5,
-      "max_flaw_credit": 7,
-      "basic_power_base": 3,
+      "max_flaw_credit": 5,
+      "basic_power_base": 6,
       "trait_xp_costs": {
         "Attribute": [
+          {
+            "max_next": 32767,
+            "cost": 1
+          }
+        ],
+        "Ability": [
           {
             "max_next": 32767,
             "cost": 1
@@ -451,62 +461,58 @@
             "cost": 1
           }
         ],
-        "HumanityPath": [
+        "Arete": [
           {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
+            "max_next": 10,
+            "cost": 4
           }
         ],
         "Willpower": [
           {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
             "max_next": 10,
-            "cost": 2
-          }
-        ],
-        "Arete": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Quintessence": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Paradox": [
-          {
-            "max_next": 32767,
             "cost": 3
           }
         ]
       },
       "power_tier_costs": {
-        "Basic": 3,
-        "Intermediate": 6,
-        "Advanced": 9,
+        "Basic": 4,
+        "Intermediate": 8,
+        "Advanced": 12,
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Standard six starting Sphere levels, with specialization and faction choices reviewed by a Storyteller. Starting Quintessence comes from Avatar. Rotes use the separately cited per-rank schedule.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Willpower": 5,
+        "Arete": 1,
+        "Quintessence": 0,
+        "Paradox": 0
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 1,
+        "Intermediate": 1,
+        "Advanced": 1,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Laws of Ascension",
+        "edition": "MET_Laws_of_Ascension",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 122,
+        "pdf_page_1based": 124,
+        "original_pdf_sha256": "cab97fa37464a4d0339b1c4ca4de91e04c290e75b61a0304b3fff7f59a27d3f4"
+      }
     },
     {
       "kind": "Fera",
@@ -1040,69 +1046,45 @@
       "max_negative_credit": 5,
       "max_flaw_credit": 7,
       "basic_power_base": 3,
-      "trait_xp_costs": {
-        "Attribute": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "Background": [
-          {
-            "max_next": 32767,
-            "cost": 1
-          }
-        ],
-        "HumanityPath": [
-          {
-            "max_next": 32767,
-            "cost": 2
-          }
-        ],
-        "Virtue": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Willpower": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Ability": [
-          {
-            "max_next": 5,
-            "cost": 1
-          },
-          {
-            "max_next": 10,
-            "cost": 2
-          }
-        ],
-        "Pathos": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ],
-        "Angst": [
-          {
-            "max_next": 32767,
-            "cost": 3
-          }
-        ]
-      },
+      "trait_xp_costs": {},
       "power_tier_costs": {
-        "Basic": 3,
-        "Intermediate": 6,
-        "Advanced": 9,
+        "Basic": 4,
+        "Intermediate": 7,
+        "Advanced": 10,
         "in_affiliation_adj": 0,
-        "out_of_affiliation_adj": 1
+        "out_of_affiliation_adj": 0
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Local Risen starting pools. The binding 2019 Risen packet supplies the natural Discipline XP schedule, inherited Corpus and Potency limits. Record standalone or Wraith-origin review and confirm local adoption of the creation pools.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 4,
+        "specialization": 0,
+        "permanent_resource": 0
+      },
+      "starting_resources": {
+        "Willpower": 6,
+        "Pathos": 5,
+        "Corpus": 10
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 4,
+        "Intermediate": 7,
+        "Advanced": 10,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 0
+      },
+      "cost_source": {
+        "book": "Wraith-Risen-2019_0.pdf",
+        "edition": "OWbN_Risen_2019",
+        "system": "Mind's Eye Theatre",
+        "printed_page": 0,
+        "pdf_page_1based": 12,
+        "original_pdf_sha256": "c589155b3ee4d2174b970c1ca59a1ca34d506edaeca75bc8562459ce922bbe7c"
+      }
     }
   ]
 }

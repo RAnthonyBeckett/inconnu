@@ -12,7 +12,10 @@ fn all_thirteen_profiles_are_explicit_and_unknown_defaults_never_become_approved
     for p in &profiles.profiles {
         assert!(sheet::is_character_kind(&p.kind));
         assert!(p.owns_power_list(&p.primary_power_list));
-        if !matches!(p.kind.as_str(), "Vampire" | "Changeling") {
+        if !matches!(
+            p.kind.as_str(),
+            "Vampire" | "Changeling" | "Mage" | "Mortal" | "Risen" | "Werewolf" | "Wraith"
+        ) {
             assert!(!p.rules_reviewed);
             assert_eq!(
                 p.trait_cost("Attribute", 0).unwrap_err().code,
@@ -224,6 +227,10 @@ fn reviewed_profiles_require_bounded_valid_sources_and_unambiguous_lists() {
     }
     let mut data = original.clone();
     data["profiles"][1]["rules_reviewed"] = json!(true);
+    data["profiles"][1]
+        .as_object_mut()
+        .unwrap()
+        .remove("cost_source");
     assert!(creature_profiles::Catalogue::from_json(&data.to_string()).is_err());
     let mut data = original;
     data["profiles"][1]["secondary_power_list"] = data["profiles"][1]["primary_power_list"].clone();

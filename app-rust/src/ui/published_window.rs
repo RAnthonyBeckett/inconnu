@@ -238,7 +238,7 @@ impl InconnuApp {
                 let hits: Vec<_>=catalogue.search(state.book_id.as_deref(),&state.query).into_iter().filter(|power|catalogue.book(&power.book_id).is_some_and(|book|book.applies_to(&creature_kind))).collect();
                 ui.label(format!("{}: {}",t(pt,"Matching published entries","Registros publicados encontrados"),hits.len()));
                 egui::ScrollArea::vertical().id_salt("published_entries").max_height(145.0).show(ui,|ui|{
-                    for power in hits.iter().take(500) {ui.selectable_value(&mut state.request.source_id,power.id.clone(),format!("{:?} · {} · {} · {} {}{}",catalogue.book(&power.book_id).unwrap().edition,power.name,power.discipline,t(pt,"published level","nível publicado"),power.level,power.path.as_ref().map(|path|format!(" · {path}")).unwrap_or_default()));}
+                    for power in hits.iter().take(500) {ui.selectable_value(&mut state.request.source_id,power.id.clone(),format!("{:?} · {} · {} · {}{}",catalogue.book(&power.book_id).unwrap().edition,power.name,power.discipline,published_rating(power,pt),power.path.as_ref().map(|path|format!(" · {path}")).unwrap_or_default()));}
                 });
                 if hits.len()>500 {ui.small(t(pt,"Showing first500; narrow the search.","Mostrando primeiros500; refine a busca."));}
                 if let Ok(reference)=catalogue.reference(&state.request.source_id) {source_label(ui,&reference,pt);}
@@ -278,16 +278,39 @@ impl InconnuApp {
         }
     }
 }
+fn published_rating(power: &powers::Power, pt: bool) -> String {
+    use grapevine_workbench::owbn_bylaws::TierMappingBasis;
+    if power.kind == powers::Kind::Thorn {
+        return format!("{} {}", t(pt, "Point cost", "Custo em pontos"), power.level);
+    }
+    if power.tier_mapping_basis == Some(TierMappingBasis::NativeMetTier) {
+        return match power.level {
+            1 | 2 => t(pt, "Basic (native MET)", "Básico (MET nativo)"),
+            3 | 4 => t(
+                pt,
+                "Intermediate (native MET)",
+                "Intermediário (MET nativo)",
+            ),
+            _ => t(pt, "Advanced (native MET)", "Avançado (MET nativo)"),
+        }
+        .into();
+    }
+    format!(
+        "{} {}",
+        t(pt, "Published level", "Nível publicado"),
+        power.level
+    )
+}
+
 fn source_label(ui: &mut egui::Ui, reference: &powers::Reference, pt: bool) {
     use grapevine_workbench::owbn_bylaws::{PacketAuthority, non_binding_badge};
     if reference.power.effective_authority() == PacketAuthority::NonBindingOrBook {
         ui.small(non_binding_badge(pt));
     }
     ui.strong(format!(
-        "{} · {} {}",
+        "{} · {}",
         reference.power.name,
-        t(pt, "Published level", "Nível publicado"),
-        reference.power.level
+        published_rating(&reference.power, pt)
     ));
     ui.small(format!(
         "{} · {:?} · {} {} / PDF{}",

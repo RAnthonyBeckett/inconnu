@@ -5,10 +5,7 @@ use serde_json::json;
 use tempfile::TempDir;
 
 const ST: Role = Role::Storyteller;
-const NON_VAMPIRE_KINDS: &[&str] = &[
-    "Werewolf", "Mortal", "Wraith", "Mage", "Fera", "Various", "Mummy", "KueiJin", "Hunter",
-    "Demon", "Risen",
-];
+const UNREVIEWED_KINDS: &[&str] = &["Fera", "Various", "Mummy", "KueiJin", "Hunter", "Demon"];
 
 fn reviewed_request(lib: &Library, id: &str) -> creation::Request {
     let mut request = lib.vampire_creation_context(id, ST).unwrap().request;
@@ -24,11 +21,11 @@ fn reviewed_request(lib: &Library, id: &str) -> creation::Request {
 }
 
 #[test]
-fn every_non_vampire_profile_has_a_blocked_configured_preview() {
+fn every_unreviewed_profile_has_a_blocked_configured_preview() {
     let directory = TempDir::new().unwrap();
     let mut lib = Library::create(&directory.path().join("creatures.gvlib"), "Creatures").unwrap();
 
-    for (index, kind) in NON_VAMPIRE_KINDS.iter().enumerate() {
+    for (index, kind) in UNREVIEWED_KINDS.iter().enumerate() {
         let id = lib
             .create_character(
                 kind,
@@ -152,7 +149,7 @@ fn configured_pool_arithmetic_uses_profile_bases_and_blocks_vampire_options() {
         blocked.configured_budget.unwrap().free_available,
         configured.free_available
     );
-    assert!(blocked.effective_sheet.resources.is_empty());
+    assert_ne!(blocked.effective_sheet.resources.get("Willpower"), Some(&0));
 }
 
 #[test]

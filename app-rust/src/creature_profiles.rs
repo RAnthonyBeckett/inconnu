@@ -208,7 +208,8 @@ impl Profile {
                     .all(|s| {
                         !s.trim().is_empty() && s.len() <= 512 && !s.chars().any(char::is_control)
                     })
-                    && (1..=10000).contains(&source.printed_page)
+                    && ((1..=10000).contains(&source.printed_page)
+                        || source.printed_page == 0 && source.edition == "OWbN_Risen_2019")
                     && (1..=10000).contains(&source.pdf_page_1based)
                     && source.original_pdf_sha256.len() == 64
                     && source

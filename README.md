@@ -1,12 +1,12 @@
-# Inconnu 0.48.0-beta.2 — Windows Vampire beta
+# Inconnu 0.48.0-beta.3 — Windows beta
 
-[Download the Windows beta](https://github.com/RAnthonyBeckett/inconnu/releases/tag/v0.48.0-beta.2) · [Beta guide](docs/BETA_QUICKSTART.md)
+[Download the Windows beta](https://github.com/RAnthonyBeckett/inconnu/releases) · [Beta guide](docs/BETA_QUICKSTART.md)
 
 Product branding: Inconnu
 A Frakd-Up Media App
 Based on Grapevine by Adam Cerling
 
-Inconnu is a character and Storyteller tool for Mind's Eye Theatre Vampire games, and it
+Inconnu is a character and Storyteller tool for Mind's Eye Theatre games, and it
 runs entirely on your own Windows PC. It opens your existing Grapevine files (GEX and GV3),
 so a chronicle can move over without retyping anyone.
 
@@ -16,8 +16,8 @@ go through your Storytellers and your chronicle.
 
 ## What it does
 
-The beta covers importing and editing characters, Vampire creation and advancement with
-reviewed rules, an XP ledger with an audit trail, spending previews before anything is bought,
+The beta covers importing and editing characters, reviewed creation and advancement,
+an XP ledger with an audit trail, spending previews before anything is bought,
 local chronicle tools, Player sheets in English or Portuguese, and backup and recovery for your
 library.
 
@@ -31,12 +31,12 @@ workflows and lists the known limits.
 
 ## Beta limits
 
-Vampire is the only creature type with reviewed rules so far. The other twelve kinds that
-Grapevine files can hold will import and display, but creating or pricing them stays locked
-until their rules and book citations have been reviewed. The beta does not yet do everything
-the original Grapevine did, and it has no network sign-in or sharing between games. The local work
-modes keep Player and Storyteller material apart, but they are not password security.
-Source books are not included.
+Reviewed creation and catalogue purchases are available for Vampire, Changeling,
+Wraith, Risen, Werewolf, Mage and Mortal. Each profile covers a defined set of starting
+rules and powers. Hunter has initial reference entries while its creation and Edge
+XP rules remain pending. The other kinds can be imported and edited. Game libraries
+stay local. Printed source material and private chronicle evidence are kept separately.
+See the beta guide for workflow coverage.
 
 ## Build from source
 

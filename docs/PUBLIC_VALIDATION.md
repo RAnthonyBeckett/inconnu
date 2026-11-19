@@ -1,4 +1,4 @@
-# Inconnu 0.48.0-beta.2 validation and limits
+# Inconnu 0.48.0-beta.3 validation and limits
 
 The beta is checked with Rust service/integration tests, strict Clippy and formatting,
 synthetic same-character creation/advancement/audit/recovery, standalone Windows UI checks
@@ -16,3 +16,9 @@ primary/secondary power purchase and original-cost refund path. Creation/profile
 source validation, bilingual form state and private draft exclusion are tested. Legacy
 Vampire wire and source-fact hash tests remain unchanged. ASCII custom Storyteller markers
 match case-insensitively with Unicode-safe boundaries; non-ASCII markers retain exact matching.
+
+The beta.3 profile checks exercise both catalogue purchase lists and original-cost
+refunds for Wraith, Risen, Werewolf, Mage and Mortal. Reviewed Shadow awards use the
+local XP ledger with a Storyteller reference. The Hunter source coverage currently
+supports reference lookup for selected special Edges. See the Phase 7B checkpoint
+in the source repository for the source and rules still pending.

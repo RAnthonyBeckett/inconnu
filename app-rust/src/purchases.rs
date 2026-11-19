@@ -200,7 +200,7 @@ pub fn quote_from_catalogue(
     let rules = profiles
         .profile(&record.kind)
         .ok_or_else(|| error("UNSUPPORTED_PRICING_SCOPE", "Unknown creature profile."))?;
-    let price = preview_from_definition(
+    let mut price = preview_from_definition(
         &record.kind,
         definition,
         input.profile,
@@ -208,6 +208,30 @@ pub fn quote_from_catalogue(
         rules,
     )?;
     price.validate_scope(&record.kind)?;
+    if definition.template_scope == "Wraith"
+        && definition.target_list == "ThornList"
+        && definition.published_source_id.is_some()
+    {
+        if input
+            .owbn_evidence
+            .shadow_review_reference
+            .trim()
+            .is_empty()
+        {
+            return Err(error(
+                "SHADOW_REVIEW_REQUIRED",
+                "Record the reviewed Shadow award and its local XP adoption before acquiring a Thorn.",
+            ));
+        }
+        input.owbn_evidence.validate()?;
+        let mut source = price.power_source.citation.clone();
+        source.printed_page = 303;
+        source.pdf_page_1based = 368;
+        price.price.citation = source;
+        price.price.coverage =
+            "Wr20 Shadow XP converted to the chronicle's local ledger with explicit Shadow review."
+                .into();
+    }
     let list = power_list(record, price.target_list())?;
     if list["Traits"].as_array().unwrap().iter().any(|t| {
         t["AppSourcePowerId"].as_str() == Some(&input.power_id)
@@ -246,9 +270,13 @@ pub fn quote_from_catalogue(
             "The committed ledger does not have enough unspent XP.",
         ));
     }
-    let trait_value = if definition.template_scope == "Changeling"
-        && definition.target_list == "RealmList"
-        && definition.published_source_id.is_some()
+    let trait_value = if matches!(
+        (
+            definition.template_scope.as_str(),
+            definition.target_list.as_str()
+        ),
+        ("Changeling", "RealmList") | ("Mage", "SphereList") | ("Wraith", "ThornList")
+    ) && definition.published_source_id.is_some()
     {
         definition.source_level.map_or_else(
             || price.tier.sheet_value().into(),

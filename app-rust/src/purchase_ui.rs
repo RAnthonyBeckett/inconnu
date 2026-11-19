@@ -86,7 +86,8 @@ fn t<'a>(pt: bool, en: &'a str, br: &'a str) -> &'a str {
     if pt { br } else { en }
 }
 fn remember(ui: &egui::Ui, r: &egui::Response, key: &str) {
-    let rect = ui.is_rect_visible(r.rect).then_some(r.rect);
+    let visible = r.interact_rect.intersect(ui.clip_rect());
+    let rect = (ui.is_visible() && visible.is_positive()).then_some(visible);
     ui.ctx()
         .data_mut(|d| d.insert_temp(egui::Id::unique(key), rect));
 }
@@ -934,6 +935,16 @@ pub fn render_owbn_evidence(
                 ),
             )
             .changed();
+        if kind == "Wraith" && teacher {
+            ui.label(t(
+                pt,
+                "Shadow award and local XP review reference",
+                "Referencia do premio da Sombra e revisao local de XP",
+            ));
+            changed |= ui
+                .text_edit_singleline(&mut evidence.shadow_review_reference)
+                .changed();
+        }
         if teacher {
             ui.label(t(
                 pt,

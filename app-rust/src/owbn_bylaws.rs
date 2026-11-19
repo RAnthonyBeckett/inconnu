@@ -89,6 +89,8 @@ pub struct Evidence {
     pub references: Vec<RegulationEvidence>,
     pub teacher_exception_reference: String,
     pub confirm_non_binding_sources: bool,
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub shadow_review_reference: String,
 }
 impl Evidence {
     pub fn is_empty(&self) -> bool {
@@ -99,6 +101,8 @@ impl Evidence {
         let mut ids = BTreeSet::new();
         let mut references = BTreeSet::new();
         if self.references.len() > 64
+            || self.shadow_review_reference.len() > 512
+            || self.shadow_review_reference.chars().any(char::is_control)
             || self.teacher_exception_reference.len() > 512
             || self
                 .teacher_exception_reference

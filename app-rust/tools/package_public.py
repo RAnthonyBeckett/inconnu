@@ -1,4 +1,5 @@
 """Package a portable beta without developer journals, raw logs or private inputs."""
+import argparse
 import hashlib
 import json
 import os
@@ -9,26 +10,29 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = tomllib.loads((ROOT / "Cargo.toml").read_text(encoding="utf-8"))["package"]["version"]
-OUT = ROOT.parent / "releases" / ("working-build-" + VERSION)
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=False)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-root", type=Path, default=ROOT.parent / "releases")
+    out = parser.parse_args().output_root.resolve() / ("working-build-" + VERSION)
+    out.mkdir(parents=True, exist_ok=False)
     target=Path(os.environ.get("CARGO_TARGET_DIR", str(ROOT / "target")))
     if not target.is_absolute(): target=ROOT / target
-    shutil.copy2(target / "release/Inconnu.exe", OUT)
-    shutil.copy2(ROOT / "Open Inconnu.cmd", OUT)
+    shutil.copy2(target / "release/Inconnu.exe", out)
+    shutil.copy2(ROOT / "Open Inconnu.cmd", out)
     for source, name in [("PUBLIC_README.md", "README.md"),
                          ("PUBLIC_VALIDATION.md", "VALIDATION.md"),
                          ("BETA_QUICKSTART.md", "BETA_QUICKSTART.md"),
                          ("CONFIGURATION.md", "CONFIGURATION.md")]:
-        shutil.copy2(ROOT.parent / "docs" / source, OUT / name)
+        shutil.copy2(ROOT.parent / "docs" / source, out / name)
         if name == "README.md":
-            readme = OUT / name
+            readme = out / name
             readme.write_text(readme.read_text(encoding="utf-8").replace("../assets/", "assets/"), encoding="utf-8")
-    shutil.copy2(ROOT.parent / "LICENSE", OUT / "LICENSE.txt")
-    shutil.copytree(ROOT.parent / "assets/branding", OUT / "assets/branding")
-    examples = OUT / "Synthetic Examples"
+    shutil.copy2(ROOT.parent / "LICENSE", out / "LICENSE.txt")
+    shutil.copy2(ROOT.parent / "LICENSE-GRAPEVINE.md", out)
+    shutil.copytree(ROOT.parent / "assets/branding", out / "assets/branding")
+    examples = out / "Synthetic Examples"
     examples.mkdir()
     shutil.copy2(ROOT / "tests/fixtures/synthetic-game.gv3", examples / "Synthetic Game.gv3")
     (examples / "Example.gex").write_text(
@@ -47,7 +51,7 @@ def main():
         wanted.add(node_id)
         pending.extend(dep["pkg"] for dep in nodes[node_id]["deps"]
                        if any(kind["kind"] != "dev" for kind in dep["dep_kinds"]))
-    licenses = OUT / "Third-party licenses"
+    licenses = out / "Third-party licenses"
     licenses.mkdir()
     notices = ["# Component notices", "", "Dependency licenses do not grant rights to third-party source content.", ""]
     for package in sorted(metadata["packages"], key=lambda p: (p["name"], p["version"])):
@@ -67,11 +71,11 @@ def main():
         path = sysroot / "share/doc/rust" / name
         if path.is_file():
             shutil.copy2(path, stdlib / name)
-    (OUT / "THIRD_PARTY_NOTICES.md").write_text("\n".join(notices) + "\n", encoding="utf-8")
-    manifest = {p.relative_to(OUT).as_posix(): {"bytes": p.stat().st_size,
+    (out / "THIRD_PARTY_NOTICES.md").write_text("\n".join(notices) + "\n", encoding="utf-8")
+    manifest = {p.relative_to(out).as_posix(): {"bytes": p.stat().st_size,
                 "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
-                for p in sorted(OUT.rglob("*")) if p.is_file()}
-    (OUT / "PACKAGE_MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+                for p in sorted(out.rglob("*")) if p.is_file()}
+    (out / "PACKAGE_MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"Packaged {len(manifest)} verified files for {VERSION}")
 
 
