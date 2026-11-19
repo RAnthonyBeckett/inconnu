@@ -1,4 +1,4 @@
-# Inconnu 0.48.0-beta.3 — Windows beta
+# Inconnu 0.48.0-beta.4 — Windows beta
 
 This beta supports local testing of the reviewed creature profiles. Inconnu is not officially
 sponsored or supported by OWbN (maybe one day!), and this beta does not claim complete rules, content or original Grapevine parity.
@@ -17,7 +17,7 @@ The included Synthetic Examples are fabricated and suitable for a first look.
 ## Try the useful routes
 
 - Import a roster, open a character, edit and save, close and reopen the library.
-- Create a supported Vampire, review starting traits/powers and entering-play status.
+- Choose a reviewed creature profile, then review starting traits, powers and entering-play status.
 - Record an explicit XP opening; preview spending and combined saved plans, including
   out-of-clan costs. Review attendance/group awards, corrections and the no-negative ledger.
 - Open XP-versus-playtime review, classify awards explicitly and save private choices.
@@ -29,15 +29,17 @@ The included Synthetic Examples are fabricated and suitable for a first look.
 
 ## Shared profile forms
 
-Shared creation, pricing and source-review forms recognize all thirteen character kinds.
-Reviewed profiles are available for Vampire, Changeling, Wraith, Risen, Werewolf, Mage
-and Mortal. Storytellers review starting powers, resources and eligibility before
-applying a creation quote. The Wraith uses a local Psyche template with separate
-Shadow review. The Risen uses a local starting template and can record a Storyteller's
-transcription from a Wraith sheet. Werewolf resources follow the selected breed, auspice
-and tribe. Mage starting Quintessence follows Avatar, and Sphere ranks are limited by
-Arete. Hunter special Edge references are available while its creation and advancement
-prices remain pending. The remaining unreviewed profiles stay gated.
+Reviewed creation and catalogue purchases cover Vampire, Werewolf, Mortal, Changeling,
+Wraith, Mage, Fera, Mummy, Kuei-Jin, Hunter, Demon, and Risen. Various is the local-rules
+umbrella and requires its own Storyteller configuration. The profiles cover defined
+starting templates and powers, including Gurahl Fera and first-Balance Amenti. Hunter
+uses a locally adopted 2021 Imbued packet and legacy menu baseline. Individual MET
+book citations from Laws of the Reckoning (#5037) are pending.
+
+Storytellers can export Haller-safe .gex XML, enable OWbN Character and Mechanics
+Bylaws checks with packet authority, and load House Rules Packs. The packs configure
+Challenge Pool Math for sheets. Export a Player Mobile Sheet Bundle as
+.inconnu-sheet.json for a portable sheet without private Storyteller data.
 
 ## Known beta limits
 

@@ -949,6 +949,12 @@
             "max_next": 32767,
             "cost": 3
           }
+        ],
+        "Zeal": [
+          {
+            "max_next": 32767,
+            "cost": 3
+          }
         ]
       },
       "power_tier_costs": {
@@ -958,8 +964,39 @@
         "in_affiliation_adj": 0,
         "out_of_affiliation_adj": 1
       },
-      "rules_reviewed": false,
-      "rules_note": "Proposed configurable defaults supplied for the shared architecture; not verified creature rules. Review source and local adoption before use."
+      "rules_reviewed": true,
+      "rules_note": "Laws of the Reckoning (#5037) page citations are pending. This local baseline uses the 2021 OWbN Imbued packet for context and the legacy Grapevine menu for Creed Edge names and ranks. Both lists use the adopted 3/6/9 XP schedule (+1 out of affiliation). Confirm local adoption, starting resources, and Edge eligibility with a Storyteller.",
+      "free_trait_costs": {
+        "attribute": 1,
+        "ability": 1,
+        "background": 1,
+        "primary_power": 3,
+        "secondary_power": 0,
+        "specialization": 1,
+        "permanent_resource": 3
+      },
+      "starting_resources": {
+        "Willpower": 3,
+        "Conviction": 3,
+        "Mercy": 1,
+        "Vision": 1,
+        "Zeal": 1
+      },
+      "secondary_power_tier_costs": {
+        "Basic": 3,
+        "Intermediate": 6,
+        "Advanced": 9,
+        "in_affiliation_adj": 0,
+        "out_of_affiliation_adj": 1
+      },
+      "cost_source": {
+        "book": "OWbN Hunter Imbued Packet (2021)",
+        "edition": "OWbN_Imbued_2021",
+        "system": "Local MET Imbued baseline",
+        "printed_page": 1,
+        "pdf_page_1based": 4,
+        "original_pdf_sha256": "b7e12baa65ea1ee04cb3f020fd77e714e6c633cbc1c4cfdbec19a497183f6a83"
+      }
     },
     {
       "kind": "Demon",

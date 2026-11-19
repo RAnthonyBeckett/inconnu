@@ -249,6 +249,8 @@ impl InconnuApp {
                 ui.checkbox(&mut state.request.confirm_alias,t(pt,"I reviewed the different saved name as an alias","Revisei o nome salvo diferente como um apelido"));
                 if catalogue.power(&state.request.source_id).is_some_and(|power|power.evidence==powers::Evidence::IndexOnly) {
                     let b=ui.checkbox(&mut state.request.confirm_index_evidence,t(pt,"I checked this indexed entry in the cited book","Conferi este registro indexado no livro citado"));remember(ui,&b,"published_index_confirm");
+                } else if catalogue.power(&state.request.source_id).is_some_and(|power|power.evidence==powers::Evidence::LegacyMenu) {
+                    let b=ui.checkbox(&mut state.request.confirm_index_evidence,t(pt,"I confirm local use of this legacy menu entry","Confirmo o uso local deste registro do menu legado"));remember(ui,&b,"published_index_confirm");
                 }
                 if state.request.source_id!=before.source_id||state.request.trait_index!=before.trait_index {
                     state.request.rename_to_source=false;state.request.confirm_alias=false;state.request.confirm_index_evidence=false;

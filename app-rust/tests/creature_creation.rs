@@ -5,7 +5,7 @@ use serde_json::json;
 use tempfile::TempDir;
 
 const ST: Role = Role::Storyteller;
-const UNREVIEWED_KINDS: &[&str] = &["Various", "Hunter"];
+const UNREVIEWED_KINDS: &[&str] = &["Various"];
 
 fn reviewed_request(lib: &Library, id: &str) -> creation::Request {
     let mut request = lib.vampire_creation_context(id, ST).unwrap().request;

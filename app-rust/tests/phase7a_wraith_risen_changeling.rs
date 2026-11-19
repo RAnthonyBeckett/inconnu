@@ -254,6 +254,7 @@ fn bylaws_remain_distinct_from_catalogue_inclusion_and_profile_readiness() {
             "Changeling",
             "Demon",
             "Fera",
+            "Hunter",
             "KueiJin",
             "Mage",
             "Mummy",

@@ -206,6 +206,12 @@ pub fn quote_for_list(
                 "This entry is indexed evidence. Confirm that you checked its cited book before attributing it.",
             ));
         }
+        if reference.power.evidence == Evidence::LegacyMenu && !request.confirm_index_evidence {
+            return Err(error(
+                "PUBLISHED_REFERENCE_SOURCE_REVIEW",
+                "Confirm local use of this legacy menu entry. The packet page provides context; the MET book page is pending.",
+            ));
+        }
         if name != reference.power.name && !request.rename_to_source && !request.confirm_alias {
             return Err(error(
                 "PUBLISHED_REFERENCE_NAME",

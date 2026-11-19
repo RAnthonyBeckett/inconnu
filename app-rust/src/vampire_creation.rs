@@ -1105,6 +1105,12 @@ pub fn quote_configured_profile(
         .cost_source
         .as_ref()
         .map(|source| source.edition.as_str());
+    if profile.kind == "Hunter" && source_edition == Some("OWbN_Imbued_2021") {
+        warnings.push(profile.rules_note.clone());
+        if request.current_resources_reference.trim().is_empty() {
+            issues.push("Record Storyteller confirmation of the local Imbued starting resources and Creed Edge baseline. / Registre a confirmação do Narrador sobre os recursos iniciais e as Dádivas de Credo do Imbuído.".into());
+        }
+    }
     let mage = profile.kind == "Mage" && source_edition == Some("MET_Laws_of_Ascension");
     let garou =
         profile.kind == "Werewolf" && source_edition == Some("MET_Laws_of_the_Wild_Revised");

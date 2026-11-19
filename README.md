@@ -1,4 +1,4 @@
-# Inconnu 0.48.0-beta.3 — Windows beta
+# Inconnu 0.48.0-beta.4 — Windows beta
 
 [Download the Windows beta](https://github.com/RAnthonyBeckett/inconnu/releases) · [Beta guide](docs/BETA_QUICKSTART.md)
 
@@ -31,11 +31,18 @@ workflows and lists the known limits.
 
 ## Beta limits
 
-Reviewed creation and catalogue purchases are available for Vampire, Changeling,
-Wraith, Risen, Werewolf, Mage and Mortal. Each profile covers a defined set of starting
-rules and powers. Hunter has initial reference entries while its creation and Edge
-XP rules remain pending. The other kinds can be imported and edited. Game libraries
-stay local. Printed source material and private chronicle evidence are kept separately.
+Reviewed creation and catalogue purchases cover Vampire, Werewolf, Mortal, Changeling,
+Wraith, Mage, Fera, Mummy, Kuei-Jin, Hunter, Demon, and Risen. Various is the local-rules
+umbrella and requires its own Storyteller configuration. The profiles cover defined
+starting templates and powers, including Gurahl Fera and first-Balance Amenti. Hunter
+uses a locally adopted 2021 Imbued packet and legacy menu baseline. Individual MET
+book citations from Laws of the Reckoning (#5037) are pending.
+
+Storytellers can export Haller-safe .gex XML, enable OWbN Character and Mechanics
+Bylaws checks with packet authority, and load House Rules Packs. The packs configure
+Challenge Pool Math for sheets. Export a Player Mobile Sheet Bundle as
+.inconnu-sheet.json for a portable sheet without private Storyteller data.
+
 See the beta guide for workflow coverage.
 
 ## Build from source

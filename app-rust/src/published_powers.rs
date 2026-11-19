@@ -132,6 +132,7 @@ pub enum Kind {
 pub enum Evidence {
     PageText,
     IndexOnly,
+    LegacyMenu,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

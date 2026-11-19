@@ -126,6 +126,10 @@ fn creation(lib: &Library, id: &str, kind: &str) -> Request {
                 ["Analyze Material", "Ashen Shroud", "Becalm"],
             );
         }
+        "Hunter" => {
+            identity(&mut request, &[("Faction", "Defender")]);
+            basic(&mut request, "EdgeList", ["Ward", "Alarm", "Rejuvenate"]);
+        }
         _ => unreachable!(),
     }
     request
@@ -286,6 +290,70 @@ fn reviewed_starting_templates_price_powers_and_refund_original_cost() {
     ] {
         buy_and_refund(&mut lib, &vampire, power, price);
     }
+}
+
+#[test]
+fn imbued_baseline_requires_local_review_and_refunds_both_lists() {
+    let dir = tempfile::tempdir().unwrap();
+    let mut lib = Library::create(&dir.path().join("imbued.gvlib"), "Synthetic").unwrap();
+    let id = lib
+        .create_character("Hunter", "Synthetic Hunter", lib.revision().unwrap(), ST)
+        .unwrap();
+    let mut request = creation(&lib, &id, "Hunter");
+    let reference = std::mem::take(&mut request.current_resources_reference);
+    let unconfirmed = lib
+        .quote_vampire_creation(&id, &request, lib.revision().unwrap(), ST)
+        .unwrap();
+    assert!(!unconfirmed.ready);
+    assert!(
+        unconfirmed
+            .warnings
+            .iter()
+            .any(|warning| warning.contains("#5037"))
+    );
+    request.current_resources_reference = reference;
+    let quote = lib
+        .quote_vampire_creation(&id, &request, lib.revision().unwrap(), ST)
+        .unwrap();
+    assert!(quote.ready, "{:?}", quote.issues);
+    assert_eq!(
+        quote.configured_budget.as_ref().unwrap().free_spent,
+        Some(1)
+    );
+    lib.commit_vampire_creation(&quote, ST).unwrap();
+    let resources = lib.sheet_edit(&id, ST).unwrap().resources;
+    for (key, value) in [
+        ("Willpower", 3),
+        ("Conviction", 3),
+        ("Mercy", 1),
+        ("Vision", 1),
+        ("Zeal", 1),
+    ] {
+        assert_eq!(resources[key], value);
+    }
+    initialize(&mut lib, &id);
+    let core_id = "phase8-imbued-menu.defense.lock.2";
+    let packet_id = "phase7b-imbued.divine-edges.cremate.5";
+    let catalogue = grapevine_workbench::published_powers::catalogue().unwrap();
+    let core = catalogue.power(core_id).unwrap();
+    assert_eq!(
+        core.evidence,
+        grapevine_workbench::published_powers::Evidence::LegacyMenu
+    );
+    assert_eq!(
+        core.packet_authority,
+        grapevine_workbench::owbn_bylaws::PacketAuthority::NonBindingOrBook
+    );
+    let mut unconfirmed_purchase = purchase(core_id);
+    unconfirmed_purchase.standard_cost_confirmed = false;
+    assert_eq!(
+        lib.quote_purchase(&id, &unconfirmed_purchase, lib.revision().unwrap(), ST)
+            .unwrap_err()
+            .code,
+        "PURCHASE_RULES_UNRESOLVED"
+    );
+    buy_and_refund(&mut lib, &id, core_id, "3");
+    buy_and_refund(&mut lib, &id, packet_id, "9");
 }
 
 #[test]

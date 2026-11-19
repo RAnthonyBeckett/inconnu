@@ -245,6 +245,8 @@ pub(crate) fn configured_power_price(
     let coverage = if kind == "Vampire" && target_list == "RitualList" && citation.edition == "V20"
     {
         "Paid additional blood-magic ritual schedule from OWbN Character Bylaws, Experience Points. Rulebook citations identify source rank. Confirm the paradigm, eligible rank and whether the ritual is already included in the primary path."
+    } else if kind == "Hunter" && citation.edition == "OWbN_Imbued_2021" {
+        "Local MET Imbued XP schedule. Confirm Storyteller adoption and Edge eligibility. Laws of the Reckoning (#5037) page citations are pending."
     } else {
         "Configured source-reviewed creature price; local policy, eligibility, teacher and approval declarations are still required."
     };

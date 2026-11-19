@@ -86,7 +86,7 @@ fn purchase(id: &str) -> PurchaseRequest {
 }
 
 #[test]
-fn phase7b_source_joins_resolve_and_unpriced_hunter_edges_are_reference_only() {
+fn phase7b_source_joins_resolve_and_packet_hunter_edges_remain_indexed() {
     let published = published_powers::catalogue().unwrap();
     for definition in power_catalogue::builtin()
         .entries
@@ -104,11 +104,6 @@ fn phase7b_source_joins_resolve_and_unpriced_hunter_edges_are_reference_only() {
             .filter(|row| row.book_id == "phase7b-imbued")
             .count(),
         6
-    );
-    assert!(
-        !grapevine_workbench::creature_profiles::profile("Hunter")
-            .unwrap()
-            .rules_reviewed
     );
 }
 
