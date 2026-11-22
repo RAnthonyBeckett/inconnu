@@ -1,5 +1,11 @@
 # Inconnu 0.48.0-beta.4 — Windows beta
 
+<p align="center">
+  <img src="../assets/branding/inconnu.png" alt="Inconnu" height="160">
+  <br>
+  <img src="../assets/branding/frakd-up-media.png" alt="Frakd-Up Media" height="90">
+</p>
+
 Product branding: Inconnu
 A Frakd-Up Media App
 Based on Grapevine by Adam Cerling
